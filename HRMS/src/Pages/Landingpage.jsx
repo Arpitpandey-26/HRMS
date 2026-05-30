@@ -26,13 +26,13 @@ export default function LandingPage() {
       isScrolled ? 'bg-white/80 text-on-background' : 'bg-white/10 text-white'
     }`}>
       
-      {/* --- LOGO & BRANDING SECTION --- */}
+      {/* --- LOGO SECTION --- */}
       <div className="flex items-center gap-3">
         
         {/* LOGO PLACEHOLDER BOX */}
         <div className="w-10 h-10 rounded-lg border-2 border-dashed border-white/40 bg-white/10 flex items-center justify-center overflow-hidden">
           
-          {/* uncomment after logo will ready */}
+          {/* have to uncomment after logo will ready */}
           {/* <img src="/assets/your-logo.png" alt="Company Logo" className="w-full h-full object-contain" /> */}
           
           {/* Dummy text */}
@@ -101,7 +101,7 @@ export default function LandingPage() {
   </div>
 </section>
 
-      {/* Dashboard Preview Section */}
+ {/* Dashboard Preview Section */}
       <section className="relative bg-surface py-24 -mt-20 z-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="relative w-full rounded-xl overflow-hidden border border-outline-variant/30 shadow-2xl">
@@ -145,6 +145,7 @@ export default function LandingPage() {
         </div>
       </section>
 
+     
      {/* Footer */}
       <footer className="bg-on-background text-white pt-20 pb-10">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-10 mb-20">
@@ -169,8 +170,7 @@ export default function LandingPage() {
             </p>
           </div>
           
-          <div></div>
-
+          
           <div>
             <h4 className="font-bold mb-6 text-sm">Support</h4>
             {/* Note: changed 'class' to 'className' here */}
