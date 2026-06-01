@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
 export default function LandingPage() {
@@ -50,9 +51,10 @@ export default function LandingPage() {
       </nav>
       
       <div className="flex items-center gap-4">
-        <button className="px-6 py-2 bg-white text-primary font-bold text-sm rounded-lg hover:bg-surface-container-low transition-all shadow-xs cursor-pointer">
-          LogIn
-        </button>
+       {/* Header wala link */}
+<Link to="/login" className="px-6 py-2 bg-white text-primary font-bold text-sm rounded-lg hover:bg-surface-container-low transition-all shadow-xs cursor-pointer">
+  LogIn
+</Link>
       </div>
     </div>
   </div>
@@ -83,16 +85,15 @@ export default function LandingPage() {
       The all-in-one ecosystem for the next generation of workforce excellence. Optimize productivity, nurture talent, and lead with intelligence.
     </p>
     
-    <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
-      <button className="group relative flex min-w-[220px] h-10 items-center justify-center overflow-hidden rounded-xl premium-gradient text-white text-lg font-bold glow-effect transition-all duration-300 cursor-pointer">
-        <span className="relative z-10 flex items-center gap-2">
-          Login to Portal
-          <span className="material-symbols-outlined transition-transform group-hover:translate-x-1">
-            arrow_forward
-          </span>
-        </span>
-      </button>
-    </div>
+   {/* Hero section link */}
+<Link to="/login" className="group relative flex min-w-[220px] h-10 items-center justify-center overflow-hidden rounded-xl premium-gradient text-white text-lg font-bold glow-effect transition-all duration-300 cursor-pointer">
+  <span className="relative z-10 flex items-center gap-2">
+    Login to Portal
+    <span className="material-symbols-outlined transition-transform group-hover:translate-x-1">
+      arrow_forward
+    </span>
+  </span>
+</Link>
   </div>
 
   {/* Scroll Indicator */}
@@ -102,13 +103,13 @@ export default function LandingPage() {
 </section>
 
  {/* Dashboard Preview Section */}
-      <section className="relative bg-surface py-24 -mt-20 z-20">
+      <section className="relative bg-surface py-0 -mt-0 z-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="relative w-full rounded-xl overflow-hidden border border-outline-variant/30 shadow-2xl">
             <div className="absolute inset-0 dashboard-preview-gradient pointer-events-none"></div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
             {/* Feature Card 1 */}
             <div className="glass-card bg-white p-8 rounded-xl border border-outline-variant/20 hover:-translate-y-2 transition-transform duration-300">
               <div className="w-14 h-14 rounded-xl bg-primary-container/10 flex items-center justify-center text-primary mb-6">
@@ -147,7 +148,7 @@ export default function LandingPage() {
 
      
      {/* Footer */}
-      <footer className="bg-on-background text-white pt-20 pb-10">
+      <footer className="bg-on-background text-white pt-20 mt-10 pb-10">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-10 mb-20">
           <div className="col-span-2">
             

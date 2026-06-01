@@ -106,3 +106,23 @@
   50% { transform: translate(0, 20px); }
   100% { transform: translate(0, -0px); }
 }
+
+@utility glass-card-login {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+  }
+}
+
+@utility bg-mesh-login {
+  background-color: #f9f9ff;
+  background-image: radial-gradient(at 0% 0%, hsla(245,100%,95%,1) 0, transparent 50%), 
+                    radial-gradient(at 100% 0%, hsla(230,100%,95%,1) 0, transparent 50%),
+                    radial-gradient(at 100% 100%, hsla(240,100%,95%,1) 0, transparent 50%),
+                    radial-gradient(at 0% 100%, hsla(220,100%,95%,1) 0, transparent 50%);
+}
