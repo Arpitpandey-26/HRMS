@@ -36,7 +36,7 @@ export default function LandingPage() {
                 </span>
               </div>
               <span className={`text-xl font-extrabold tracking-tight transition-colors duration-300 ${isScrolled ? 'text-primary' : 'text-white'}`}>
-                TechHansa
+                Techhansa <span className="text-[#D4AF37] font-normal">HRMS</span>
               </span>
             </div>
             
@@ -51,29 +51,44 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-[#0F204A]">
+   <section className="relative h-[100dvh] w-full flex flex-col items-center justify-center overflow-hidden bg-[#0F204A]">
         
-        {/* Dynamic Mesh Background Gradients */}
-        <div className="absolute inset-0 opacity-60">
-           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#1E3A8A]/40 via-transparent to-transparent"></div>
-           <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-[#D4AF37]/10 via-transparent to-transparent"></div>
+        {/* UPDATE 2: Mobile Responsive Video Tag */}
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          webkit-playsinline="true" /* iOS devices ke liye safety */
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-50 pointer-events-none" 
+        >
+          {/* UPDATE 3: Path me forward slash (/) use kiya */}
+          <source src="/Hero-sec-banner.mp4" type="video/mp4" />
+        </video>
+
+        {/* Cinematic Dark Blue Overlay (Video aur text ke beech ka parda) */}
+        <div className="absolute inset-0 bg-[#0F204A]/60 z-0 mix-blend-multiply"></div>
+
+        {/* Dynamic Mesh Background Gradients (Ab video ke upar halka tint denge) */}
+        <div className="absolute inset-0 opacity-6   0 z-0 pointer-events-none">
+           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#1E3A8A]/50 via-transparent to-transparent"></div>
+           <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-[#D4AF37]/20 via-transparent to-transparent"></div>
         </div>
 
         {/* Enhanced Decorative Floating Glass Shapes */}
-        <div className="absolute top-1/4 -left-10 w-72 h-72 bg-gradient-to-tr from-[#D4AF37]/20 to-transparent rounded-full floating blur-2xl" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/4 -left-10 w-72 h-72 bg-gradient-to-tr from-[#D4AF37]/20 to-transparent rounded-full floating blur-2xl z-0" style={{ animationDelay: '1s' }}></div>
         
-        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-gradient-to-bl from-[#1E3A8A]/50 to-[#D4AF37]/10 rounded-full floating blur-3xl" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-gradient-to-bl from-[#1E3A8A]/50 to-[#D4AF37]/10 rounded-full floating blur-3xl z-0" style={{ animationDelay: '2s' }}></div>
         
-        <div className="absolute top-1/2 right-1/4 w-32 h-32 glass-card border border-[#D4AF37]/30 bg-white/5 rounded-full floating blur-sm shadow-[0_0_30px_rgba(212,175,55,0.15)]" style={{ animationDelay: '4s' }}></div>
+        <div className="absolute top-1/2 right-1/4 w-32 h-32 glass-card border border-[#D4AF37]/30 bg-white/5 rounded-full floating blur-sm shadow-[0_0_30px_rgba(212,175,55,0.15)] z-0" style={{ animationDelay: '4s' }}></div>
 
-        <div className="absolute bottom-1/3 left-1/4 w-16 h-16 glass-card border border-white/20 bg-white/10 rounded-full floating blur-[2px]" style={{ animationDelay: '1.5s' }}></div>
+        <div className="absolute bottom-1/3 left-1/4 w-16 h-16 glass-card border border-white/20 bg-white/10 rounded-full floating blur-[2px] z-0" style={{ animationDelay: '1.5s' }}></div>
         
-        {/* Main Content */}
+        {/* Main Content (z-10 ensures text stays on top of everything) */}
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center mt-10">
           
           {/* Golden Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/40 text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-8 backdrop-blur-md shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-8 backdrop-blur-md shadow-[0_0_15px_rgba(212,175,55,0.2)]">
             <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse"></span>
             Next-Gen Talent Platform
           </div>
@@ -85,12 +100,12 @@ export default function LandingPage() {
             </span>
           </h1>
           
-          <p className="text-white/80 text-lg md:text-base font-normal leading-relaxed mb-12 max-w-2xl mx-auto">
+          <p className="text-white/90 text-lg md:text-xl font-medium leading-relaxed mb-12 max-w-2xl mx-auto drop-shadow-md">
             The all-in-one ecosystem for the next generation of workforce excellence. Optimize productivity, nurture talent, and lead with intelligence.
           </p>
           
           {/* Enhanced Golden Hover Button */}
-          <Link to="/login" className="group relative flex min-w-[220px] h-14 w-fit mx-auto items-center justify-center overflow-hidden rounded-xl bg-white/10 text-white text-lg font-bold border border-white/20 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0F204A] hover:shadow-[0_0_30px_rgba(212,175,55,0.6)] backdrop-blur-md transition-all duration-300 cursor-pointer">
+          <Link to="/login" className="group relative flex min-w-[220px] h-14 w-fit mx-auto items-center justify-center overflow-hidden rounded-xl bg-white/10 text-white text-lg font-bold border border-white/30 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0F204A] hover:shadow-[0_0_30px_rgba(212,175,55,0.6)] backdrop-blur-md transition-all duration-300 cursor-pointer">
             <span className="relative z-10 flex items-center gap-2">
               Login to Portal
               <span className="material-symbols-outlined transition-transform duration-300 group-hover:translate-x-1">
@@ -101,11 +116,10 @@ export default function LandingPage() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50 animate-bounce">
-          <span className="material-symbols-outlined text-[#D4AF37]/70">expand_more</span>
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50 animate-bounce z-10">
+          <span className="material-symbols-outlined text-[#D4AF37]/80">expand_more</span>
         </div>
       </section>
-
       {/* Dashboard Preview Section */}
       <section className="relative bg-surface py-20 z-20">
         <div className="max-w-7xl mx-auto px-6">
