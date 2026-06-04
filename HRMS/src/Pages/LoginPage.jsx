@@ -20,7 +20,7 @@ export default function LoginPage() {
   return (
     <div className="bg-gradient-to-br from-[#F4F7FF] via-[#E6EEFF] to-[#FAF5E6] min-h-screen font-sans text-[#0F204A] antialiased relative selection:bg-[#D4AF37] selection:text-white">
       
-      {/* Premium Ambient Background Mesh Lights */}
+      {/*  Background */}
       <div className="absolute inset-0 opacity-70 pointer-events-none z-0">
         <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-[radial-gradient(circle,_rgba(212,175,55,0.15)_0%,transparent_65%)]"></div>
         <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-[radial-gradient(circle,_rgba(30,58,138,0.08)_0%,transparent_70%)]"></div>
