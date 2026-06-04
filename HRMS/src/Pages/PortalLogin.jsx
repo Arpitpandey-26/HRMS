@@ -54,7 +54,14 @@ export default function PortalLogin() {
               </span> <br />
               Login Portal
             </h1>
-            <div className="w-24 h-1.5 bg-[#D4AF37] mx-auto mt-8 rounded-full shadow-[0_0_15px_rgba(212,175,55,0.5)]"></div>
+             {/*   Dotted & Lined Custom Underline */}
+             <div className="flex items-center justify-center gap-1.5 mb-6 mt-4">
+               <div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div>
+               <div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div>
+               <div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div>
+               <div className="w-26 h-1.5 rounded-full bg-[#D4AF37]"></div>
+             </div>
           </div>
 
         </section>

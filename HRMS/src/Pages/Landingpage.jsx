@@ -20,37 +20,48 @@ export default function LandingPage() {
   return (
     <div className="bg-surface text-on-background antialiased overflow-x-hidden min-h-screen font-sans">
       
-      {/* Fixed Header */}
-      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
+     {/* Fixed Header (Sleek & Compact) */}
+      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'py-1.5' : 'py-3'}`}>
         <div className="max-w-7xl mx-auto px-6">
-          <div className={`glass-card rounded-xl px-8 py-3 flex items-center justify-between border-opacity-30 transition-all duration-300 ${
-            isScrolled ? 'bg-white/90 text-on-background shadow-lg backdrop-blur-xl border-white/50' : 'bg-white/10 text-white backdrop-blur-md'
+          
+          {/* UPDATE: py-3 ko py-2 kar diya aur px-8 ko px-6 kiya taaki height aur width compact lage */}
+          <div className={`rounded-2xl px-6 md:px-8 py-2 flex items-center justify-between transition-all duration-300 border ${
+            isScrolled 
+              ? 'bg-white/95 text-on-background shadow-xl backdrop-blur-xl border-white/60' 
+              : 'bg-white/40 text-white backdrop-blur-xl border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.15)]'
           }`}>
             
             {/* --- LOGO SECTION --- */}
             <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-lg border-2 border-dashed flex items-center justify-center overflow-hidden transition-colors ${isScrolled ? 'border-primary/40 bg-primary/5' : 'border-secondary/60 bg-white/10'}`}>
-                {/* <img src="/assets/your-logo.png" alt="Company Logo" className="w-full h-full object-contain" /> */}
-                <span className={`text-[12px] font-black tracking-wider ${isScrolled ? 'text-primary' : 'text-secondary'}`}>
-                  LOGO
-                </span>
+              
+              {/* UPDATE: Logo size ko chhota (w-12 h-12) kar diya */}
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center overflow-hidden bg-transparent shrink-0">
+                <img src="logo.png" alt="Company Logo" className="w-full h-full object-contain drop-shadow-md" /> 
               </div>
-              <span className={`text-xl font-extrabold tracking-tight transition-colors duration-300 ${isScrolled ? 'text-primary' : 'text-white'}`}>
-                Techhansa <span className="text-[#D4AF37] font-normal">HRMS</span>
+              
+              {/* UPDATE: Text size thoda adjust kiya taaki logo ke sath match kare */}
+              <span className="text-xl md:text-2xl font-extrabold tracking-tight">
+                <span className="text-[#D4AF37] drop-shadow-sm">TechHansa</span>{' '}
+                <span className={`font-black transition-colors duration-300 ${
+                  isScrolled ? 'text-[#0F204A]' : 'text-[#0F204A]' 
+                }`}>
+                  HRMS
+                </span>
               </span>
+              
             </div>
             
             <nav className="hidden md:flex items-center gap-8"></nav>
             
             <div className="flex items-center gap-4">
-              <Link to="/login" className="px-6 py-2.5 bg-secondary text-primary font-bold text-sm rounded-lg hover:bg-white hover:text-secondary hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] transition-all duration-300 cursor-pointer">
+              {/* UPDATE: Button ki padding thodi slim ki (py-2) */}
+              <Link to="/login" className="px-5 py-2 bg-[#D4AF37] text-[#0F204A] font-bold text-sm rounded-lg hover:bg-white hover:text-[#0F204A] hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] transition-all duration-300 cursor-pointer">
                 LogIn
               </Link>
             </div>
           </div>
         </div>
       </header>
-
       {/* Hero Section */}
       
       <section className="relative h-[75vh] min-h-[500px] w-full flex flex-col items-center justify-center overflow-hidden bg-[#0F204A]">
@@ -100,9 +111,9 @@ export default function LandingPage() {
             The all-in-one ecosystem for the next generation of workforce excellence. Optimize productivity, nurture talent, and lead with intelligence.
           </p>
           
-          {/* Enhanced Golden Hover Button */}
+          {/* Golden Hover Button */}
           
-          <Link to="/login" className="group relative flex min-w-[200px] h-14 w-fit mx-auto items-center justify-center overflow-hidden rounded-xl bg-white/10 text-white text-lg font-bold border border-white/30 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0F204A] hover:shadow-[0_0_30px_rgba(212,175,55,0.6)] backdrop-blur-md transition-all duration-300 cursor-pointer">
+          <Link to="/login" className="group relative flex min-w-[200px] h-14 w-fit mx-auto items-center justify-center overflow-hidden rounded-xl bg-white/30 text-white text-lg font-bold border border-white/30 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0F204A] hover:shadow-[0_0_30px_rgba(212,175,55,0.6)] backdrop-blur-md transition-all duration-300 cursor-pointer">
             <span className="relative z-10 flex items-center gap-2">
               Login to Portal
               <span className="material-symbols-outlined transition-transform duration-300 group-hover:translate-x-1">
@@ -117,13 +128,18 @@ export default function LandingPage() {
       {/* Dashboard Preview Section */}
       <section className="relative bg-surface py-10 z-10">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-10">
+        <div className="text-center mb-10">
              <h2 className="text-3xl md:text-5xl font-bold text-[#D4AF37] mb-4">
-               Features for HRMS
+               Features for <span className="text-[#0F204A]">HRMS</span> 
              </h2>
              
-             {/*  Glowing Underline  */}
-             <div className="w-24 h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#FDE047] mx-auto rounded-full shadow-[0_0_15px_rgba(212,175,55,0.5)] mb-6"></div>
+             {/*   Dotted & Lined Custom Underline */}
+             <div className="flex items-center justify-center gap-1.5 mb-6">
+               <div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div>
+               <div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div>
+               <div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div>
+               <div className="w-20 h-1.5 rounded-full bg-[#D4AF37]"></div>
+             </div>
              
              <p className="text-on-surface-variant max-w-2xl mx-auto font-medium">
                Everything you need to manage your workforce seamlessly from a single dashboard.
@@ -167,50 +183,72 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Light & Clean Footer with Golden Hovers (No Black) */}
-      <footer className="bg-[#F4F7FF] text-[#0F204A] pt-20 pb-10 border-t-4 border-[#D4AF37]">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-10 mb-16">
-          <div className="col-span-2">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-lg border-2 border-dashed border-[#D4AF37] bg-[#D4AF37]/10 flex items-center justify-center overflow-hidden">
-                <span className="text-[10px] font-black text-[#D4AF37] tracking-wider">LOGO</span>
+            {/*Footer*/}
+      <footer className="relative pt-12 pb-6 border-t-[6px] border-[#D4AF37] overflow-hidden z-10">
+        
+        {/* 1. Base Background */}
+        <div className="absolute inset-0 bg-[#F8FAFC] z-0"></div>
+
+        {/* 2. Vibrant Floating Colored Orbs */}
+        <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
+           {/* Top Left - Deep Golden Glow */}
+           <div className="absolute -top-[40%] -left-[5%] w-[50%] h-[140%] bg-[#D4AF37]/60 rounded-full blur-[100px] animate-pulse"></div>
+           
+           {/* Bottom Right - Bright Sky Blue Glow */}
+           <div className="absolute -bottom-[40%] -right-[5%] w-[50%] h-[140%] bg-[#38BDF8]/50 rounded-full blur-[100px]"></div>
+           
+           {/* Center - Brown/Copper Glow */}
+           <div className="absolute top-[10%] left-[30%] w-[40%] h-[100%] bg-[#B87333]/45 rounded-full blur-[100px]"></div>
+        </div>
+
+        {/* 3. Frosted Glass Overlay */}
+        <div className="absolute inset-0 bg-white/15 backdrop-blur-[50px] z-0 border-t border-white/30"></div>
+
+        {/*  FOOTER CONTENT  */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          
+          {/* Logo & About */}
+          <div className="md:col-span-2 pr-0 md:pr-10">
+            <div className="flex items-center gap-3 mb-5">
+               {/* Logo */}
+              <div className="w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center overflow-hidden bg-transparent shrink-0">
+                <img src="logo.png" alt="Company Logo" className="w-full h-full object-contain drop-shadow-md" /> 
               </div>
-              <span className="text-2xl font-black tracking-tight text-[#0F204A]">TechHansa <span className="text-[#D4AF37] font-normal">HRMS</span></span>
+              <span className="text-2xl font-black tracking-tight text-[#0F204A] drop-shadow-sm">
+                TechHansa <span className="text-[#D4AF37] font-normal">HRMS</span>
+              </span>
             </div>
-            <p className="text-[#0F204A]/70 max-w-xs text-sm leading-relaxed font-medium">
+            <p className="text-[#0F204A]/90 text-sm leading-relaxed font-bold">
               Pioneering the next era of HCM. We provide the tools leaders need to empower their teams and scale their impact globally.
             </p>
           </div>
-          
+       
           <div>
-            <h4 className="font-bold mb-6 text-sm text-[#0F204A] uppercase tracking-wider">Support</h4>
-            <ul className="space-y-4 text-[#0F204A]/70 text-sm font-medium">
-              <li><a className="hover:text-[#D4AF37] transition-colors duration-300" href="#">Help Center</a></li>
-              <li><a className="hover:text-[#D4AF37] transition-colors duration-300" href="#">Contact</a></li>
-              <li><a className="hover:text-[#D4AF37] transition-colors duration-300" href="#">Documentation</a></li>
+            <h4 className="font-black mb-5 text-sm text-[#0F204A] uppercase tracking-widest drop-shadow-sm">Support</h4>
+            <ul className="space-y-3 text-[#0F204A]/90 text-sm font-bold">
+              <li><a className="hover:text-[#D4AF37] hover:translate-x-1 transition-all duration-300 flex items-center gap-2" href="#"><span className="material-symbols-outlined text-xs">chevron_right</span> Help Center</a></li>
+              <li><a className="hover:text-[#D4AF37] hover:translate-x-1 transition-all duration-300 flex items-center gap-2" href="#"><span className="material-symbols-outlined text-xs">chevron_right</span> Contact</a></li>
+              <li><a className="hover:text-[#D4AF37] hover:translate-x-1 transition-all duration-300 flex items-center gap-2" href="#"><span className="material-symbols-outlined text-xs">chevron_right</span> Documentation</a></li>
             </ul>
           </div>
           
+      
           <div>
-            <h4 className="font-bold mb-6 text-sm text-[#0F204A] uppercase tracking-wider">Legal</h4>
-            <ul className="space-y-4 text-[#0F204A]/70 text-sm font-medium">
-              <li><a className="hover:text-[#D4AF37] transition-colors duration-300" href="#">Privacy Policy</a></li>
-              <li><a className="hover:text-[#D4AF37] transition-colors duration-300" href="#">Terms of Service</a></li>
-              <li><a className="hover:text-[#D4AF37] transition-colors duration-300" href="#">Security</a></li>
+            <h4 className="font-black mb-5 text-sm text-[#0F204A] uppercase tracking-widest drop-shadow-sm">Legal</h4>
+            <ul className="space-y-3 text-[#0F204A]/90 text-sm font-bold">
+              <li><a className="hover:text-[#D4AF37] hover:translate-x-1 transition-all duration-300 flex items-center gap-2" href="#"><span className="material-symbols-outlined text-xs">chevron_right</span> Privacy Policy</a></li>
+              <li><a className="hover:text-[#D4AF37] hover:translate-x-1 transition-all duration-300 flex items-center gap-2" href="#"><span className="material-symbols-outlined text-xs">chevron_right</span> Terms of Service</a></li>
+              <li><a className="hover:text-[#D4AF37] hover:translate-x-1 transition-all duration-300 flex items-center gap-2" href="#"><span className="material-symbols-outlined text-xs">chevron_right</span> Security</a></li>
             </ul>
           </div>
+
         </div>
 
-        {/* Bottom Bar */}
-        <div className="max-w-7xl mx-auto px-6 border-t border-[#0F204A]/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-[#0F204A]/60 text-xs font-semibold">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 border-t border-[#0F204A]/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-[#0F204A]/80 text-xs font-black">
           <p>© 2026 TechHansa HRMS. All rights reserved.</p>
-          <div className="flex gap-8">
-            <a className="hover:text-[#D4AF37] transition-colors duration-300" href="#">LinkedIn</a>
-            <a className="hover:text-[#D4AF37] transition-colors duration-300" href="#">Twitter</a>
-          </div>
+         
         </div>
       </footer>
-
     </div>
   );
 }
