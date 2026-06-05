@@ -125,7 +125,7 @@ export default function LoginPage() {
                 </li>
               </ul>
               
-              <Link to="/portal-login" className="w-full bg-[#F4F7FF] border border-[#E6EEFF] text-[#0F204A] py-3 px-4 rounded-xl font-bold text-sm hover:bg-[#D4AF37] hover:border-[#D4AF37] hover:text-white hover:shadow-[0_5px_15px_rgba(212,175,55,0.3)] transition-all duration-300 flex items-center justify-center gap-2 group-hover:translate-y-0">
+              <Link to="/user-dashboard" className="w-full bg-[#F4F7FF] border border-[#E6EEFF] text-[#0F204A] py-3 px-4 rounded-xl font-bold text-sm hover:bg-[#D4AF37] hover:border-[#D4AF37] hover:text-white hover:shadow-[0_5px_15px_rgba(212,175,55,0.3)] transition-all duration-300 flex items-center justify-center gap-2 group-hover:translate-y-0">
                 User Login
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </Link>

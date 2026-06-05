@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import PortalLogin from './pages/PortalLogin';
+import UserDashboard from './pages/UserDashboard';
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         {/* /portal-login route -> Management Portal Login */}
         <Route path="/portal-login" element={<PortalLogin />} />
+        {/* /user-dashboard route -> User Dashboard */}
+        <Route path="/user-dashboard" element={<UserDashboard />} />
       </Routes>
     </BrowserRouter>
   );
