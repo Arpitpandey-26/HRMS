@@ -20,28 +20,28 @@ export default function LandingPage() {
   return (
     <div className="bg-surface text-on-background antialiased overflow-x-hidden min-h-screen font-sans">
       
-     {/* Fixed Header (Sleek & Compact) */}
+     {/* Fixed Header */}
       <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'py-1.5' : 'py-3'}`}>
         <div className="max-w-7xl mx-auto px-6">
           
-          {/* UPDATE: py-3 ko py-2 kar diya aur px-8 ko px-6 kiya taaki height aur width compact lage */}
+          
           <div className={`rounded-2xl px-6 md:px-8 py-2 flex items-center justify-between transition-all duration-300 border ${
             isScrolled 
               ? 'bg-white/95 text-on-background shadow-xl backdrop-blur-xl border-white/60' 
               : 'bg-white/40 text-white backdrop-blur-xl border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.15)]'
           }`}>
             
-            {/* --- LOGO SECTION --- */}
+            {/* LOGO SECTION  */}
             <div className="flex items-center gap-3">
               
-              {/* UPDATE: Logo size ko chhota (w-12 h-12) kar diya */}
+              {/* UPDATE: Logo size  */}
               <div className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center overflow-hidden bg-transparent shrink-0">
                 <img src="logo.png" alt="Company Logo" className="w-full h-full object-contain drop-shadow-md" /> 
               </div>
               
-              {/* UPDATE: Text size thoda adjust kiya taaki logo ke sath match kare */}
+              
               <span className="text-xl md:text-2xl font-extrabold tracking-tight">
-                <span className="text-[#D4AF37] drop-shadow-sm">TechHansa</span>{' '}
+                <span className="text-[#D4AF37] drop-shadow-sm">Techhansa</span>{' '}
                 <span className={`font-black transition-colors duration-300 ${
                   isScrolled ? 'text-[#0F204A]' : 'text-[#0F204A]' 
                 }`}>
@@ -54,7 +54,7 @@ export default function LandingPage() {
             <nav className="hidden md:flex items-center gap-8"></nav>
             
             <div className="flex items-center gap-4">
-              {/* UPDATE: Button ki padding thodi slim ki (py-2) */}
+              {/* Button padding slim  (py-2) */}
               <Link to="/login" className="px-5 py-2 bg-[#D4AF37] text-[#0F204A] font-bold text-sm rounded-lg hover:bg-white hover:text-[#0F204A] hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] transition-all duration-300 cursor-pointer">
                 LogIn
               </Link>
@@ -78,13 +78,13 @@ export default function LandingPage() {
           <source src="/Hero-sec-banner.mp4" type="video/mp4" />
         </video>
 
-        {/* Dynamic Mesh Background Gradients */}
+        {/* Mesh Background Gradients */}
         <div className="absolute inset-0 opacity-95 z-0 pointer-events-none">
            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#1E3A8A]/50 via-transparent to-transparent"></div>
            <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-[#D4AF37]/20 via-transparent to-transparent"></div>
         </div>
 
-        {/* Enhanced Decorative Floating Glass Shapes */}
+        {/* Floating Glass Shapes */}
         <div className="absolute top-1/4 -left-10 w-72 h-72 bg-gradient-to-tr from-[#D4AF37]/20 to-transparent rounded-full floating blur-2xl z-0" style={{ animationDelay: '1s' }}></div>
         <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-gradient-to-bl from-[#1E3A8A]/50 to-[#D4AF37]/10 rounded-full floating blur-3xl z-0" style={{ animationDelay: '2s' }}></div>
         <div className="absolute top-1/2 right-1/4 w-32 h-32 glass-card border border-[#D4AF37]/30 bg-white/5 rounded-full floating blur-sm shadow-[0_0_30px_rgba(212,175,55,0.15)] z-0" style={{ animationDelay: '4s' }}></div>
@@ -97,7 +97,7 @@ export default function LandingPage() {
           {/* Golden Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-[0_0_15px_rgba(212,175,55,0.2)]">
             <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse"></span>
-            Next-Gen Talent Platform
+            Digital Transformation Company
           </div>
           
           <h1 className="text-white text-5xl md:text-5xl font-black leading-tight tracking-[-0.03em] mb-6 drop-shadow-lg">
@@ -215,7 +215,7 @@ export default function LandingPage() {
                 <img src="logo.png" alt="Company Logo" className="w-full h-full object-contain drop-shadow-md" /> 
               </div>
               <span className="text-2xl font-black tracking-tight text-[#0F204A] drop-shadow-sm">
-                TechHansa <span className="text-[#D4AF37] font-normal">HRMS</span>
+                Techhansa <span className="text-[#D4AF37] font-normal">HRMS</span>
               </span>
             </div>
             <p className="text-[#0F204A]/90 text-sm leading-relaxed font-bold">

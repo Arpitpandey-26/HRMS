@@ -20,7 +20,7 @@ export default function LoginPage() {
   return (
     <div className="bg-[#F8FAFC] min-h-screen font-sans text-[#0F204A] antialiased relative selection:bg-[#D4AF37] selection:text-white overflow-hidden">
       
-      {/* 🔥 UPDATE: Catchy & Vibrant Background Mesh 🔥 */}
+      {/* Vibrant Background Mesh  */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         {/* Top Right Golden Glow */}
         <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[#D4AF37]/20 rounded-full blur-[120px] animate-pulse"></div>
@@ -72,11 +72,11 @@ export default function LoginPage() {
       {/* Main Container */}
       <main className="relative z-10 pt-32 pb-16 px-6 max-w-7xl mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-80px)]">
         
-        {/* 🔥 UPDATE: Distinct & Catchy Hero Title Section 🔥 */}
+        {/* Hero Section */}
         <section className="text-center mb-10 max-w-2xl mx-auto">
           
 
-          {/* Differentiated Heading with Gradient */}
+       
           <h1 className="text-4xl md:text-4xl font-black text-[#0F204A] tracking-tight mb-3">
             Welcome to the <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-[#B87333] to-[#D4AF37] drop-shadow-sm">
@@ -92,7 +92,7 @@ export default function LoginPage() {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 w-full max-w-3xl">
           
           {/* 1. Employee Login Card */}
-          {/* 🔥 UPDATE: bg-white/70, border-white/80 se faded look hata kar solid glass look diya 🔥 */}
+         
           <div className="group relative flex flex-col rounded-[2rem] bg-white/70 backdrop-blur-2xl border border-white/80 p-2 shadow-[0_8px_30px_rgba(15,32,74,0.08)] hover:shadow-[0_20px_40px_rgba(212,175,55,0.15)] transition-all duration-500 hover:-translate-y-2">
             
             <div className="relative h-48 w-full rounded-t-[1.5rem] rounded-b-xl overflow-hidden">

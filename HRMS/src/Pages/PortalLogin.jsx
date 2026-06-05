@@ -39,10 +39,10 @@ export default function PortalLogin() {
 
           {/* Logo at Top Left */}
           <div className="absolute top-10 left-10 z-10 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg border border-[#D4AF37]/50 bg-white/10 backdrop-blur-md flex items-center justify-center overflow-hidden">
-              <span className="text-[12px] font-black tracking-wider text-[#D4AF37]">TH</span>
-            </div>
-            <span className="text-xl font-bold tracking-tight text-white">TechHansa</span>
+            <div className="w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center overflow-hidden bg-transparent shrink-0">
+                <img src="logo.png" alt="Company Logo" className="w-full h-full object-contain drop-shadow-md" /> 
+              </div>
+            <span className="text-2xl md:text-3xl font-bold tracking-tight text-[#D4AF37] drop-shadow-sm">Techhansa</span>
           </div>
 
           
