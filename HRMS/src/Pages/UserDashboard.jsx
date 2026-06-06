@@ -42,7 +42,7 @@ export default function UserDashboard() {
         </div>
 
         {/* Navigation Links */}
-        <div className="flex-1 px-4 space-y-1 overflow-y-auto">
+        <div className="flex-1 px-4 -gap-1 overflow-hidden">
           <a href="#" className="flex items-center gap-3 bg-[#0F204A] text-white px-4 py-2.5 rounded-lg shadow-md transition-all">
             <span className="material-symbols-outlined text-[18px] text-[#D4AF37]">dashboard</span>
             <span className="font-bold text-[13px]">Dashboard</span>
@@ -110,7 +110,6 @@ export default function UserDashboard() {
             <div className="flex-grow text-center md:text-left z-10">
               <div className="flex flex-col md:flex-row md:items-center gap-3 mb-1.5">
                 <h2 className="text-xl font-black text-[#0F204A] tracking-tight">Arpit Pandey</h2>
-                <span className="px-2.5 py-0.5 bg-green-100 text-green-700 rounded-full text-[10px] font-bold self-start md:self-center">Active</span>
               </div>
               <p className="text-xs font-bold text-[#0F204A]/60">Software Developer • ID: SE-1234</p>
               
@@ -255,6 +254,220 @@ export default function UserDashboard() {
           </div>
 
         </section>
+
+
+         {/* Section 3: Daily Attendance Log */}
+        <section className="mb-6 bg-white rounded-2xl p-6 shadow-sm border border-[#0F204A]/5">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-5 gap-4">
+            <h3 className="text-base font-black text-[#0F204A]">Daily Attendance Log</h3>
+            <div className="flex gap-2">
+              <button className="flex items-center gap-1.5 bg-[#0F204A] text-white px-4 py-2 rounded-lg font-bold text-xs shadow-md hover:bg-[#D4AF37] hover:text-[#0F204A] transition-all">
+                <span className="material-symbols-outlined text-[16px]">login</span> Punch In
+              </button>
+              <button className="flex items-center gap-1.5 bg-white border border-[#0F204A]/10 text-[#0F204A] px-4 py-2 rounded-lg font-bold text-xs hover:bg-[#F4F7FF] transition-all">
+                <span className="material-symbols-outlined text-[16px]">logout</span> Punch Out
+              </button>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { d: 'Today, June 06', in: '09:30 AM', out: '06:30 PM' },
+              { d: 'Yesterday, june 05', in: '09:35 AM', out: '06:35 PM' },
+              { d: 'June 04, 2026', in: '09:25 AM', out: '06:30 PM' },
+              { d: 'June 03, 2026', in: '09:30 AM', out: '06:40 PM' }
+            ].map((log, idx) => (
+              <div key={idx} className="p-3.5 bg-[#F4F7FF] rounded-xl border border-[#0F204A]/5 hover:border-[#D4AF37]/50 transition-colors">
+                <p className="text-[11px] font-bold text-[#0F204A]/50 mb-2">{log.d}</p>
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex items-center gap-2">
+                    <span className="material-symbols-outlined text-[#D4AF37] text-[14px]">login</span>
+                    <span className="text-xs font-bold text-[#0F204A]">{log.in}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="material-symbols-outlined text-[#0F204A]/40 text-[14px]">logout</span>
+                    <span className="text-xs font-bold text-[#0F204A]/70">{log.out}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Section 4 & 5: Salary and Appraisal */}
+        <section className="mb-6 grid grid-cols-1 xl:grid-cols-2 gap-6">
+          
+          {/* Salary Components */}
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#0F204A]/5 flex flex-col">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-base font-black text-[#0F204A]">Salary Components</h3>
+              <span className="px-2.5 py-1 bg-[#F4F7FF] text-[#0F204A] border border-[#0F204A]/10 rounded-md text-[10px] font-bold tracking-wide">Current CTC: ₹1,24,000</span>
+            </div>
+            
+            <div className="space-y-3 flex-1">
+              <div className="flex justify-between items-center p-4 bg-[#F8FAFC] rounded-xl border border-gray-100">
+                <div>
+                  <p className="text-[10px] font-bold text-[#0F204A]/50 uppercase tracking-widest mb-1">Basic Salary</p>
+                  <p className="text-base font-black text-[#0F204A]">₹30,345.00</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-[10px] font-bold text-[#0F204A]/50 uppercase tracking-widest mb-1">HRA</p>
+                  <p className="text-base font-black text-[#0F204A]">₹40,000.00</p>
+                </div>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-5 bg-gradient-to-r from-[#0F204A] to-[#1E3A8A] rounded-xl shadow-md">
+                <div className="mb-3 sm:mb-0">
+                  <p className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-widest mb-1">Monthly Net Salary</p>
+                  <p className="text-2xl font-black text-white">₹32,245.00</p>
+                </div>
+                <button className="flex items-center gap-1.5 bg-[#D4AF37] text-[#0F204A] px-4 py-2 rounded-lg font-bold text-xs shadow-sm hover:bg-white transition-all w-full sm:w-auto justify-center">
+                  <span className="material-symbols-outlined text-[16px]">download</span> Payslip
+                </button>
+              </div>
+            </div>
+            <p className="mt-3 text-[10px] font-bold text-[#0F204A]/40 uppercase tracking-widest">Next Revision: July 2025</p>
+          </div>
+
+          {/* Performance Rating */}
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#0F204A]/5 flex flex-col">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-base font-black text-[#0F204A]">Performance Rating</h3>
+              <a href="#" className="text-xs font-bold text-[#D4AF37] hover:text-[#0F204A] transition-colors flex items-center gap-1">
+                View Details <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row items-center gap-6 flex-1">
+              {/* Reduced Radial Chart */}
+              <div className="flex flex-col items-center justify-center p-5 bg-[#F4F7FF] rounded-2xl shrink-0">
+                <div className="relative flex items-center justify-center w-24 h-24">
+                  <svg className="w-full h-full transform -rotate-90">
+                    <circle className="text-gray-200" cx="48" cy="48" fill="transparent" r="40" strokeWidth="6" stroke="currentColor"></circle>
+                    <circle className="text-[#0F204A] transition-all duration-1500 ease-out" cx="48" cy="48" fill="transparent" r="40" strokeWidth="6" stroke="currentColor" strokeDasharray="251.2" strokeDashoffset={mounted ? "25.12" : "251.2"} strokeLinecap="round"></circle>
+                  </svg>
+                  <div className="absolute text-center">
+                    <p className="text-2xl font-black text-[#0F204A] leading-none mb-0.5">4.5</p>
+                    <p className="text-[9px] font-bold text-[#D4AF37] uppercase tracking-widest">Overall</p>
+                  </div>
+                </div>
+               
+              </div>
+
+              {/* Skill Bars */}
+              <div className="flex-1 w-full space-y-4">
+                {[
+                  { name: 'Technical Skill', val: 92, col: 'bg-[#0F204A]' },
+                  { name: 'Leadership', val: 88, col: 'bg-[#D4AF37]' },
+                  { name: 'Soft Skills', val: 95, col: 'bg-[#38BDF8]' }
+                ].map((skill, i) => (
+                  <div key={i} className="group">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-xs font-bold text-[#0F204A]">{skill.name}</span>
+                      <span className="text-[11px] font-black text-[#0F204A]/60">{skill.val}%</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div className={`h-full ${skill.col} transition-all duration-1000 ease-out`} style={{ width: mounted ? `${skill.val}%` : '0%' }}></div>
+                    </div>
+                  </div>
+                ))}
+                
+                
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 6: Request Management */}
+        <section className="mb-6">
+          <h3 className="text-base font-black text-[#0F204A] mb-4">Request Management</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            
+            <div className="bg-white p-5 rounded-2xl shadow-sm border border-[#0F204A]/5 hover:border-[#0F204A]/20 transition-all">
+              <div className="flex justify-between items-start mb-3">
+                <div className="p-2.5 bg-[#F4F7FF] text-[#0F204A] rounded-lg border border-[#0F204A]/10"><span className="material-symbols-outlined text-[18px]">event_note</span></div>
+                <span className="px-2 py-0.5 bg-gray-100 text-[#0F204A]/60 rounded-md text-[9px] font-bold tracking-widest uppercase">Active</span>
+              </div>
+              <h4 className="text-sm font-black text-[#0F204A] mb-1.5">Leave Application</h4>
+              <p className="text-xs font-semibold text-[#0F204A]/60 mb-4">Request PTO or sick leave through the automated approval system.</p>
+              <button className="w-full py-2 bg-white border border-[#0F204A] text-[#0F204A] rounded-lg font-bold text-xs hover:bg-[#0F204A] hover:text-white transition-colors">Apply Now</button>
+            </div>
+
+            <div className="bg-white p-5 rounded-2xl shadow-sm border border-[#0F204A]/5 hover:border-[#D4AF37]/50 transition-all">
+              <div className="flex justify-between items-start mb-3">
+                <div className="p-2.5 bg-[#FFF9E6] text-[#D4AF37] rounded-lg border border-[#D4AF37]/20"><span className="material-symbols-outlined text-[18px]">home_work</span></div>
+                <span className="px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded-md text-[9px] font-bold tracking-widest uppercase">1 Pending</span>
+              </div>
+              <h4 className="text-sm font-black text-[#0F204A] mb-1.5">Work From Home</h4>
+              <p className="text-xs font-semibold text-[#0F204A]/60 mb-4">Submit remote work requests or modify your hybrid schedule.</p>
+              <button className="w-full py-2 bg-white border border-[#D4AF37] text-[#D4AF37] rounded-lg font-bold text-xs hover:bg-[#D4AF37] hover:text-white transition-colors">New Request</button>
+            </div>
+
+            <div className="bg-white p-5 rounded-2xl shadow-sm border border-[#0F204A]/5 hover:border-gray-300 transition-all">
+              <div className="flex justify-between items-start mb-3">
+                <div className="p-2.5 bg-gray-50 text-gray-400 rounded-lg border border-gray-200"><span className="material-symbols-outlined text-[18px]">flight_takeoff</span></div>
+                <span className="px-2 py-0.5 bg-gray-100 text-[#0F204A]/60 rounded-md text-[9px] font-bold tracking-widest uppercase">None</span>
+              </div>
+              <h4 className="text-sm font-black text-[#0F204A] mb-1.5">Travel Request</h4>
+              <p className="text-xs font-semibold text-[#0F204A]/60 mb-4">Business trip documentation, visa support, and expense filing.</p>
+              <button className="w-full py-2 bg-gray-50 border border-gray-200 text-gray-500 rounded-lg font-bold text-xs hover:bg-gray-200 transition-colors">Start Filing</button>
+            </div>
+
+          </div>
+        </section>
+
+        {/* Section 7: Career Growth Roadmap */}
+        <section className="mb-6">
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#0F204A]/5">
+            <h3 className="text-base font-black text-[#0F204A] mb-6">Career Growth Roadmap</h3>
+            
+            <div className="relative">
+              <div className="absolute left-3 top-2 bottom-2 w-0.5 bg-gray-100 rounded-full"></div>
+              
+              <div className="space-y-6">
+                <div className="relative pl-10 flex flex-col md:flex-row md:items-center gap-4">
+                  <div className="absolute left-[9px] top-1.5 w-2.5 h-2.5 bg-green-500 rounded-full ring-[3px] ring-green-100 z-10"></div>
+                  <div className="flex-grow">
+                    <h4 className="text-sm font-black text-[#0F204A]">Junior Developer</h4>
+                    <p className="text-[11px] font-bold text-[#0F204A]/50 mt-0.5">Completed April 2026 • Duration: 1 Year</p>
+                  </div>
+                  <span className="material-symbols-outlined text-green-500 text-2xl">check_circle</span>
+                </div>
+
+                <div className="relative pl-10 flex flex-col md:flex-row md:items-center gap-4">
+                  <div className="absolute left-[9px] top-1.5 w-2.5 h-2.5 bg-[#0F204A] rounded-full ring-[3px] ring-[#F4F7FF] z-10"></div>
+                  <div className="flex-grow">
+                    <h4 className="text-base font-black text-[#D4AF37]">Software Developer</h4>
+                    <p className="text-xs font-bold text-[#0F204A]/60 mt-0.5">Current Position • Since May 2026</p>
+                    <div className="mt-2 flex gap-1.5">
+                     
+                    </div>
+                  </div>
+                  <div className="px-4 py-1.5 bg-[#0F204A] text-white rounded-lg font-bold text-xs shadow-md">Current</div>
+                </div>
+
+                <div className="relative pl-10 flex flex-col md:flex-row md:items-center gap-4 opacity-50">
+                  <div className="absolute left-[9px] top-1.5 w-2.5 h-2.5 bg-gray-300 rounded-full ring-[3px] ring-white z-10 border border-gray-400"></div>
+                  <div className="flex-grow">
+                    <h4 className="text-sm font-bold text-[#0F204A]">Senior Software Developer</h4>
+                    <p className="text-[11px] font-semibold text-[#0F204A]/60 mt-0.5">Projected Target: Q4 2028</p>
+                  </div>
+                  <span className="material-symbols-outlined text-gray-400 text-2xl">lock</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer Minimal */}
+        <footer className="pt-6 pb-2 flex flex-col md:flex-row justify-between items-center border-t border-[#0F204A]/5 mt-8 gap-3">
+          <p className="text-[11px] font-bold text-[#0F204A]/50">© 2026 TechHansa HRMS. All rights reserved.</p>
+          <div className="flex gap-5">
+            <a className="text-[11px] font-bold text-[#0F204A]/50 hover:text-[#D4AF37] transition-all" href="#">Privacy</a>
+            <a className="text-[11px] font-bold text-[#0F204A]/50 hover:text-[#D4AF37] transition-all" href="#">Terms</a>
+            <a className="text-[11px] font-bold text-[#0F204A]/50 hover:text-[#D4AF37] transition-all" href="#">Support</a>
+          </div>
+        </footer>
 
        
 
