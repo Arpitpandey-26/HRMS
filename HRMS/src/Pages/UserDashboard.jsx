@@ -9,8 +9,8 @@ export default function UserDashboard() {
   return (
     <div className="flex min-h-screen bg-[#F4F7FF] font-sans text-[#0F204A] selection:bg-[#D4AF37] selection:text-white">
       
-      {/* ================= SIDEBAR NAV (Slimmer: w-60) ================= */}
-      <aside className="fixed left-0 top-0 h-full w-60 bg-white border-r border-[#0F204A]/5 shadow-[4px_0_24px_rgba(15,32,74,0.02)] flex flex-col z-40">
+     {/* ================= SIDEBAR NAV (Slimmer: w-60) ================= */}
+      <aside className="fixed left-0 top-0 h-full w-60 bg-gradient-to-b from-[#F4F7FF] via-white to-[#FFF5D1] border-r border-[#D4AF37]/20 shadow-[4px_0_24px_rgba(212,175,55,0.08)] flex flex-col z-40">
         
         {/* Logo Section */}
         <div className="p-2 mb-2 flex items-center gap-1">
@@ -28,24 +28,24 @@ export default function UserDashboard() {
 
         {/* User Mini Profile */}
         <div className="px-5 mb-6">
-          <div className="flex items-center gap-3 p-2.5 bg-[#F4F7FF] rounded-xl border border-[#0F204A]/5">
+          <div className="flex items-center gap-3 p-2.5 bg-white/60 backdrop-blur-sm rounded-xl border border-[#D4AF37]/20 shadow-sm">
             <img 
               alt="Arpit Pandey" 
-              className="w-9 h-9 rounded-lg object-cover shadow-sm" 
+              className="w-9 h-9 rounded-lg object-cover shadow-sm border border-white" 
               src="" 
             />
             <div>
               <p className="font-bold text-[#0F204A] text-[13px]">Arpit Pandey</p>
-              <p className="text-[10px] font-semibold text-[#0F204A]/50">Software Developer</p>
+              <p className="text-[10px] font-bold text-[#0F204A]/60">Software Developer</p>
             </div>
           </div>
         </div>
 
         {/* Navigation Links */}
         <div className="flex-1 px-4 -gap-1 overflow-hidden">
-          <a href="#" className="flex items-center gap-3 bg-[#0F204A] text-white px-4 py-2.5 rounded-lg shadow-md transition-all">
-            <span className="material-symbols-outlined text-[18px] text-[#D4AF37]">dashboard</span>
-            <span className="font-bold text-[13px]">Dashboard</span>
+          <a href="#" className="flex items-center gap-3 bg-gradient-to-r from-[#D4AF37] to-[#FDE047] text-[#0F204A] px-4 py-2.5 rounded-lg shadow-[0_4px_10px_rgba(212,175,55,0.3)] transition-all">
+            <span className="material-symbols-outlined text-[18px] text-[#0F204A]">dashboard</span>
+            <span className="font-black text-[13px]">Dashboard</span>
           </a>
           
           {[
@@ -57,26 +57,25 @@ export default function UserDashboard() {
             { icon: 'trending_up', label: 'Growth' },
             { icon: 'mail', label: 'Newsletter' }
           ].map((item, index) => (
-            <a key={index} href="#" className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-[#0F204A]/60 hover:bg-[#0F204A]/5 hover:text-[#0F204A] transition-all duration-200 group">
+            <a key={index} href="#" className="flex items-center gap-3 px-4 py-2.5 mt-1 rounded-lg text-[#0F204A]/70 hover:bg-white/70 hover:text-[#0F204A] hover:shadow-sm border border-transparent hover:border-[#D4AF37]/20 transition-all duration-200 group">
               <span className="material-symbols-outlined text-[18px] group-hover:text-[#D4AF37] transition-colors">{item.icon}</span>
-              <span className="font-semibold text-[13px]">{item.label}</span>
+              <span className="font-bold text-[13px]">{item.label}</span>
             </a>
           ))}
         </div>
 
         {/* Bottom Actions */}
-        <div className="p-4 border-t border-[#0F204A]/5 space-y-1">
-          <a href="#" className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-[#0F204A]/60 hover:bg-[#0F204A]/5 hover:text-[#0F204A] transition-all group">
+        <div className="p-4 border-t border-[#D4AF37]/20 space-y-1 bg-white/30 backdrop-blur-sm">
+          <a href="#" className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-[#0F204A]/70 hover:bg-white/70 hover:text-[#0F204A] hover:shadow-sm border border-transparent hover:border-[#D4AF37]/20 transition-all group">
             <span className="material-symbols-outlined text-[18px] group-hover:text-[#D4AF37]">settings</span>
-            <span className="font-semibold text-[13px]">Settings</span>
+            <span className="font-bold text-[13px]">Settings</span>
           </a>
-          <a href="#" className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-[#0F204A]/60 hover:bg-red-50 hover:text-red-600 transition-all">
+          <a href="#" className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-[#0F204A]/70 hover:bg-red-50 hover:text-red-600 hover:shadow-sm border border-transparent hover:border-red-100 transition-all">
             <span className="material-symbols-outlined text-[18px]">logout</span>
-            <span className="font-semibold text-[13px]">Sign Out</span>
+            <span className="font-bold text-[13px]">Sign Out</span>
           </a>
         </div>
       </aside>
-
       {/* ================= MAIN CONTENT CANVAS ================= */}
       {/* Reduced left margin and paddings */}
       <main className="ml-60 flex-1 p-6 xl:p-8 max-w-[1440px] mx-auto">
@@ -95,10 +94,12 @@ export default function UserDashboard() {
           </div>
         </header>
 
-        {/* Section 1: Profile Banner */}
+  {/* Section 1: Profile Banner */}
         <section className="mb-6">
           <div className="bg-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6 relative overflow-hidden shadow-[0_4px_20px_rgba(15,32,74,0.03)] border border-[#0F204A]/5">
-            <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-[#0F204A]/5 to-transparent skew-x-12 translate-x-10 pointer-events-none"></div>
+            
+            {/* Exact Image-like Slanted Solid Gradient Background  */}
+            <div className="absolute top-0 right-0 w-1/3 h-full bg-[#FFF5D1]/50 skew-x-12 translate-x-10 pointer-events-none"></div>
             
             {/* Reduced Image Size */}
             <img 
@@ -108,10 +109,12 @@ export default function UserDashboard() {
             />
             
             <div className="flex-grow text-center md:text-left z-10">
-              <div className="flex flex-col md:flex-row md:items-center gap-3 mb-1.5">
-                <h2 className="text-xl font-black text-[#0F204A] tracking-tight">Arpit Pandey</h2>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-1.5 w-full pr-0 md:pr-[25%] lg:pr-[30%]">
+                <h2 className="text-3xl font-black text-[#0F204A] tracking-tight">Arpit Pandey</h2>
+                {/* Active badge position adjusted like the image */}
+                <span className="px-3 py-0.5 bg-green-100 text-green-700 rounded-full text-[10px] font-bold self-start md:self-center">Active</span>
               </div>
-              <p className="text-xs font-bold text-[#0F204A]/60">Software Developer • ID: SE-1234</p>
+              <p className="text-sm font-black text-[#0F204A]/70">Software Developer • ID: SE-1234</p>
               
               <div className="mt-3 flex flex-wrap justify-center md:justify-start gap-4">
                 <span className="flex items-center gap-1 text-xs font-semibold text-[#0F204A]/60">
@@ -125,10 +128,10 @@ export default function UserDashboard() {
             
             <div className="flex flex-col items-center md:items-end gap-2.5 z-10 mt-4 md:mt-0">
               <div className="text-center md:text-right">
-                <p className="text-[10px] font-bold text-[#0F204A]/50 uppercase tracking-widest mb-0.5">Join Date</p>
+                <p className="text-[10px] font-bold text-[#0F204A]/60 mb-0.5">Join Date</p>
                 <p className="text-sm font-black text-[#0F204A]">May 25, 2026</p>
               </div>
-              <button className="bg-[#0F204A] text-white hover:bg-[#D4AF37] hover:text-[#0F204A] px-4 py-2 rounded-lg font-bold text-xs shadow-md transition-all active:scale-95">
+              <button className="bg-[#0F204A] text-white hover:bg-[#D4AF37] hover:text-[#0F204A] px-6 py-2.5 rounded-lg font-bold text-xs shadow-md transition-all active:scale-95">
                 Edit Profile
               </button>
             </div>
@@ -380,39 +383,73 @@ export default function UserDashboard() {
 
         {/* Section 6: Request Management */}
         <section className="mb-6">
-          <h3 className="text-base font-black text-[#0F204A] mb-4">Request Management</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {/* Main Wrapper Div (Heading ab iske andar hai) */}
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#0F204A]/5">
             
-            <div className="bg-white p-5 rounded-2xl shadow-sm border border-[#0F204A]/5 hover:border-[#0F204A]/20 transition-all">
-              <div className="flex justify-between items-start mb-3">
-                <div className="p-2.5 bg-[#F4F7FF] text-[#0F204A] rounded-lg border border-[#0F204A]/10"><span className="material-symbols-outlined text-[18px]">event_note</span></div>
-                <span className="px-2 py-0.5 bg-gray-100 text-[#0F204A]/60 rounded-md text-[9px] font-bold tracking-widest uppercase">Active</span>
-              </div>
-              <h4 className="text-sm font-black text-[#0F204A] mb-1.5">Leave Application</h4>
-              <p className="text-xs font-semibold text-[#0F204A]/60 mb-4">Request PTO or sick leave through the automated approval system.</p>
-              <button className="w-full py-2 bg-white border border-[#0F204A] text-[#0F204A] rounded-lg font-bold text-xs hover:bg-[#0F204A] hover:text-white transition-colors">Apply Now</button>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-base font-black text-[#0F204A]">Request Management</h3>
+              <button className="text-[11px] font-bold text-[#D4AF37] hover:text-[#0F204A] transition-colors flex items-center gap-1">
+                View History <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </button>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl shadow-sm border border-[#0F204A]/5 hover:border-[#D4AF37]/50 transition-all">
-              <div className="flex justify-between items-start mb-3">
-                <div className="p-2.5 bg-[#FFF9E6] text-[#D4AF37] rounded-lg border border-[#D4AF37]/20"><span className="material-symbols-outlined text-[18px]">home_work</span></div>
-                <span className="px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded-md text-[9px] font-bold tracking-widest uppercase">1 Pending</span>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              
+              {/* Option 1: Leave Request */}
+              <div className="group relative bg-gradient-to-br from-[#F4F7FF] to-white p-5 rounded-2xl border border-[#0F204A]/10 hover:border-[#0F204A]/30 hover:shadow-[0_8px_20px_rgba(15,32,74,0.06)] transition-all duration-300 hover:-translate-y-1">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="w-10 h-10 bg-white text-[#0F204A] rounded-xl shadow-sm flex items-center justify-center border border-[#0F204A]/5 group-hover:scale-110 transition-transform duration-300">
+                    <span className="material-symbols-outlined text-[20px]">event_busy</span>
+                  </div>
+                  <span className="px-2.5 py-1 bg-yellow-100 text-yellow-700 rounded-md text-[9px] font-bold tracking-widest uppercase shadow-sm">1 Pending</span>
+                </div>
+                <h4 className="text-sm font-black text-[#0F204A] mb-1.5">Leave Request</h4>
+                <p className="text-xs font-semibold text-[#0F204A]/60 mb-5">Request full-day PTOs, casual, or sick leaves securely.</p>
+                
+                {/* Animated Button */}
+                <button className="w-full py-2.5 bg-white border border-[#0F204A]/20 text-[#0F204A] rounded-xl font-bold text-xs group-hover:bg-[#0F204A] group-hover:text-white group-hover:border-[#0F204A] transition-all duration-300 flex justify-center items-center gap-1.5 overflow-hidden">
+                  Apply Leave 
+                  <span className="material-symbols-outlined text-[14px] opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300">add</span>
+                </button>
               </div>
-              <h4 className="text-sm font-black text-[#0F204A] mb-1.5">Work From Home</h4>
-              <p className="text-xs font-semibold text-[#0F204A]/60 mb-4">Submit remote work requests or modify your hybrid schedule.</p>
-              <button className="w-full py-2 bg-white border border-[#D4AF37] text-[#D4AF37] rounded-lg font-bold text-xs hover:bg-[#D4AF37] hover:text-white transition-colors">New Request</button>
-            </div>
 
-            <div className="bg-white p-5 rounded-2xl shadow-sm border border-[#0F204A]/5 hover:border-gray-300 transition-all">
-              <div className="flex justify-between items-start mb-3">
-                <div className="p-2.5 bg-gray-50 text-gray-400 rounded-lg border border-gray-200"><span className="material-symbols-outlined text-[18px]">flight_takeoff</span></div>
-                <span className="px-2 py-0.5 bg-gray-100 text-[#0F204A]/60 rounded-md text-[9px] font-bold tracking-widest uppercase">None</span>
+              {/* Option 2: Half-Day Request */}
+              <div className="group relative bg-gradient-to-br from-[#FFF9E6] to-white p-5 rounded-2xl border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 hover:shadow-[0_8px_20px_rgba(212,175,55,0.1)] transition-all duration-300 hover:-translate-y-1">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="w-10 h-10 bg-white text-[#D4AF37] rounded-xl shadow-sm flex items-center justify-center border border-[#D4AF37]/10 group-hover:scale-110 transition-transform duration-300">
+                    <span className="material-symbols-outlined text-[20px]">timelapse</span>
+                  </div>
+                  <span className="px-2.5 py-1 bg-green-100 text-green-700 rounded-md text-[9px] font-bold tracking-widest uppercase shadow-sm">Approved</span>
+                </div>
+                <h4 className="text-sm font-black text-[#0F204A] mb-1.5">Half-Day Request</h4>
+                <p className="text-xs font-semibold text-[#0F204A]/60 mb-5">Apply for first or second half leaves for urgent short tasks.</p>
+                
+                {/* Animated Button */}
+                <button className="w-full py-2.5 bg-white border border-[#D4AF37]/40 text-[#D4AF37] rounded-xl font-bold text-xs group-hover:bg-[#D4AF37] group-hover:text-white group-hover:border-[#D4AF37] transition-all duration-300 flex justify-center items-center gap-1.5 overflow-hidden">
+                  Request Half-Day 
+                  <span className="material-symbols-outlined text-[14px] opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300">add</span>
+                </button>
               </div>
-              <h4 className="text-sm font-black text-[#0F204A] mb-1.5">Travel Request</h4>
-              <p className="text-xs font-semibold text-[#0F204A]/60 mb-4">Business trip documentation, visa support, and expense filing.</p>
-              <button className="w-full py-2 bg-gray-50 border border-gray-200 text-gray-500 rounded-lg font-bold text-xs hover:bg-gray-200 transition-colors">Start Filing</button>
-            </div>
 
+              {/* Option 3: Expense Claim (Reimbursement) */}
+              <div className="group relative bg-gradient-to-br from-[#F0F9FF] to-white p-5 rounded-2xl border border-[#38BDF8]/20 hover:border-[#38BDF8]/50 hover:shadow-[0_8px_20px_rgba(56,189,248,0.1)] transition-all duration-300 hover:-translate-y-1">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="w-10 h-10 bg-white text-[#38BDF8] rounded-xl shadow-sm flex items-center justify-center border border-[#38BDF8]/10 group-hover:scale-110 transition-transform duration-300">
+                    <span className="material-symbols-outlined text-[20px]">receipt_long</span>
+                  </div>
+                  <span className="px-2.5 py-1 bg-gray-100 text-gray-500 rounded-md text-[9px] font-bold tracking-widest uppercase shadow-sm">0 Drafts</span>
+                </div>
+                <h4 className="text-sm font-black text-[#0F204A] mb-1.5">Expense Claim</h4>
+                <p className="text-xs font-semibold text-[#0F204A]/60 mb-5">Submit bills for travel, meals, or internet reimbursements.</p>
+                
+                {/* Animated Button */}
+                <button className="w-full py-2.5 bg-white border border-[#38BDF8]/40 text-[#38BDF8] rounded-xl font-bold text-xs group-hover:bg-[#38BDF8] group-hover:text-white group-hover:border-[#38BDF8] transition-all duration-300 flex justify-center items-center gap-1.5 overflow-hidden">
+                  File Expense 
+                  <span className="material-symbols-outlined text-[14px] opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300">add</span>
+                </button>
+              </div>
+
+            </div>
           </div>
         </section>
 
