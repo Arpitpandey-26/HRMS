@@ -48,7 +48,7 @@ export default function UserDashboard() {
           <span className="text-lg font-black tracking-tight text-[#D4AF37]">
             Techhansa
           </span>
-           <span className="text-lg font-black tracking-tight text-[#0F204A]">
+           <span className="text-lg font-black tracking-tight text-[#1E3A8A]">
             HRMS
           </span>
          
@@ -82,7 +82,7 @@ export default function UserDashboard() {
           {[
             //  Yaha 'path' add kiya gaya hai Profile ke liye
             { icon: 'person', label: 'Profile', path: '/user-profile' }, 
-            { icon: 'calendar_today', label: 'Attendance', path: '#' },
+            { icon: 'calendar_today', label: 'Attendance', path: '/user-attendance' },
             { icon: 'payments', label: 'Salary', path: '#' },
             { icon: 'monitoring', label: 'Appraisal', path: '#' },
             { icon: 'mark_as_unread', label: 'Requests', path: '#' },
@@ -117,47 +117,50 @@ export default function UserDashboard() {
       {/* MAIN CONTENT CANVAS  */}
       <main className="ml-55 flex-1 p-6 xl:p-8 max-w-[1440px] mx-auto">
         
-        {/* Header */}
+       {/* Header */}
         <header className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-2xl font-black text-[#0F204A] tracking-tight">Employee Dashboard</h1>
-            <p className="text-[#0F204A]/60 font-medium text-xs mt-1">Welcome back, Arpit. Here's your performance summary.</p>
+            {/*  Vibrant Royal Blue for Headings (No black tint)  */}
+            <h1 className="text-2xl font-black text-[#2563EB]/85 tracking-tight">Employee Dashboard</h1>
+            {/*  Soft Slate for subtext  */}
+            <p className="text-[#64748B] font-medium text-xs mt-1">Welcome back, Arpit. Here's your performance summary.</p>
           </div>
           <div className="flex gap-3">
-            <button className="relative p-2 rounded-full bg-white border border-[#0F204A]/10 hover:border-[#D4AF37] text-[#0F204A] hover:text-[#D4AF37] transition-all shadow-sm">
+            {/* Blue tinted border and soft shadow  */}
+            <button className="relative p-2 rounded-full bg-white border border-[#2563EB]/15 hover:border-[#D4AF37] text-[#2563EB]/85 hover:text-[#D4AF37] transition-all shadow-[0_4px_15px_rgba(37,99,235,0.08)]">
               <span className="material-symbols-outlined text-[20px]">notifications</span>
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-400 rounded-full border border-white"></span>
             </button>
           </div>
         </header>
 
     {/* Section 1: Profile Banner */}
         <section className="mb-6">
-          {/*  UPDATE: Enhanced Light Blue to White Gradient, stronger shadow for 3D feel  */}
-          <div className="bg-gradient-to-r from-[#E0F2FE] via-[#F8FAFC] to-white rounded-2xl p-2 flex flex-col md:flex-row items-center gap-6 relative overflow-hidden shadow-[0_8px_30px_rgba(15,32,74,0.05)] border border-[#0F204A]/5">
+          {/*  Container with blue-tinted shadow instead of black/grey  */}
+          <div className="bg-gradient-to-r from-[#E0F2FE] via-[#F8FAFC] to-white rounded-2xl p-2 flex flex-col md:flex-row items-center gap-6 relative overflow-hidden shadow-[0_8px_30px_rgba(37,99,235,0.08)] border border-[#2563EB]/10">
             
-            {/*  UPDATE: Solid Creamy-Gold Gradient with a left shadow/border to make it POP  */}
-            <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-[#FFF9E6] to-[#FFF5D1] skew-x-12 translate-x-10 pointer-events-none border-l border-[#D4AF37]/20 shadow-[-15px_0_30px_rgba(212,175,55,0.1)]"></div>
+            {/*  Gold gradient with pure gold shadow (no black drop-shadow)  */}
+            <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-[#FFF9E6] to-[#FFF5D1] skew-x-12 translate-x-10 pointer-events-none border-l border-[#D4AF37]/30 shadow-[-15px_0_30px_rgba(250,204,21,0.15)]"></div>
             
             {/* Reduced Image Size */}
             <img 
               alt="Arpit Pandey" 
-              className="w-20 h-20 rounded-xl object-cover shadow-md border-2 border-white relative z-10" 
+              className="w-20 h-20 rounded-xl object-cover shadow-[0_4px_15px_rgba(37,99,235,0.1)] border-2 border-white relative z-10" 
               src="" 
             />
             
             <div className="flex-grow text-center md:text-left z-10">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-1.5 w-full pr-0 md:pr-[25%] lg:pr-[30%]">
-                <h2 className="text-3xl font-black text-[#0F204A] tracking-tight">Arpit Pandey</h2>
+                <h2 className="text-3xl font-black text-[#2563EB]/85 tracking-tight">Arpit Pandey</h2>
                
               </div>
-              <p className="text-sm font-black text-[#0F204A]/70">Software Developer • ID: SE-1234</p>
+              <p className="text-sm font-black text-[#475569]">Software Developer • ID: SE-1234</p>
               
               <div className="mt-3 flex flex-wrap justify-center md:justify-start gap-4">
-                <span className="flex items-center gap-1 text-xs font-semibold text-[#0F204A]/60">
+                <span className="flex items-center gap-1 text-xs font-semibold text-[#64748B]">
                   <span className="material-symbols-outlined text-[16px] text-[#D4AF37]">location_on</span>Varanasi
                 </span>
-                <span className="flex items-center gap-1 text-xs font-semibold text-[#0F204A]/60">
+                <span className="flex items-center gap-1 text-xs font-semibold text-[#64748B]">
                   <span className="material-symbols-outlined text-[16px] text-[#D4AF37]">mail</span>arpit.pandey@techhansait.com
                 </span>
               </div>
@@ -165,16 +168,13 @@ export default function UserDashboard() {
             
             <div className="flex flex-col items-center md:items-end gap-2.5 z-10 mt-4 md:mt-0">
               <div className="text-center md:text-right">
-                <p className="text-[10px] font-bold text-[#0F204A]/60 mb-0.5">Join Date</p>
-                <p className="text-sm font-black text-[#0F204A]">May 25, 2026</p>
+                <p className="text-[10px] font-bold text-[#64748B] mb-0.5 uppercase tracking-widest">Join Date</p>
+                <p className="text-sm font-black text-[#2563EB]/85">May 25, 2026</p>
               </div>
-              <button className="bg-[#0F204A] text-white hover:bg-[#D4AF37] hover:text-[#0F204A] px-6 py-2.5 rounded-lg font-bold text-xs shadow-md transition-all active:scale-95">
-                Edit Profile
-              </button>
+              
             </div>
           </div>
         </section>
-
       {/* COMBINED ATTENDANCE HUB (AURA GLOW + ROYAL BLUE CHART)  */}
         <section className="mb-6">
           {/* Main Outer Container */}
@@ -200,7 +200,7 @@ export default function UserDashboard() {
                     <span className={`w-2 h-2 rounded-full animate-pulse ${
                       isPunchedIn ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]'
                     }`}></span>
-                    <span className={`text-xs font-bold tracking-wide ${isPunchedIn ? 'text-green-700' : 'text-[#0F204A]'}`}>
+                    <span className={`text-xs font-bold tracking-wide ${isPunchedIn ? 'text-green-700' : 'text-[#1E3A8A]'}`}>
                       {isPunchedIn ? 'Active (Punched In)' : 'Not Punched In'}
                     </span>
                   </div>
@@ -212,7 +212,7 @@ export default function UserDashboard() {
 
               {/* Dynamic Live Time */}
               <div className="relative z-10 my-4 text-center">
-                <h2 className="text-5xl md:text-6xl font-black text-[#0F204A] tracking-tight drop-shadow-sm mb-1">
+                <h2 className="text-5xl md:text-6xl font-black text-[#2563EB]/85 tracking-tight drop-shadow-sm mb-1">
                   {timeVal} <span className="text-2xl text-[#0F204A]/50">{amPm}</span>
                 </h2>
                 <p className="text-sm font-bold text-[#0F204A]/60">{formattedDate}</p>
@@ -266,7 +266,7 @@ export default function UserDashboard() {
               {/* Header */}
               <div className="flex justify-between items-center mb-6">
                 <div>
-                  <h3 className="text-lg font-black text-[#0F204A]">Attendance Analytics</h3>
+                  <h3 className="text-lg font-black text-[#2563EB]/85 text-shadow-lg">Attendance Analytics</h3>
                   <p className="text-xs font-semibold text-[#0F204A]/50 mt-0.5">Your monthly trends & recent logs</p>
                 </div>
                 <div className="flex items-center gap-3">
@@ -281,7 +281,7 @@ export default function UserDashboard() {
               <div className="flex-grow flex flex-col justify-end mb-6">
                 {/* Legends - UPDATED COLOR */}
                 <div className="flex gap-3 mb-4 self-end bg-white p-1.5 px-3 rounded-full shadow-sm border border-[#0F204A]/5">
-                  <div className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-[#2563EB]"></span><span className="text-[10px] font-bold text-[#0F204A]/60">Present</span></div>
+                  <div className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-[#2563EB]/85"></span><span className="text-[10px] font-bold text-[#0F204A]/60">Present</span></div>
                   <div className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-red-500"></span><span className="text-[10px] font-bold text-[#0F204A]/60">Absent</span></div>
                   <div className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-[#D4AF37]"></span><span className="text-[10px] font-bold text-[#0F204A]/60">Half Day</span></div>
                 </div>
@@ -307,7 +307,7 @@ export default function UserDashboard() {
                     <div key={idx} className="flex-1 flex flex-col justify-end items-center gap-px relative h-full z-10 group/bar">
                       
                       {/* Royal Blue for Primary Bar */}
-                      <div className={`w-full max-w-[28px] bg-[#2563EB] rounded-t-md transition-all duration-1000 group-hover/bar:brightness-110 ${mounted ? '' : '!h-0'}`} style={{ height: mounted ? `${col.p}%` : '0%' }}></div>
+                      <div className={`w-full max-w-[28px] bg-[#2563EB]/85 rounded-t-md transition-all duration-1000 group-hover/bar:brightness-110 ${mounted ? '' : '!h-0'}`} style={{ height: mounted ? `${col.p}%` : '0%' }}></div>
                       
                       {col.a > 0 && <div className={`w-full max-w-[28px] bg-red-500 transition-all duration-1000 delay-100 ${mounted ? '' : '!h-0'}`} style={{ height: mounted ? `${col.a}%` : '0%' }}></div>}
                       {col.h > 0 && <div className={`w-full max-w-[28px] bg-[#D4AF37] transition-all duration-1000 delay-200 ${mounted ? '' : '!h-0'}`} style={{ height: mounted ? `${col.h}%` : '0%' }}></div>}
@@ -327,7 +327,7 @@ export default function UserDashboard() {
 
               {/* Bottom Area: Recent Logs Grid */}
               <div className="pt-5 border-t border-[#0F204A]/5">
-                <h4 className="text-[11px] font-black text-[#0F204A] uppercase tracking-widest mb-3">Recent Logs</h4>
+                <h4 className="text-[11px] font-black text-[#1E3A8A] uppercase tracking-widest mb-3">Recent Logs</h4>
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                   {[
                     { d: 'Today', in: todayLog.in, out: todayLog.out, active: true },
@@ -363,7 +363,7 @@ export default function UserDashboard() {
           {/* Performance Rating */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#0F204A]/5 flex flex-col">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-base font-black text-[#0F204A]">Performance Rating</h3>
+              <h3 className="text-lg font-black text-[#2563EB]/85 text-shadow-lg">Performance Rating</h3>
               <a href="#" className="text-xs font-bold text-[#D4AF37] hover:text-[#0F204A] transition-colors flex items-center gap-1">
                 View Details <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
               </a>
@@ -415,7 +415,7 @@ export default function UserDashboard() {
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#0F204A]/5">
             
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-base font-black text-[#0F204A]">Request Management</h3>
+              <h3 className="text-lg font-black text-[#2563EB]/85 text-shadow-lg">Request Management</h3>
               <button className="text-[11px] font-bold text-[#D4AF37] hover:text-[#0F204A] transition-colors flex items-center gap-1">
                 View History <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
               </button>
@@ -486,7 +486,7 @@ export default function UserDashboard() {
 
         <section className="mb-6">
           <div className="bg-white rounded-2xl p-6 mb-6 shadow-sm border border-[#0F204A]/5">
-            <h3 className="text-base font-black text-[#0F204A] mb-6">Career Growth Roadmap</h3>
+            <h3 className="text-lg font-black text-[#2563EB]/85 text-shadow-lg mb-6">Career Growth Roadmap</h3>
             
             <div className="relative">
               <div className="absolute left-3 top-2 bottom-2 w-0.5 bg-gray-100 rounded-full"></div>
@@ -504,13 +504,13 @@ export default function UserDashboard() {
                 <div className="relative pl-10 flex flex-col md:flex-row md:items-center gap-4">
                   <div className="absolute left-[9px] top-1.5 w-2.5 h-2.5 bg-[#0F204A] rounded-full ring-[3px] ring-[#F4F7FF] z-10"></div>
                   <div className="flex-grow">
-                    <h4 className="text-base font-black text-[#D4AF37]">Software Developer</h4>
+                    <h4 className="text-base font-black text-[#1E3A8A]">Software Developer</h4>
                     <p className="text-xs font-bold text-[#0F204A]/60 mt-0.5">Current Position • Since May 2026</p>
                     <div className="mt-2 flex gap-1.5">
                      
                     </div>
                   </div>
-                  <div className="px-4 py-1.5 bg-[#0F204A] text-white rounded-lg font-bold text-xs shadow-md">Current</div>
+                  <div className="px-4 py-1.5 bg-[#2563EB]/85 text-white rounded-lg font-bold text-xs shadow-md">Current</div>
                 </div>
 
                 <div className="relative pl-10 flex flex-col md:flex-row md:items-center gap-4 opacity-50">
@@ -532,7 +532,7 @@ export default function UserDashboard() {
         <section className="mb-6">
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#0F204A]/5 flex flex-col">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-base font-black text-[#0F204A]">
+              <h3 className="text-lg font-black text-[#2563EB]/85 text-shadow-lg">
                 Salary Overview
               </h3>
 
@@ -541,7 +541,7 @@ export default function UserDashboard() {
               </span>
             </div>
 
-            {/* 🔥 Net Salary (Light Premium Gradient) 🔥 */}
+            {/*  Net Salary (Light Premium Gradient)  */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-6 bg-gradient-to-br from-[#FFF9E6] via-[#F4F7FF] to-[#E0F2FE] border border-[#D4AF37]/20 rounded-xl shadow-sm mb-6">
               <div>
                 <p className="text-[10px] font-bold text-[#0F204A]/60 uppercase tracking-widest mb-1">
@@ -555,7 +555,7 @@ export default function UserDashboard() {
               </div>
 
               {/* Button changed to Dark Blue for contrast against light background */}
-              <button className="flex items-center gap-1.5 bg-[#0F204A] text-white px-5 py-2.5 rounded-lg font-bold text-xs shadow-md hover:bg-[#D4AF37] hover:text-[#0F204A] transition-all w-full sm:w-auto justify-center mt-4 sm:mt-0">
+              <button className="flex items-center gap-1.5 bg-[#2563EB]/85 text-white px-5 py-2.5 rounded-lg font-bold text-xs shadow-md hover:bg-[#D4AF37] hover:text-[#0F204A] transition-all w-full sm:w-auto justify-center mt-4 sm:mt-0">
                 <span className="material-symbols-outlined text-[16px]">
                   download
                 </span>
