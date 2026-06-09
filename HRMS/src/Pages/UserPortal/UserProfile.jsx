@@ -102,7 +102,7 @@ export default function UserProfile() {
         </div>
       </aside>
 
-    {/* ================= MAIN CONTENT CANVAS ================= */}
+   {/* ================= MAIN CONTENT CANVAS ================= */}
       <main className="ml-[220px] md:ml-60 flex-1 p-6 xl:p-10 max-w-[1500px] mx-auto">
         
         {/* Header Breadcrumbs & Title */}
@@ -122,117 +122,233 @@ export default function UserProfile() {
           </div>
         </header>
 
-        {/* Main Layout Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        {/*  MAIN LAYOUT - Full Width Column Stack (No Right Sidebar)  */}
+        <div className="flex flex-col gap-8">
           
-          {/* ================= LEFT COLUMN ================= */}
-          <div className="lg:col-span-8 flex flex-col gap-8">
+          {/* 1. Hero Profile Banner */}
+          <div className="bg-gradient-to-r from-[#E0F2FE] via-[#F8FAFC] to-white rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden shadow-[0_8px_30px_rgba(15,32,74,0.05)] border border-[#0F204A]/5">
             
-            {/* 1. Hero Profile Banner */}
-            <div className="bg-gradient-to-r from-[#E0F2FE] via-[#F8FAFC] to-white rounded-2xl p-8 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden shadow-[0_8px_30px_rgba(15,32,74,0.05)] border border-[#0F204A]/5">
-              
-              <div className="absolute top-0 right-0 w-[45%] md:w-[35%] h-[120%] bg-gradient-to-l from-[#FFF9E6] to-[#FFF5D1] skew-x-12 translate-x-10 pointer-events-none border-l border-[#D4AF37]/20 shadow-[-15px_0_30px_rgba(212,175,55,0.1)]"></div>
-              
-              <div className="relative group/img z-10 cursor-pointer shrink-0">
-                <img alt="Arpit Pandey" className="w-28 h-28 rounded-2xl object-cover shadow-lg border-4 border-white transition-all duration-300 group-hover/img:scale-105" src="" />
-                <div className="absolute inset-0 bg-[#0F204A]/40 rounded-2xl opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center border-4 border-transparent backdrop-blur-sm">
-                  <span className="material-symbols-outlined text-white text-[32px]">photo_camera</span>
-                </div>
-              </div>
-              
-              <div className="flex-grow text-center md:text-left z-10">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-2 w-full pr-0 md:pr-[25%] lg:pr-[30%]">
-                  <h2 className="text-3xl font-black text-[#0F204A] tracking-tight">{formData.firstName} {formData.lastName}</h2>
-                 
-                </div>
-                <p className="text-sm font-black text-[#0F204A]/70 flex items-center justify-center md:justify-start gap-2">
-                  Software Developer <span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full"></span> ID: SE-1234
-                </p>
-                
-                <div className="mt-5 flex flex-wrap justify-center md:justify-start gap-8">
-                  <div className="flex flex-col group/item cursor-default">
-                    <span className="text-[10px] font-bold text-[#0F204A]/50 uppercase tracking-widest mb-1">Department</span>
-                    <span className="text-sm font-black text-[#0F204A] group-hover/item:text-[#D4AF37] transition-colors">Engineering</span>
-                  </div>
-                  <div className="flex flex-col group/item cursor-default">
-                    <span className="text-[10px] font-bold text-[#0F204A]/50 uppercase tracking-widest mb-1">Location</span>
-                    <span className="text-sm font-black text-[#0F204A] flex items-center gap-1 group-hover/item:text-[#D4AF37] transition-colors"><span className="material-symbols-outlined text-[16px] text-[#D4AF37]">location_on</span> Varanasi</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex flex-col items-center md:items-end gap-3 z-10 mt-6 md:mt-0 p-5 border-l border-[#0F204A]/10 ml-0 md:ml-4 bg-white/60 backdrop-blur-md rounded-2xl shadow-sm">
-                <div className="text-center md:text-right">
-                  <p className="text-[10px] font-bold text-[#0F204A]/50 mb-1 uppercase tracking-widest">Join Date</p>
-                  <p className="text-base font-black text-[#0F204A]">May 25, 2026</p>
-                </div>
-                <button 
-                  onClick={() => setIsEditing(!isEditing)}
-                  className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all active:scale-95 ${
-                    isEditing ? 'bg-[#D4AF37] text-[#0F204A]' : 'bg-[#0F204A] text-white hover:bg-[#D4AF37] hover:text-[#0F204A]'
-                  }`}
-                >
-                  <span className="material-symbols-outlined text-[18px]">{isEditing ? 'close' : 'edit'}</span>
-                  {isEditing ? 'Cancel Edit' : 'Edit Profile'}
-                </button>
+            {/* Background shape */}
+            <div className="absolute top-0 right-0 w-[45%] md:w-[30%] h-[120%] bg-gradient-to-l from-[#FFF9E6] to-[#FFF5D1] skew-x-12 translate-x-10 pointer-events-none border-l border-[#D4AF37]/20 shadow-[-15px_0_30px_rgba(212,175,55,0.1)]"></div>
+            
+            <div className="relative group/img z-10 cursor-pointer shrink-0">
+              <img alt="Arpit Pandey" className="w-28 h-28 rounded-2xl object-cover shadow-lg border-4 border-white transition-all duration-300 group-hover/img:scale-105" src="" />
+              <div className="absolute inset-0 bg-[#0F204A]/40 rounded-2xl opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center border-4 border-transparent backdrop-blur-sm">
+                <span className="material-symbols-outlined text-white text-[32px]">photo_camera</span>
               </div>
             </div>
+            
+            <div className="flex-grow text-center md:text-left z-10">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-2 w-full pr-0 lg:pr-10">
+                <h2 className="text-3xl font-black text-[#0F204A] tracking-tight">{formData.firstName} {formData.lastName}</h2>
+                <span className="px-3 py-1.5 bg-green-50 text-green-700 border border-green-200 rounded-full text-[10px] font-bold self-start md:self-center flex items-center gap-1.5 shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>Active
+                </span>
+              </div>
+              <p className="text-sm font-black text-[#0F204A]/70 flex items-center justify-center md:justify-start gap-2">
+                Software Developer <span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full"></span> ID: SE-1234
+              </p>
+              
+              <div className="mt-5 flex flex-wrap justify-center md:justify-start gap-8">
+                <div className="flex flex-col group/item cursor-default">
+                  <span className="text-[10px] font-bold text-[#0F204A]/50 uppercase tracking-widest mb-1">Department</span>
+                  <span className="text-sm font-black text-[#0F204A] group-hover/item:text-[#D4AF37] transition-colors">Engineering</span>
+                </div>
+                <div className="flex flex-col group/item cursor-default">
+                  <span className="text-[10px] font-bold text-[#0F204A]/50 uppercase tracking-widest mb-1">Location</span>
+                  <span className="text-sm font-black text-[#0F204A] flex items-center gap-1 group-hover/item:text-[#D4AF37] transition-colors"><span className="material-symbols-outlined text-[16px] text-[#D4AF37]">location_on</span> Varanasi</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex flex-col items-center md:items-end gap-3 z-10 mt-6 md:mt-0 p-5 border-l border-[#0F204A]/10 ml-0 md:ml-4 bg-white/60 backdrop-blur-md rounded-2xl shadow-sm">
+              <div className="text-center md:text-right">
+                <p className="text-[10px] font-bold text-[#0F204A]/50 mb-1 uppercase tracking-widest">Join Date</p>
+                <p className="text-base font-black text-[#0F204A]">May 25, 2026</p>
+              </div>
+              <button 
+                onClick={() => setIsEditing(!isEditing)}
+                className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all active:scale-95 ${
+                  isEditing ? 'bg-[#D4AF37] text-[#0F204A]' : 'bg-[#0F204A] text-white hover:bg-[#D4AF37] hover:text-[#0F204A]'
+                }`}
+              >
+                <span className="material-symbols-outlined text-[18px]">{isEditing ? 'close' : 'edit'}</span>
+                {isEditing ? 'Cancel Edit' : 'Edit Profile'}
+              </button>
+            </div>
+          </div>
 
-            {/* 2. Personal Information Form */}
+          {/* 2. Personal Information Form */}
+          <div className={`bg-white rounded-3xl p-8 shadow-sm border transition-colors duration-300 ${isEditing ? 'border-[#D4AF37]/40 ring-4 ring-[#D4AF37]/5' : 'border-[#0F204A]/5'}`}>
+            <div className="flex justify-between items-center mb-8 border-b border-[#0F204A]/5 pb-5">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-[#F4F7FF] text-[#0F204A] rounded-2xl flex items-center justify-center shadow-sm">
+                  <span className="material-symbols-outlined text-[22px]">badge</span>
+                </div>
+                <h3 className="text-xl font-black text-[#0F204A]">Personal Information</h3>
+              </div>
+              {isEditing && <span className="text-[10px] font-bold text-[#D4AF37] bg-[#FFF9E6] px-4 py-1.5 rounded-full animate-pulse shadow-sm">EDIT MODE ON</span>}
+            </div>
+            
+            {/*  ALIGNMENT FIX: Used lg:grid-cols-3 because we now have full width  */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
+              {[
+                { label: "First Name", name: "firstName", type: "text" },
+                { label: "Last Name", name: "lastName", type: "text" },
+                { label: "Date of Birth", name: "dob", type: "date" },
+                { label: "Nationality", name: "nationality", type: "text" },
+                { label: "Official Email", name: "email", type: "email" },
+                { label: "Mobile Number", name: "phone", type: "tel" },
+              ].map((field, idx) => (
+                <div key={idx} className="flex flex-col group">
+                  <label className={`text-[11px] font-bold uppercase tracking-widest mb-2 ml-1 transition-colors ${isEditing ? 'text-[#D4AF37] group-focus-within:text-[#0F204A]' : 'text-[#0F204A]/60'}`}>
+                    {field.label}
+                  </label>
+                  <input 
+                    type={field.type} 
+                    name={field.name}
+                    value={formData[field.name]} 
+                    onChange={handleChange}
+                    readOnly={!isEditing}
+                    className={inputStyle}
+                  />
+                </div>
+              ))}
+
+              <div className="flex flex-col group">
+                <label className={`text-[11px] font-bold uppercase tracking-widest mb-2 ml-1 transition-colors ${isEditing ? 'text-[#D4AF37]' : 'text-[#0F204A]/60'}`}>Gender</label>
+                <select name="gender" value={formData.gender} onChange={handleChange} disabled={!isEditing} className={`${inputStyle} appearance-none`}>
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div className="flex flex-col group">
+                <label className={`text-[11px] font-bold uppercase tracking-widest mb-2 ml-1 transition-colors ${isEditing ? 'text-[#D4AF37]' : 'text-[#0F204A]/60'}`}>Marital Status</label>
+                <select name="maritalStatus" value={formData.maritalStatus} onChange={handleChange} disabled={!isEditing} className={`${inputStyle} appearance-none`}>
+                  <option>Single</option>
+                  <option>Married</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* 3. Employment Information */}
+          <div className="bg-white rounded-3xl p-8 shadow-sm border border-[#0F204A]/5">
+            <div className="flex items-center gap-3 mb-8 border-b border-[#0F204A]/5 pb-5">
+              <div className="w-12 h-12 bg-[#FFF9E6] text-[#D4AF37] border border-[#D4AF37]/20 rounded-2xl flex items-center justify-center shadow-sm">
+                <span className="material-symbols-outlined text-[22px]">work</span>
+              </div>
+              <h3 className="text-xl font-black text-[#0F204A]">Employment Info</h3>
+            </div>
+
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                { label: "Joined On", val: "12 May, 2021" },
+                { label: "Probation", val: "Completed" },
+                { label: "Shift", val: "General (9-6)" },
+                { label: "Work Mode", val: "Hybrid" }
+              ].map((stat, i) => (
+                <div key={i} className="bg-gradient-to-br from-[#F4F7FF] to-white p-5 rounded-2xl border border-[#0F204A]/5 shadow-sm text-center hover:-translate-y-1 transition-transform cursor-default">
+                  <p className="text-[10px] font-bold text-[#0F204A]/50 uppercase tracking-widest mb-2">{stat.label}</p>
+                  <p className="text-base font-black text-[#0F204A]">{stat.val}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 4. Address Section */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className={`bg-white rounded-3xl p-8 shadow-sm border transition-colors duration-300 ${isEditing ? 'border-[#D4AF37]/40 ring-4 ring-[#D4AF37]/5' : 'border-[#0F204A]/5'}`}>
-              <div className="flex justify-between items-center mb-8 border-b border-[#0F204A]/5 pb-5">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-[#F4F7FF] text-[#0F204A] rounded-2xl flex items-center justify-center shadow-sm">
-                    <span className="material-symbols-outlined text-[22px]">badge</span>
-                  </div>
-                  <h3 className="text-xl font-black text-[#0F204A]">Personal Information</h3>
-                </div>
-                {isEditing && <span className="text-[10px] font-bold text-[#D4AF37] bg-[#FFF9E6] px-4 py-1.5 rounded-full animate-pulse shadow-sm">EDIT MODE ON</span>}
+              <h3 className="text-sm font-black text-[#0F204A] mb-5">Current Address</h3>
+              <textarea 
+                name="currentAddress"
+                value={formData.currentAddress}
+                onChange={handleChange}
+                readOnly={!isEditing}
+                className={`${inputStyle} w-full min-h-[120px] resize-none`}
+              />
+            </div>
+            <div className="bg-white rounded-3xl p-8 shadow-sm border border-[#0F204A]/5 relative opacity-80">
+              <div className="flex justify-between items-center mb-5">
+                <h3 className="text-sm font-black text-[#0F204A]">Permanent Address</h3>
+                <label className="flex items-center gap-2 cursor-not-allowed">
+                  <input type="checkbox" defaultChecked disabled className="w-4 h-4 accent-[#0F204A]" />
+                  <span className="text-[11px] font-bold text-[#0F204A]/60 uppercase tracking-wider">Same as current</span>
+                </label>
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {[
-                  { label: "First Name", name: "firstName", type: "text" },
-                  { label: "Last Name", name: "lastName", type: "text" },
-                  { label: "Date of Birth", name: "dob", type: "date" },
-                  { label: "Nationality", name: "nationality", type: "text" },
-                  { label: "Official Email", name: "email", type: "email" },
-                  { label: "Mobile Number", name: "phone", type: "tel" },
-                ].map((field, idx) => (
-                  <div key={idx} className="flex flex-col group">
-                    <label className={`text-[11px] font-bold uppercase tracking-widest mb-2 ml-1 transition-colors ${isEditing ? 'text-[#D4AF37] group-focus-within:text-[#0F204A]' : 'text-[#0F204A]/60'}`}>
-                      {field.label}
-                    </label>
-                    <input 
-                      type={field.type} 
-                      name={field.name}
-                      value={formData[field.name]} 
-                      onChange={handleChange}
-                      readOnly={!isEditing}
-                      className={inputStyle}
-                    />
-                  </div>
-                ))}
+              <textarea 
+                disabled
+                value={formData.currentAddress}
+                className="w-full bg-gray-50 border border-gray-100 text-[#0F204A]/50 font-bold text-sm rounded-xl px-5 py-4 min-h-[120px] resize-none cursor-not-allowed"
+              />
+            </div>
+          </div>
 
-                <div className="flex flex-col group">
-                  <label className={`text-[11px] font-bold uppercase tracking-widest mb-2 ml-1 transition-colors ${isEditing ? 'text-[#D4AF37]' : 'text-[#0F204A]/60'}`}>Gender</label>
-                  <select name="gender" value={formData.gender} onChange={handleChange} disabled={!isEditing} className={`${inputStyle} appearance-none`}>
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Other</option>
-                  </select>
+          {/* 5. Documents & Verification */}
+          <div className="bg-white rounded-3xl p-8 shadow-sm border border-[#0F204A]/5">
+            <div className="flex justify-between items-center mb-8 border-b border-[#0F204A]/5 pb-5">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-[#E0F2FE] text-[#0ea5e9] rounded-2xl flex items-center justify-center shadow-sm">
+                  <span className="material-symbols-outlined text-[22px]">folder_shared</span>
                 </div>
-                <div className="flex flex-col group">
-                  <label className={`text-[11px] font-bold uppercase tracking-widest mb-2 ml-1 transition-colors ${isEditing ? 'text-[#D4AF37]' : 'text-[#0F204A]/60'}`}>Marital Status</label>
-                  <select name="maritalStatus" value={formData.maritalStatus} onChange={handleChange} disabled={!isEditing} className={`${inputStyle} appearance-none`}>
-                    <option>Single</option>
-                    <option>Married</option>
-                  </select>
-                </div>
+                <h3 className="text-xl font-black text-[#0F204A]">Documents & Verification</h3>
               </div>
+              {isEditing && (
+                <button className="text-xs font-bold bg-[#FFF9E6] text-[#D4AF37] px-4 py-2 rounded-xl hover:bg-[#D4AF37] hover:text-white flex items-center gap-1.5 transition-all shadow-sm">
+                  <span className="material-symbols-outlined text-[18px]">upload</span> Upload Doc
+                </button>
+              )}
             </div>
 
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                { name: "Aadhaar Card", icon: "picture_as_pdf", color: "text-red-500", bg: "bg-red-50" },
+                { name: "PAN Card", icon: "description", color: "text-[#0F204A]", bg: "bg-[#F4F7FF]" },
+                { name: "Experience Letter", icon: "contract", color: "text-[#D4AF37]", bg: "bg-[#FFF9E6]" }
+              ].map((doc, idx) => (
+                <div key={idx} className="p-5 rounded-2xl border border-[#0F204A]/10 hover:border-[#D4AF37]/50 hover:shadow-md transition-all flex flex-col gap-4 group bg-white">
+                  <div className="flex justify-between items-start">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${doc.bg} ${doc.color} group-hover:scale-110 transition-transform`}>
+                      <span className="material-symbols-outlined text-[20px]">{doc.icon}</span>
+                    </div>
+                    <span className="px-2.5 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded-full uppercase tracking-widest border border-green-200 shadow-sm">Verified</span>
+                  </div>
+                  <p className="font-black text-base text-[#0F204A]">{doc.name}</p>
+                  <div className={`flex gap-3 mt-2 transition-opacity ${isEditing ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+                    <button className="flex-1 py-2.5 text-[11px] font-bold bg-[#F4F7FF] text-[#0F204A] rounded-lg hover:bg-[#0F204A] hover:text-white transition-colors uppercase tracking-widest">View</button>
+                    {isEditing && <button className="flex-1 py-2.5 text-[11px] font-bold border border-[#0F204A]/20 text-[#0F204A]/70 rounded-lg hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors uppercase tracking-widest">Replace</button>}
+                  </div>
+                </div>
+              ))}
             </div>
+          </div>
+
+          {/* 6. Emergency Contact */}
+          <div className={`bg-white rounded-3xl p-8 shadow-sm border transition-colors duration-300 ${isEditing ? 'border-[#D4AF37]/40 ring-4 ring-[#D4AF37]/5' : 'border-[#0F204A]/5'}`}>
+            <div className="flex items-center gap-3 mb-8 border-b border-[#0F204A]/5 pb-5">
+              <div className="w-12 h-12 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center shadow-sm">
+                <span className="material-symbols-outlined text-[22px]">contact_emergency</span>
+              </div>
+              <h3 className="text-xl font-black text-[#0F204A]">Emergency Contact</h3>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-6">
+              <div className="flex flex-col group">
+                <label className={`text-[11px] font-bold uppercase tracking-widest mb-2 ml-1 transition-colors ${isEditing ? 'text-[#D4AF37]' : 'text-[#0F204A]/60'}`}>Full Name</label>
+                <input type="text" name="emName" value={formData.emName} onChange={handleChange} readOnly={!isEditing} className={inputStyle} />
+              </div>
+              <div className="flex flex-col group">
+                <label className={`text-[11px] font-bold uppercase tracking-widest mb-2 ml-1 transition-colors ${isEditing ? 'text-[#D4AF37]' : 'text-[#0F204A]/60'}`}>Relationship</label>
+                <input type="text" name="emRel" value={formData.emRel} onChange={handleChange} readOnly={!isEditing} className={inputStyle} />
+              </div>
+              <div className="flex flex-col group">
+                <label className={`text-[11px] font-bold uppercase tracking-widest mb-2 ml-1 transition-colors ${isEditing ? 'text-[#D4AF37]' : 'text-[#0F204A]/60'}`}>Contact Number</label>
+                <input type="tel" name="emPhone" value={formData.emPhone} onChange={handleChange} readOnly={!isEditing} className={inputStyle} />
+              </div>
+            </div>
+          </div>
+
         </div>
       </main>
     </div>
