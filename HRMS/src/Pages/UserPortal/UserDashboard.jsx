@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function UserDashboard() {
   const [mounted, setMounted] = useState(false);
@@ -36,12 +37,12 @@ export default function UserDashboard() {
   return (
     <div className="flex min-h-screen bg-[#F4F7FF] font-sans text-[#0F204A] selection:bg-[#D4AF37] selection:text-white">
       
-     {/* SIDEBAR NAV (Slimmer: w-60) */}
-      <aside className="fixed left-0 top-0 h-full w-60 bg-gradient-to-b from-[#F4F7FF] via-white to-[#FFF5D1] border-r border-[#D4AF37]/20 shadow-[4px_0_24px_rgba(212,175,55,0.08)] flex flex-col z-40">
+     {/* SIDEBAR NAV (Slimmer: w-50) */}
+      <aside className="fixed left-0 top-0 h-full w-55 bg-gradient-to-b from-[#F4F7FF] via-white to-[#FFF5D1] border-r border-[#D4AF37]/20 shadow-[4px_0_24px_rgba(212,175,55,0.08)] flex flex-col z-40">
         
         {/* Logo Section */}
         <div className="p-2 mb-2 flex items-center gap-1">
-          <div className="w-16 h-16 md:w-16 md:h-16 rounded-full flex items-center justify-center overflow-hidden bg-transparent shrink-0">
+          <div className="w-10 h-10 md:w-10 md:h-10 rounded-full flex items-center justify-center overflow-hidden bg-transparent shrink-0">
           <img src="logo.png" alt="Company Logo" className="w-full h-full object-contain drop-shadow-md" /> 
           </div>
           <span className="text-lg font-black tracking-tight text-[#D4AF37]">
@@ -68,31 +69,40 @@ export default function UserDashboard() {
           </div>
         </div>
 
-        {/* Navigation Links */}
-        <div className="flex-1 px-4 -gap-1 overflow-hidden">
-          <a href="#" className="flex items-center gap-3 bg-gradient-to-r from-[#D4AF37] to-[#FDE047] text-[#0F204A] px-4 py-2.5 rounded-lg shadow-[0_4px_10px_rgba(212,175,55,0.3)] transition-all">
+       {/* Navigation Links */}
+        <div className="flex-1 px-2 -gap-1 overflow-hidden">
+          
+          {/* Active Dashboard Link */}
+          <Link to="/user-dashboard" className="flex items-center gap-3 bg-gradient-to-r from-[#D4AF37] to-[#FDE047] text-[#0F204A] px-4 py-2.5 rounded-lg shadow-[0_4px_10px_rgba(212,175,55,0.3)] transition-all">
             <span className="material-symbols-outlined text-[18px] text-[#0F204A]">dashboard</span>
             <span className="font-black text-[13px]">Dashboard</span>
-          </a>
+          </Link>
           
+          {/* Inactive Links mapped dynamically */}
           {[
-            { icon: 'person', label: 'Profile' },
-            { icon: 'calendar_today', label: 'Attendance' },
-            { icon: 'payments', label: 'Salary' },
-            { icon: 'monitoring', label: 'Appraisal' },
-            { icon: 'mark_as_unread', label: 'Requests' },
-            { icon: 'trending_up', label: 'Growth' },
-            { icon: 'mail', label: 'Newsletter' }
+            //  Yaha 'path' add kiya gaya hai Profile ke liye
+            { icon: 'person', label: 'Profile', path: '/user-profile' }, 
+            { icon: 'calendar_today', label: 'Attendance', path: '#' },
+            { icon: 'payments', label: 'Salary', path: '#' },
+            { icon: 'monitoring', label: 'Appraisal', path: '#' },
+            { icon: 'mark_as_unread', label: 'Requests', path: '#' },
+            { icon: 'trending_up', label: 'Growth', path: '#' },
+            { icon: 'mail', label: 'Newsletter', path: '#' }
           ].map((item, index) => (
-            <a key={index} href="#" className="flex items-center gap-3 px-4 py-2.5 mt-1 rounded-lg text-[#0F204A]/70 hover:bg-white/70 hover:text-[#0F204A] hover:shadow-sm border border-transparent hover:border-[#D4AF37]/20 transition-all duration-200 group">
+            //  <a> tag ko <Link> se replace kiya aur href="#" ko to={item.path} kiya
+            <Link 
+              key={index} 
+              to={item.path} 
+              className="flex items-center gap-3 px-4 py-2.5 mt-1 rounded-lg text-[#0F204A]/70 hover:bg-white/70 hover:text-[#0F204A] hover:shadow-sm border border-transparent hover:border-[#D4AF37]/20 transition-all duration-200 group"
+            >
               <span className="material-symbols-outlined text-[18px] group-hover:text-[#D4AF37] transition-colors">{item.icon}</span>
               <span className="font-bold text-[13px]">{item.label}</span>
-            </a>
+            </Link>
           ))}
         </div>
 
         {/* Bottom Actions */}
-        <div className="p-4 border-t border-[#D4AF37]/20 space-y-1 bg-white/30 backdrop-blur-sm">
+        <div className="p-1 border-t border-[#D4AF37]/20 space-y-1 bg-white/30 backdrop-blur-sm">
           <a href="#" className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-[#0F204A]/70 hover:bg-white/70 hover:text-[#0F204A] hover:shadow-sm border border-transparent hover:border-[#D4AF37]/20 transition-all group">
             <span className="material-symbols-outlined text-[18px] group-hover:text-[#D4AF37]">settings</span>
             <span className="font-bold text-[13px]">Settings</span>
@@ -105,7 +115,7 @@ export default function UserDashboard() {
       </aside>
 
       {/* MAIN CONTENT CANVAS  */}
-      <main className="ml-60 flex-1 p-6 xl:p-8 max-w-[1440px] mx-auto">
+      <main className="ml-55 flex-1 p-6 xl:p-8 max-w-[1440px] mx-auto">
         
         {/* Header */}
         <header className="flex justify-between items-center mb-6">
@@ -121,12 +131,13 @@ export default function UserDashboard() {
           </div>
         </header>
 
-        {/* Section 1: Profile Banner */}
+    {/* Section 1: Profile Banner */}
         <section className="mb-6">
-          <div className="bg-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6 relative overflow-hidden shadow-[0_4px_20px_rgba(15,32,74,0.03)] border border-[#0F204A]/5">
+          {/*  UPDATE: Enhanced Light Blue to White Gradient, stronger shadow for 3D feel  */}
+          <div className="bg-gradient-to-r from-[#E0F2FE] via-[#F8FAFC] to-white rounded-2xl p-2 flex flex-col md:flex-row items-center gap-6 relative overflow-hidden shadow-[0_8px_30px_rgba(15,32,74,0.05)] border border-[#0F204A]/5">
             
-            {/* Gradient Background  */}
-            <div className="absolute top-0 right-0 w-1/3 h-full bg-[#FFF5D1]/50 skew-x-12 translate-x-10 pointer-events-none"></div>
+            {/*  UPDATE: Solid Creamy-Gold Gradient with a left shadow/border to make it POP  */}
+            <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-[#FFF9E6] to-[#FFF5D1] skew-x-12 translate-x-10 pointer-events-none border-l border-[#D4AF37]/20 shadow-[-15px_0_30px_rgba(212,175,55,0.1)]"></div>
             
             {/* Reduced Image Size */}
             <img 
@@ -164,47 +175,47 @@ export default function UserDashboard() {
           </div>
         </section>
 
-       {/* COMBINED ATTENDANCE HUB */}
+      {/* COMBINED ATTENDANCE HUB (AURA GLOW + ROYAL BLUE CHART)  */}
         <section className="mb-6">
           {/* Main Outer Container */}
-          <div className="bg-white rounded-3xl p-2.5 shadow-sm border border-[#0F204A]/5 flex flex-col lg:flex-row gap-2.5">
+          <div className="bg-white rounded-3xl p-1.5 shadow-[0_8px_30px_rgba(15,32,74,0.03)] border border-[#0F204A]/5 flex flex-col lg:flex-row gap-2.5">
             
-            {/* LEFT: The "Star" Punch In/Out Widget (Deep Blue Premium Card) */}
-            <div className="lg:w-[35%] bg-[#0F204A] rounded-2xl p-6 md:p-8 relative overflow-hidden flex flex-col shadow-[0_8px_30px_rgba(15,32,74,0.15)] group">
+            {/*  LEFT: The "Star" Punch In/Out Widget (Glow Gradient Card)  */}
+            <div className="lg:w-[35%] rounded-2xl p-2 md:p-4 relative overflow-hidden flex flex-col shadow-[inner_0_2px_12px_rgba(255,255,255,0.8)] border border-[#D4AF37]/20 group bg-gradient-to-b from-[#FFF5D1] via-white to-[#E0F2FE]">
               
-              {/* Dynamic Glow Background: Gold for Out, Green for In */}
-              <div className={`absolute top-[-20%] right-[-20%] w-64 h-64 blur-[80px] rounded-full transition-colors duration-700 pointer-events-none ${
-                isPunchedIn ? 'bg-green-500/20 group-hover:bg-green-500/30' : 'bg-[#D4AF37]/20 group-hover:bg-[#D4AF37]/30'
+              {/* Dynamic Glow Background */}
+              <div className={`absolute top-[-20%] right-[-20%] w-50 h-50 blur-[80px] rounded-full transition-colors duration-700 pointer-events-none ${
+                isPunchedIn ? 'bg-green-400/30 group-hover:bg-green-400/40' : 'bg-[#D4AF37]/30 group-hover:bg-[#D4AF37]/40'
               }`}></div>
               
               {/* Header & Status */}
               <div className="relative z-10 flex justify-between items-start mb-6">
                 <div>
-                  <h3 className="text-[#D4AF37] text-[10px] font-black tracking-widest uppercase mb-1.5">Current Status</h3>
+                  <h3 className="text-[#0F204A]/60 text-[10px] font-black tracking-widest uppercase mb-1.5">Current Status</h3>
                   
                   {/* Dynamic Attendance Status Badge */}
                   <div className={`flex items-center gap-2 w-fit px-3 py-1.5 rounded-full border backdrop-blur-md transition-all duration-300 ${
-                    isPunchedIn ? 'bg-green-500/20 border-green-500/30' : 'bg-white/10 border-white/10'
+                    isPunchedIn ? 'bg-green-50 border-green-200 shadow-sm' : 'bg-white/70 border-[#0F204A]/10 shadow-sm'
                   }`}>
                     <span className={`w-2 h-2 rounded-full animate-pulse ${
-                      isPunchedIn ? 'bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.8)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]'
+                      isPunchedIn ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]'
                     }`}></span>
-                    <span className={`text-xs font-bold tracking-wide ${isPunchedIn ? 'text-green-300' : 'text-white'}`}>
+                    <span className={`text-xs font-bold tracking-wide ${isPunchedIn ? 'text-green-700' : 'text-[#0F204A]'}`}>
                       {isPunchedIn ? 'Active (Punched In)' : 'Not Punched In'}
                     </span>
                   </div>
                 </div>
-                <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center backdrop-blur-sm">
-                  <span className="material-symbols-outlined text-white/80 text-[20px]">schedule</span>
+                <div className="w-10 h-10 rounded-full bg-white border border-[#0F204A]/5 flex items-center justify-center shadow-sm">
+                  <span className="material-symbols-outlined text-[#0F204A]/60 text-[20px]">schedule</span>
                 </div>
               </div>
 
-              {/* Dynamic Live Time (IST Match) */}
+              {/* Dynamic Live Time */}
               <div className="relative z-10 my-4 text-center">
-                <h2 className="text-5xl md:text-6xl font-black text-white tracking-tight drop-shadow-lg mb-1">
-                  {timeVal} <span className="text-2xl text-white/60">{amPm}</span>
+                <h2 className="text-5xl md:text-6xl font-black text-[#0F204A] tracking-tight drop-shadow-sm mb-1">
+                  {timeVal} <span className="text-2xl text-[#0F204A]/50">{amPm}</span>
                 </h2>
-                <p className="text-sm font-semibold text-[#D4AF37]">{formattedDate}</p>
+                <p className="text-sm font-bold text-[#0F204A]/60">{formattedDate}</p>
               </div>
 
               {/* DYNAMIC PUNCH BUTTON  */}
@@ -213,11 +224,11 @@ export default function UserDashboard() {
                   onClick={handlePunch}
                   className={`w-full relative group/btn overflow-hidden rounded-2xl p-[2px] transition-all duration-300 transform hover:-translate-y-1 ${
                     isPunchedIn 
-                      ? 'bg-gradient-to-r from-red-500 via-rose-400 to-red-500 shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:shadow-[0_0_30px_rgba(239,68,68,0.6)]' 
-                      : 'bg-gradient-to-r from-[#D4AF37] via-[#FDE047] to-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.6)]'
+                      ? 'bg-gradient-to-r from-red-500 via-rose-400 to-red-500 shadow-[0_4px_15px_rgba(239,68,68,0.2)] hover:shadow-[0_8px_25px_rgba(239,68,68,0.4)]' 
+                      : 'bg-gradient-to-r from-[#D4AF37] via-[#FDE047] to-[#D4AF37] shadow-[0_4px_15px_rgba(212,175,55,0.2)] hover:shadow-[0_8px_25px_rgba(212,175,55,0.4)]'
                   }`}
                 >
-                  <div className="relative bg-[#0F204A] group-hover/btn:bg-transparent transition-colors duration-500 py-4 px-6 rounded-[14px] flex items-center justify-center gap-3">
+                  <div className="relative bg-white group-hover/btn:bg-transparent transition-colors duration-500 py-4 px-6 rounded-[14px] flex items-center justify-center gap-3">
                     <span className={`material-symbols-outlined text-[28px] transition-colors duration-500 ${
                       isPunchedIn ? 'text-red-500 group-hover/btn:text-white' : 'text-[#D4AF37] group-hover/btn:text-[#0F204A]'
                     }`}>
@@ -232,24 +243,24 @@ export default function UserDashboard() {
                 </button>
               </div>
 
-              {/* Quick Stats (Glassmorphic inside blue card) */}
-              <div className="relative z-10 grid grid-cols-3 gap-3 mt-auto pt-5 border-t border-white/10">
+              {/* Quick Stats */}
+              <div className="relative z-10 grid grid-cols-3 gap-3 mt-auto pt-5 border-t border-[#0F204A]/10">
                 <div className="text-center">
-                  <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest mb-1">Present</p>
-                  <p className="text-xl font-black text-white">21</p>
+                  <p className="text-[9px] font-bold text-[#0F204A]/50 uppercase tracking-widest mb-1">Present</p>
+                  <p className="text-xl font-black text-[#0F204A]">21</p>
                 </div>
-                <div className="text-center border-l border-r border-white/10">
-                  <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest mb-1">Absent</p>
-                  <p className="text-xl font-black text-red-400">01</p>
+                <div className="text-center border-l border-r border-[#0F204A]/10">
+                  <p className="text-[9px] font-bold text-[#0F204A]/50 uppercase tracking-widest mb-1">Absent</p>
+                  <p className="text-xl font-black text-red-500">01</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest mb-1">Half Day</p>
+                  <p className="text-[9px] font-bold text-[#0F204A]/50 uppercase tracking-widest mb-1">Half Day</p>
                   <p className="text-xl font-black text-[#D4AF37]">02</p>
                 </div>
               </div>
             </div>
 
-            {/*  RIGHT: Analytics & Recent Logs (Clean Light Section)  */}
+            {/* RIGHT: Analytics & Recent Logs */}
             <div className="lg:w-[65%] bg-[#F8FAFC] rounded-2xl p-6 border border-[#0F204A]/5 flex flex-col">
               
               {/* Header */}
@@ -268,15 +279,15 @@ export default function UserDashboard() {
 
               {/* Middle Area: Chart */}
               <div className="flex-grow flex flex-col justify-end mb-6">
-                {/* Legends */}
-                <div className="flex gap-3 mb-4 self-end">
-                  <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#0F204A]"></span><span className="text-[10px] font-bold text-[#0F204A]/60">Present</span></div>
-                  <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500"></span><span className="text-[10px] font-bold text-[#0F204A]/60">Absent</span></div>
-                  <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#D4AF37]"></span><span className="text-[10px] font-bold text-[#0F204A]/60">Half Day</span></div>
+                {/* Legends - UPDATED COLOR */}
+                <div className="flex gap-3 mb-4 self-end bg-white p-1.5 px-3 rounded-full shadow-sm border border-[#0F204A]/5">
+                  <div className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-[#2563EB]"></span><span className="text-[10px] font-bold text-[#0F204A]/60">Present</span></div>
+                  <div className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-red-500"></span><span className="text-[10px] font-bold text-[#0F204A]/60">Absent</span></div>
+                  <div className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-[#D4AF37]"></span><span className="text-[10px] font-bold text-[#0F204A]/60">Half Day</span></div>
                 </div>
 
                 {/* Chart Plot Area */}
-                <div className="relative flex-grow flex items-end gap-6 md:gap-10 h-32 border-l-2 border-b-2 border-[#0F204A]/10 pl-4 pb-px">
+                <div className="relative flex-grow flex items-end gap-6 md:gap-10 h-32 border-l-2 border-b-2 border-[#0F204A]/10 pl-4 pb-px overflow-hidden">
                   <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
                     {[100, 50, 0].map((val, i) => (
                       <div key={i} className="flex items-center w-full">
@@ -286,17 +297,25 @@ export default function UserDashboard() {
                     ))}
                   </div>
 
-                  {/* Bars */}
+                  {/* Bars - UPDATED COLOR */}
                   {[
                     { p: 85, h: 5, a: 0 },
                     { p: 90, h: 0, a: 0 },
                     { p: 70, h: 10, a: 10 },
                     { p: 80, h: 10, a: 0 },
                   ].map((col, idx) => (
-                    <div key={idx} className="flex-1 flex flex-col justify-end items-center gap-px relative h-full z-10">
-                      <div className={`w-full max-w-[28px] bg-[#0F204A] rounded-t-md transition-all duration-1000 ${mounted ? '' : '!h-0'}`} style={{ height: mounted ? `${col.p}%` : '0%' }}></div>
+                    <div key={idx} className="flex-1 flex flex-col justify-end items-center gap-px relative h-full z-10 group/bar">
+                      
+                      {/* Royal Blue for Primary Bar */}
+                      <div className={`w-full max-w-[28px] bg-[#2563EB] rounded-t-md transition-all duration-1000 group-hover/bar:brightness-110 ${mounted ? '' : '!h-0'}`} style={{ height: mounted ? `${col.p}%` : '0%' }}></div>
+                      
                       {col.a > 0 && <div className={`w-full max-w-[28px] bg-red-500 transition-all duration-1000 delay-100 ${mounted ? '' : '!h-0'}`} style={{ height: mounted ? `${col.a}%` : '0%' }}></div>}
                       {col.h > 0 && <div className={`w-full max-w-[28px] bg-[#D4AF37] transition-all duration-1000 delay-200 ${mounted ? '' : '!h-0'}`} style={{ height: mounted ? `${col.h}%` : '0%' }}></div>}
+                      
+                      {/* Tooltip on hover */}
+                      <div className="absolute bottom-full mb-2 bg-[#0F204A] text-white text-[9px] font-bold px-2 py-1 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg z-20">
+                        Pr: {col.p}% | Ab: {col.a}% | HD: {col.h}%
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -306,7 +325,7 @@ export default function UserDashboard() {
                 </div>
               </div>
 
-              {/* Bottom Area: Recent Logs Grid (Now dynamically updates Today's In/Out time) */}
+              {/* Bottom Area: Recent Logs Grid */}
               <div className="pt-5 border-t border-[#0F204A]/5">
                 <h4 className="text-[11px] font-black text-[#0F204A] uppercase tracking-widest mb-3">Recent Logs</h4>
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -340,124 +359,7 @@ export default function UserDashboard() {
         {/* Section 4 & 5: Salary and Appraisal */}
         <section className="mb-6 grid grid-cols-1 xl:grid-cols-2 gap-6">
           
-        {/* Salary Components - Updated & Interactive */}
-
-<div className="bg-white rounded-2xl p-6 shadow-sm border border-[#0F204A]/5 flex flex-col">
-  <div className="flex justify-between items-center mb-6">
-    <h3 className="text-base font-black text-[#0F204A]">
-      Salary Overview
-    </h3>
-
-    <span className="px-2.5 py-1 bg-[#F4F7FF] text-[#0F204A] border border-[#0F204A]/10 rounded-md text-[10px] font-bold tracking-wide">
-      June 2026
-    </span>
-  </div>
-
-  {/* Net Salary */}
-  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-6 bg-gradient-to-r from-[#0F204A] to-[#1E3A8A] rounded-xl shadow-lg mb-6">
-    <div>
-      <p className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-widest mb-1">
-        Monthly Net Payable
-      </p>
-
-      {/* 36000 - 1800 - 200 = 34000 */}
-      <p className="text-3xl font-black text-white">
-        ₹ 34,000.00
-      </p>
-    </div>
-
-    <button className="flex items-center gap-1.5 bg-[#D4AF37] text-[#0F204A] px-5 py-2.5 rounded-lg font-bold text-xs shadow-md hover:bg-white transition-all w-full sm:w-auto justify-center mt-4 sm:mt-0">
-      <span className="material-symbols-outlined text-[16px]">
-        download
-      </span>
-      Download Payslip
-    </button>
-  </div>
-
-  {/* Earnings */}
-  <div className="mb-4">
-    <p className="text-xs font-black text-green-600 uppercase tracking-wider mb-3">
-      Earnings
-    </p>
-
-    <div className="space-y-4">
-      <div className="flex justify-between items-center text-sm font-bold">
-        <span className="text-[#0F204A]/60">Basic Salary</span>
-        <span className="text-[#0F204A]">₹ 22,500.00</span>
-      </div>
-
-      <div className="flex justify-between items-center text-sm font-bold">
-        <span className="text-[#0F204A]/60">House Rent Allowance (HRA)</span>
-        <span className="text-[#0F204A]">₹ 9,000.00</span>
-      </div>
-
-      <div className="flex justify-between items-center text-sm font-bold">
-        <span className="text-[#0F204A]/60">Special Allowance</span>
-        <span className="text-[#0F204A]">₹ 4,500.00</span>
-      </div>
-
-      <div className="flex justify-between items-center text-sm font-black text-green-600 pt-2 border-t border-green-100">
-        <span>Gross Earnings</span>
-        <span>₹ 36,000.00</span>
-      </div>
-    </div>
-  </div>
-
-  {/* Deductions */}
-  <div>
-    <p className="text-xs font-black text-red-500 uppercase tracking-wider mb-3">
-      Deductions
-    </p>
-
-    <div className="space-y-4">
-      <div className="flex justify-between items-center text-sm font-bold text-red-500">
-        <span>Provident Fund (12%)</span>
-        <span>- ₹ 1,800.00</span>
-      </div>
-
-      <div className="flex justify-between items-center text-sm font-bold text-red-500">
-        <span>Professional Tax</span>
-        <span>- ₹ 200.00</span>
-      </div>
-
-      <div className="flex justify-between items-center text-sm font-black text-red-500 pt-2 border-t border-red-100">
-        <span>Total Deductions</span>
-        <span>- ₹ 2,000.00</span>
-      </div>
-    </div>
-  </div>
-
-  {/* Net Pay */}
-  <div className="mt-5 p-4 bg-[#F4F7FF] rounded-xl border border-[#0F204A]/5">
-    <div className="flex justify-between items-center">
-      <span className="text-sm font-black text-[#0F204A]">
-        Net Salary Credited
-      </span>
-
-      <span className="text-xl font-black text-green-600">
-        ₹ 34,000.00
-      </span>
-    </div>
-  </div>
-
-  {/* Footer */}
-  <div className="mt-6 pt-4 border-t border-[#0F204A]/5 flex justify-between items-center">
-    <p className="text-[10px] font-bold text-[#0F204A]/40 uppercase tracking-widest">
-      Next Revision: July 2026
-    </p>
-
-    <a
-      href="#"
-      className="text-[11px] font-black text-[#D4AF37] hover:text-[#0F204A] transition-colors flex items-center gap-1"
-    >
-      View History
-      <span className="material-symbols-outlined text-[14px]">
-        arrow_forward
-      </span>
-    </a>
-  </div>
-</div>
-
+   
           {/* Performance Rating */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#0F204A]/5 flex flex-col">
             <div className="flex justify-between items-center mb-6">
@@ -580,8 +482,10 @@ export default function UserDashboard() {
         </section>
 
         {/* Section 7: Career Growth Roadmap */}
+
+
         <section className="mb-6">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#0F204A]/5">
+          <div className="bg-white rounded-2xl p-6 mb-6 shadow-sm border border-[#0F204A]/5">
             <h3 className="text-base font-black text-[#0F204A] mb-6">Career Growth Roadmap</h3>
             
             <div className="relative">
@@ -618,6 +522,128 @@ export default function UserDashboard() {
                   <span className="material-symbols-outlined text-gray-400 text-2xl">lock</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+             
+
+    {/* Salary Components - Updated & Interactive */}
+        <section className="mb-6">
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#0F204A]/5 flex flex-col">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-base font-black text-[#0F204A]">
+                Salary Overview
+              </h3>
+
+              <span className="px-2.5 py-1 bg-[#F4F7FF] text-[#0F204A] border border-[#0F204A]/10 rounded-md text-[10px] font-bold tracking-wide">
+                June 2026
+              </span>
+            </div>
+
+            {/* 🔥 Net Salary (Light Premium Gradient) 🔥 */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-6 bg-gradient-to-br from-[#FFF9E6] via-[#F4F7FF] to-[#E0F2FE] border border-[#D4AF37]/20 rounded-xl shadow-sm mb-6">
+              <div>
+                <p className="text-[10px] font-bold text-[#0F204A]/60 uppercase tracking-widest mb-1">
+                  Monthly Net Payable
+                </p>
+
+                {/* 36000 - 1800 - 200 = 34000 */}
+                <p className="text-3xl font-black text-[#0F204A]">
+                  ₹ 34,000.00
+                </p>
+              </div>
+
+              {/* Button changed to Dark Blue for contrast against light background */}
+              <button className="flex items-center gap-1.5 bg-[#0F204A] text-white px-5 py-2.5 rounded-lg font-bold text-xs shadow-md hover:bg-[#D4AF37] hover:text-[#0F204A] transition-all w-full sm:w-auto justify-center mt-4 sm:mt-0">
+                <span className="material-symbols-outlined text-[16px]">
+                  download
+                </span>
+                Download Payslip
+              </button>
+            </div>
+
+            {/* Earnings */}
+            <div className="mb-4">
+              <p className="text-xs font-black text-green-600 uppercase tracking-wider mb-3">
+                Earnings
+              </p>
+
+              <div className="space-y-4">
+                <div className="flex justify-between items-center text-sm font-bold">
+                  <span className="text-[#0F204A]/60">Basic Salary</span>
+                  <span className="text-[#0F204A]">₹ 22,500.00</span>
+                </div>
+
+                <div className="flex justify-between items-center text-sm font-bold">
+                  <span className="text-[#0F204A]/60">House Rent Allowance (HRA)</span>
+                  <span className="text-[#0F204A]">₹ 9,000.00</span>
+                </div>
+
+                <div className="flex justify-between items-center text-sm font-bold">
+                  <span className="text-[#0F204A]/60">Special Allowance</span>
+                  <span className="text-[#0F204A]">₹ 4,500.00</span>
+                </div>
+
+                <div className="flex justify-between items-center text-sm font-black text-green-600 pt-2 border-t border-green-100">
+                  <span>Gross Earnings</span>
+                  <span>₹ 36,000.00</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Deductions */}
+            <div>
+              <p className="text-xs font-black text-red-500 uppercase tracking-wider mb-3">
+                Deductions
+              </p>
+
+              <div className="space-y-4">
+                <div className="flex justify-between items-center text-sm font-bold text-red-500">
+                  <span>Provident Fund (12%)</span>
+                  <span>- ₹ 1,800.00</span>
+                </div>
+
+                <div className="flex justify-between items-center text-sm font-bold text-red-500">
+                  <span>Professional Tax</span>
+                  <span>- ₹ 200.00</span>
+                </div>
+
+                <div className="flex justify-between items-center text-sm font-black text-red-500 pt-2 border-t border-red-100">
+                  <span>Total Deductions</span>
+                  <span>- ₹ 2,000.00</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Net Pay */}
+            <div className="mt-5 p-4 bg-[#F4F7FF] rounded-xl border border-[#0F204A]/5">
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-black text-[#0F204A]">
+                  Net Salary Credited
+                </span>
+
+                <span className="text-xl font-black text-green-600">
+                  ₹ 34,000.00
+                </span>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="mt-6 pt-4 border-t border-[#0F204A]/5 flex justify-between items-center">
+              <p className="text-[10px] font-bold text-[#0F204A]/40 uppercase tracking-widest">
+                Next Revision: July 2026
+              </p>
+
+              <a
+                href="#"
+                className="text-[11px] font-black text-[#D4AF37] hover:text-[#0F204A] transition-colors flex items-center gap-1"
+              >
+                View History
+                <span className="material-symbols-outlined text-[14px]">
+                  arrow_forward
+                </span>
+              </a>
             </div>
           </div>
         </section>
