@@ -1,8 +1,212 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+//  Logo colours: Gold #C9A84C · Sky #A8D5EA · Signal Blue #1E90D6
+
+const STYLES = `
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --gold:     #C9A84C;
+    --gold-lt:  #E8C96A;
+    --blue:     #1E90D6;
+    --blue-lt:  #41ADEE;
+    --sky:      #A8D5EA;
+    --mint:     #3DBF85;
+    --rose:     #F06060;
+    --page:     #F0F5FF;
+    --card:     #FFFFFF;
+    --sub:      #7A8EAA;
+    --border:   #D4E8FF;
+    --mist:     #FDF6E3;
+    --lagoon:   #EAF4FF;
+  }
+
+  /* ── Animations ─────────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(16px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  @keyframes pulseGold {
+    0%,100% { box-shadow: 0 0 0 0   rgba(201,168,76,0.55); }
+    60%      { box-shadow: 0 0 0 12px rgba(201,168,76,0); }
+  }
+  @keyframes pulseMint {
+    0%,100% { box-shadow: 0 0 0 0   rgba(61,191,133,0.50); }
+    60%      { box-shadow: 0 0 0 12px rgba(61,191,133,0); }
+  }
+  @keyframes shimmer {
+    0%   { background-position:-500px 0; }
+    100% { background-position:500px 0; }
+  }
+  @keyframes dotBeat {
+    0%,100% { transform:scale(1); }
+    50%      { transform:scale(1.45); }
+  }
+  @keyframes spin {
+    to { transform:rotate(360deg); }
+  }
+  @keyframes slideAccent {
+    from { transform:scaleY(0); }
+    to   { transform:scaleY(1); }
+  }
+
+  /* ── Typography base ─────────────────────────────────────── */
+  body { font-family:'Inter','Segoe UI',sans-serif; }
+
+  /* ── Sidebar link ────────────────────────────────────────── */
+  .nav-l {
+    display:flex; align-items:center; gap:10px;
+    color:var(--sub); padding:10px 14px; border-radius:10px;
+    text-decoration:none; font-weight:700; font-size:13px;
+    margin-bottom:3px; transition:all 0.22s ease;
+    border:1px solid transparent; position:relative; overflow:hidden;
+  }
+  .nav-l::before {
+    content:''; position:absolute; left:0; top:10%; bottom:10%;
+    width:3px; background:var(--blue); border-radius:0 3px 3px 0;
+    transform:scaleY(0); transition:transform 0.22s ease;
+  }
+  .nav-l:hover {
+    background:rgba(255,255,255,0.92); color:var(--blue);
+    border-color:var(--border); transform:translateX(3px);
+  }
+  .nav-l:hover::before { transform:scaleY(1); }
+  .nav-l:hover .ni { color:var(--gold); }
+  .ni { font-size:18px; transition:color 0.22s; }
+
+  /* ── Hover-lift card ─────────────────────────────────────── */
+  .hcard { transition:transform 0.25s ease, box-shadow 0.25s ease; cursor:default; }
+  .hcard:hover { transform:translateY(-3px); }
+
+  /* ── Section heading gradient text ──────────────────────── */
+  .sh {
+    font-size:16px; font-weight:900; letter-spacing:-0.3px; margin:0;
+    background:linear-gradient(90deg,var(--blue),var(--gold));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+
+  /* ── Punch button ────────────────────────────────────────── */
+  .pbtn {
+    width:100%; padding:15px 20px; border-radius:16px; border:none;
+    cursor:pointer; font-weight:900; font-size:17px; letter-spacing:1.5px;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    color:#fff; transition:transform 0.28s ease, box-shadow 0.28s ease;
+    position:relative; overflow:hidden;
+  }
+  .pbtn::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.28),transparent);
+    transform:translateX(-120%); transition:transform 0.55s ease;
+  }
+  .pbtn:hover::after { transform:translateX(120%); }
+  .pbtn:hover { transform:scale(1.025) translateY(-2px); }
+  .pbtn:active { transform:scale(0.97); }
+
+  /* ── Skill bar shimmer ───────────────────────────────────── */
+  .sbar {
+    height:100%; border-radius:10px;
+    transition:width 1.35s cubic-bezier(0.4,0,0.2,1);
+    background-size:500px 100%;
+    position:relative; overflow:hidden;
+  }
+  .sbar::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.38) 50%,transparent 100%);
+    background-size:500px 100%;
+    animation:shimmer 2.8s ease infinite;
+  }
+
+  /* ── Request card ────────────────────────────────────────── */
+  .rcard {
+    border-radius:16px; padding:20px;
+    transition:transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    cursor:default;
+  }
+  .rcard:hover { transform:translateY(-5px); }
+  .ricon {
+    width:42px; height:42px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform 0.3s ease;
+  }
+  .rcard:hover .ricon { transform:scale(1.15) rotate(-6deg); }
+  .rbtn {
+    width:100%; padding:10px 14px; border-radius:10px; cursor:pointer;
+    font-weight:800; font-size:12px; border:1.5px solid;
+    display:flex; align-items:center; justify-content:center; gap:5px;
+    transition:all 0.25s ease; position:relative; overflow:hidden;
+  }
+  .rbtn::after {
+    content:''; position:absolute; inset:0;
+    background:rgba(255,255,255,0.18);
+    transform:scaleX(0); transform-origin:left;
+    transition:transform 0.3s ease;
+  }
+  .rbtn:hover::after { transform:scaleX(1); }
+
+  /* ── Timeline dot pulse ──────────────────────────────────── */
+  .tl-live { animation:dotBeat 2s ease-in-out infinite; }
+
+  /* ── Salary banner shimmer ───────────────────────────────── */
+  .sal-banner { position:relative; overflow:hidden; }
+  .sal-banner::before {
+    content:''; position:absolute; top:0; left:-80%; width:60%; height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.32),transparent);
+    animation:shimmer 3.2s ease infinite;
+  }
+
+  /* ── View / arrow link ───────────────────────────────────── */
+  .vlink {
+    font-size:12px; font-weight:800; color:var(--gold);
+    text-decoration:none; display:flex; align-items:center; gap:4px;
+    transition:gap 0.22s, color 0.22s;
+  }
+  .vlink:hover { color:var(--blue); gap:8px; }
+
+  /* ── Download button ─────────────────────────────────────── */
+  .dlbtn {
+    display:flex; align-items:center; gap:8px;
+    background:linear-gradient(90deg,var(--blue),var(--blue-lt));
+    color:#fff; padding:12px 22px; border-radius:12px;
+    font-weight:800; font-size:13px; border:none; cursor:pointer;
+    box-shadow:0 5px 18px rgba(30,144,214,0.30);
+    transition:all 0.25s;
+  }
+  .dlbtn:hover {
+    transform:translateY(-2px);
+    box-shadow:0 8px 24px rgba(30,144,214,0.40);
+    background:linear-gradient(90deg,var(--gold),var(--gold-lt));
+  }
+
+  /* ── Log card hover ──────────────────────────────────────── */
+  .lc { transition:border-color 0.22s, box-shadow 0.22s, transform 0.22s; }
+  .lc:hover { border-color:var(--sky) !important; box-shadow:0 4px 14px rgba(30,144,214,0.12); transform:translateY(-2px); }
+
+  /* ── Notif button ────────────────────────────────────────── */
+  .nbtn { transition:all 0.22s; }
+  .nbtn:hover { background:var(--lagoon) !important; border-color:var(--blue) !important; transform:rotate(12deg) scale(1.10); }
+
+  /* ── Chart bar ───────────────────────────────────────────── */
+  .cb { position:relative; }
+  .cb:hover .cbtip { opacity:1 !important; }
+  .cbtip {
+    position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%);
+    background:var(--blue); color:#fff;
+    font-size:9px; font-weight:700; padding:5px 9px;
+    border-radius:7px; white-space:nowrap; opacity:0;
+    pointer-events:none; transition:opacity 0.2s;
+    box-shadow:0 3px 10px rgba(30,144,214,0.28);
+  }
+`;
 
 export default function UserDashboard() {
-  const [mounted, setMounted] = useState(false);
+  // 🔥 Separate states for scroll-triggered animations 🔥
+  const [statsVisible, setStatsVisible] = useState(false);
+  const [perfVisible, setPerfVisible] = useState(false);
 
   // REAL-TIME & ATTENDANCE STATES 
   const [time, setTime] = useState(new Date());
@@ -10,655 +214,541 @@ export default function UserDashboard() {
   const [todayLog, setTodayLog] = useState({ in: '--:-- --', out: '--:-- --' });
 
   useEffect(() => {
-    setTimeout(() => setMounted(true), 100);
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: 'ease-out-cubic',
+      offset: 120,
+    });
 
-    // Live Clock (Forced to IST - Indian Standard Time Zone)
-    const timer = setInterval(() => setTime(new Date()), 1000);
-    return () => clearInterval(timer);
+    const c = setInterval(() => setTime(new Date()), 1000);
+
+    // 🔥 Intersection Observers to trigger charts ONLY when scrolled into view 🔥
+    const obsOptions = { threshold: 0.3 };
+    
+    const obsStats = new IntersectionObserver(([e]) => {
+      if(e.isIntersecting) { setStatsVisible(true); obsStats.disconnect(); }
+    }, obsOptions);
+    
+    const obsPerf = new IntersectionObserver(([e]) => {
+      if(e.isIntersecting) { setPerfVisible(true); obsPerf.disconnect(); }
+    }, obsOptions);
+
+    const statsEl = document.getElementById('stats-section');
+    const perfEl = document.getElementById('perf-section');
+
+    if(statsEl) obsStats.observe(statsEl);
+    if(perfEl) obsPerf.observe(perfEl);
+
+    return () => { 
+      clearInterval(c); 
+      obsStats.disconnect(); 
+      obsPerf.disconnect(); 
+    };
   }, []);
 
-  // Format Time & Date specifically for India Standard Time
-  const formattedTime = time.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true });
+  const formattedTime = time.toLocaleTimeString('en-US', {
+    timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true,
+  });
   const [timeVal, amPm] = formattedTime.split(' ');
-  const formattedDate = time.toLocaleDateString('en-US', { timeZone: 'Asia/Kolkata', weekday: 'long', month: 'long', day: '2-digit', year: 'numeric' });
+  const formattedDate = time.toLocaleDateString('en-US', {
+    timeZone: 'Asia/Kolkata', weekday: 'long', month: 'long', day: '2-digit', year: 'numeric',
+  });
 
-  // Handle Punch In / Punch Out Toggle Functionality
   const handlePunch = () => {
     if (!isPunchedIn) {
       setIsPunchedIn(true);
-      setTodayLog(prev => ({ ...prev, in: formattedTime })); // Save exact Punch In time
+      setTodayLog(p => ({ ...p, in: formattedTime }));
     } else {
       setIsPunchedIn(false);
-      setTodayLog(prev => ({ ...prev, out: formattedTime })); // Save exact Punch Out time
+      setTodayLog(p => ({ ...p, out: formattedTime }));
     }
   };
-  // 
+
+  const bars = [
+    { p:85, h:5,  a:0  },
+    { p:90, h:0,  a:0  },
+    { p:70, h:10, a:10 },
+    { p:80, h:10, a:0  },
+  ];
+
+  /* ── helpers ── */
+  const Row = ({ l, v, lc='var(--sub)', vc='var(--blue)', border='var(--lagoon)' }) => (
+    <div style={{ display:'flex', justifyContent:'space-between', padding:'10px 0', borderBottom:`1px solid ${border}` }}>
+      <span style={{ fontSize:'13px', fontWeight:600, color:lc }}>{l}</span>
+      <span style={{ fontSize:'13px', fontWeight:700, color:vc }}>{v}</span>
+    </div>
+  );
 
   return (
-    <div className="flex min-h-screen bg-[#F4F7FF] font-sans text-[#0F204A] selection:bg-[#D4AF37] selection:text-white">
-      
-     {/* SIDEBAR NAV (Slimmer: w-50) */}
-      <aside className="fixed left-0 top-0 h-full w-55 bg-gradient-to-b from-[#F4F7FF] via-white to-[#FFF5D1] border-r border-[#D4AF37]/20 shadow-[4px_0_24px_rgba(212,175,55,0.08)] flex flex-col z-40">
-        
-        {/* Logo Section */}
-        <div className="p-2 mb-2 flex items-center gap-1">
-          <div className="w-10 h-10 md:w-10 md:h-10 rounded-full flex items-center justify-center overflow-hidden bg-transparent shrink-0">
-          <img src="logo.png" alt="Company Logo" className="w-full h-full object-contain drop-shadow-md" /> 
-          </div>
-          <span className="text-lg font-black tracking-tight text-[#D4AF37]">
-            Techhansa
-          </span>
-           <span className="text-lg font-black tracking-tight text-[#1E3A8A]">
-            HRMS
-          </span>
-         
-        </div>
+    <>
+      <style>{STYLES}</style>
+      <div style={{ fontFamily:"'Inter','Segoe UI',sans-serif", background:'var(--page)', minHeight:'100vh' }}>
 
-        {/* User Mini Profile */}
-        <div className="px-5 mb-6">
-          <div className="flex items-center gap-3 p-2.5 bg-white/60 backdrop-blur-sm rounded-xl border border-[#D4AF37]/20 shadow-sm">
-            <img 
-              alt="Arpit Pandey" 
-              className="w-9 h-9 rounded-lg object-cover shadow-sm border border-white" 
-              src="" 
-            />
+        {/* ══════════════════════════════════════════ SIDEBAR */}
+        <aside style={{
+          position:'fixed', left:0, top:0, height:'100%', width:'218px',
+          background:'linear-gradient(180deg,#FAFCFF 0%,#EAF4FF 55%,#FDF9EF 100%)',
+          borderRight:'1.5px solid var(--border)',
+          boxShadow:'4px 0 26px rgba(30,144,214,0.08)',
+          display:'flex', flexDirection:'column', zIndex:40,
+        }}>
+          {/* Logo */}
+          <div style={{ padding:'16px 18px 14px', display:'flex', alignItems:'center', gap:'5px', borderBottom:'1px solid var(--border)' }}>
+            <div style={{ width:'55px', height:'53px', borderRadius:'50%', overflow:'hidden', flexShrink:0, border:'2px solid transparent', boxShadow:'0 3px 10px rgba(201,168,76,0.20)' }}>
+              <img src="logo.png" alt="TechHansa" style={{ width:'100%', height:'100%', objectFit:'contain' }} />
+            </div>
             <div>
-              <p className="font-bold text-[#0F204A] text-[13px]">Arpit Pandey</p>
-              <p className="text-[10px] font-bold text-[#0F204A]/60">Software Developer</p>
+              <span style={{ fontWeight:900, fontSize:'15px', color:'var(--gold)', letterSpacing:'-0.3px' }}>Techhansa</span>
+              <span style={{ fontWeight:900, fontSize:'15px', color:'var(--blue)', letterSpacing:'-0.3px' }}>HRMS</span>
             </div>
           </div>
-        </div>
 
-       {/* Navigation Links */}
-        <div className="flex-1 px-2 -gap-1 overflow-hidden">
-          
-          {/* Active Dashboard Link */}
-          <Link to="/user-dashboard" className="flex items-center gap-3 bg-gradient-to-r from-[#D4AF37] to-[#FDE047] text-[#0F204A] px-4 py-2.5 rounded-lg shadow-[0_4px_10px_rgba(212,175,55,0.3)] transition-all">
-            <span className="material-symbols-outlined text-[18px] text-[#0F204A]">dashboard</span>
-            <span className="font-black text-[13px]">Dashboard</span>
-          </Link>
-          
-          {/* Inactive Links mapped dynamically */}
-          {[
-            //  Yaha 'path' add kiya gaya hai Profile ke liye
-            { icon: 'person', label: 'Profile', path: '/user-profile' }, 
-            { icon: 'calendar_today', label: 'Attendance', path: '/user-attendance' },
-            { icon: 'payments', label: 'Salary', path: '#' },
-            { icon: 'monitoring', label: 'Appraisal', path: '#' },
-            { icon: 'mark_as_unread', label: 'Requests', path: '#' },
-            { icon: 'trending_up', label: 'Growth', path: '#' },
-            { icon: 'mail', label: 'Newsletter', path: '#' }
-          ].map((item, index) => (
-            //  <a> tag ko <Link> se replace kiya aur href="#" ko to={item.path} kiya
-            <Link 
-              key={index} 
-              to={item.path} 
-              className="flex items-center gap-3 px-4 py-2.5 mt-1 rounded-lg text-[#0F204A]/70 hover:bg-white/70 hover:text-[#0F204A] hover:shadow-sm border border-transparent hover:border-[#D4AF37]/20 transition-all duration-200 group"
-            >
-              <span className="material-symbols-outlined text-[18px] group-hover:text-[#D4AF37] transition-colors">{item.icon}</span>
-              <span className="font-bold text-[13px]">{item.label}</span>
+          {/* Mini profile */}
+          <div style={{ padding:'14px 12px 10px' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:'10px', background:'rgba(255,255,255,0.88)', border:'1px solid var(--border)', borderRadius:'13px', padding:'10px 12px', backdropFilter:'blur(4px)' }}>
+              <div style={{ width:'38px', height:'38px', borderRadius:'10px', background:'linear-gradient(135deg,var(--sky),var(--gold))', flexShrink:0, display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 3px 9px rgba(201,168,76,0.28)' }}>
+                <span style={{ fontSize:'14px', fontWeight:900, color:'#fff' }}>AP</span>
+              </div>
+              <div>
+                <p style={{ fontWeight:800, fontSize:'12.5px', color:'var(--blue)', margin:0 }}>Arpit Pandey</p>
+                <p style={{ fontSize:'10px', color:'var(--sub)', margin:0, fontWeight:600 }}>Software Developer</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Nav */}
+          <nav style={{ flex:1, padding:'4px 10px', overflowY:'auto' }}>
+            <Link to="/user-dashboard" style={{
+              display:'flex', alignItems:'center', gap:'10px',
+              background:'linear-gradient(90deg,var(--blue),var(--blue-lt))',
+              color:'#fff', padding:'11px 16px', borderRadius:'11px',
+              textDecoration:'none', fontWeight:800, fontSize:'13px',
+              boxShadow:'0 5px 18px rgba(30,144,214,0.30)', marginBottom:'6px',
+            }}>
+              <span className="material-symbols-outlined ni" style={{ color:'#fff' }}>dashboard</span>
+              Dashboard
             </Link>
-          ))}
-        </div>
+            {[
+              { icon:'person',         label:'Profile',    path:'/user-profile' },
+              { icon:'calendar_today', label:'Attendance', path:'/user-attendance' },
+              { icon:'payments',       label:'Salary',     path:'/user-salary' },
+              { icon:'monitoring',     label:'Appraisal',  path:'#' },
+              { icon:'mark_as_unread', label:'Requests',   path:'#' },
+              { icon:'trending_up',    label:'Growth',     path:'#' },
+              { icon:'mail',           label:'Newsletter', path:'#' },
+            ].map((it, i) => (
+              <Link key={i} to={it.path} className="nav-l">
+                <span className="material-symbols-outlined ni">{it.icon}</span>
+                {it.label}
+              </Link>
+            ))}
+          </nav>
 
-        {/* Bottom Actions */}
-        <div className="p-1 border-t border-[#D4AF37]/20 space-y-1 bg-white/30 backdrop-blur-sm">
-          <a href="#" className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-[#0F204A]/70 hover:bg-white/70 hover:text-[#0F204A] hover:shadow-sm border border-transparent hover:border-[#D4AF37]/20 transition-all group">
-            <span className="material-symbols-outlined text-[18px] group-hover:text-[#D4AF37]">settings</span>
-            <span className="font-bold text-[13px]">Settings</span>
-          </a>
-          <a href="#" className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-[#0F204A]/70 hover:bg-red-50 hover:text-red-600 hover:shadow-sm border border-transparent hover:border-red-100 transition-all">
-            <span className="material-symbols-outlined text-[18px]">logout</span>
-            <span className="font-bold text-[13px]">Sign Out</span>
-          </a>
-        </div>
-      </aside>
-
-      {/* MAIN CONTENT CANVAS  */}
-      <main className="ml-55 flex-1 p-6 xl:p-8 max-w-[1440px] mx-auto">
-        
-       {/* Header */}
-        <header className="flex justify-between items-center mb-6">
-          <div>
-            {/*  Vibrant Royal Blue for Headings (No black tint)  */}
-            <h1 className="text-2xl font-black text-[#2563EB]/85 tracking-tight">Employee Dashboard</h1>
-            {/*  Soft Slate for subtext  */}
-            <p className="text-[#64748B] font-medium text-xs mt-1">Welcome back, Arpit. Here's your performance summary.</p>
+          {/* Bottom */}
+          <div style={{ borderTop:'1px solid var(--border)', padding:'8px 10px' }}>
+            <a href="#" className="nav-l"><span className="material-symbols-outlined ni">settings</span>Settings</a>
+            <a href="#" className="nav-l" style={{ color:'var(--rose)' }}
+              onMouseEnter={e => { e.currentTarget.style.background='#FFF0F0'; e.currentTarget.style.borderColor='rgba(240,96,96,0.25)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.borderColor='transparent'; }}>
+              <span className="material-symbols-outlined" style={{ fontSize:'18px' }}>logout</span>Sign Out
+            </a>
           </div>
-          <div className="flex gap-3">
-            {/* Blue tinted border and soft shadow  */}
-            <button className="relative p-2 rounded-full bg-white border border-[#2563EB]/15 hover:border-[#D4AF37] text-[#2563EB]/85 hover:text-[#D4AF37] transition-all shadow-[0_4px_15px_rgba(37,99,235,0.08)]">
-              <span className="material-symbols-outlined text-[20px]">notifications</span>
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-400 rounded-full border border-white"></span>
+        </aside>
+
+        {/* ══════════════════════════════════════════ MAIN */}
+        <main style={{ marginLeft:'218px', padding:'28px 32px 44px', maxWidth:'1440px' }}>
+
+          {/* Header */}
+          <header data-aos="fade-down" style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'26px' }}>
+            <div>
+              <h1 style={{ fontSize:'23px', fontWeight:900, letterSpacing:'-0.5px', margin:0, background:'linear-gradient(90deg,var(--blue) 30%,var(--gold))', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
+                Employee Dashboard
+              </h1>
+              <p style={{ fontSize:'12.5px', color:'var(--sub)', marginTop:'4px', fontWeight:600 }}>
+                Welcome back, Arpit. Here's your performance summary.
+              </p>
+            </div>
+            <button className="nbtn" style={{ position:'relative', padding:'10px', borderRadius:'50%', background:'var(--card)', border:'1.5px solid var(--border)', color:'var(--blue)', cursor:'pointer', outline:'none', boxShadow:'0 3px 14px rgba(30,144,214,0.10)' }}>
+              <span className="material-symbols-outlined" style={{ fontSize:'20px', display:'block' }}>notifications</span>
+              <span style={{ position:'absolute', top:'8px', right:'8px', width:'8px', height:'8px', background:'var(--rose)', borderRadius:'50%', border:'2px solid var(--card)' }}></span>
             </button>
-          </div>
-        </header>
+          </header>
 
-    {/* Section 1: Profile Banner */}
-        <section className="mb-6">
-          {/*  Container with blue-tinted shadow instead of black/grey  */}
-          <div className="bg-gradient-to-r from-[#E0F2FE] via-[#F8FAFC] to-white rounded-2xl p-2 flex flex-col md:flex-row items-center gap-6 relative overflow-hidden shadow-[0_8px_30px_rgba(37,99,235,0.08)] border border-[#2563EB]/10">
-            
-            {/*  Gold gradient with pure gold shadow (no black drop-shadow)  */}
-            <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-[#FFF9E6] to-[#FFF5D1] skew-x-12 translate-x-10 pointer-events-none border-l border-[#D4AF37]/30 shadow-[-15px_0_30px_rgba(250,204,21,0.15)]"></div>
-            
-            {/* Reduced Image Size */}
-            <img 
-              alt="Arpit Pandey" 
-              className="w-20 h-20 rounded-xl object-cover shadow-[0_4px_15px_rgba(37,99,235,0.1)] border-2 border-white relative z-10" 
-              src="" 
-            />
-            
-            <div className="flex-grow text-center md:text-left z-10">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-1.5 w-full pr-0 md:pr-[25%] lg:pr-[30%]">
-                <h2 className="text-3xl font-black text-[#2563EB]/85 tracking-tight">Arpit Pandey</h2>
-               
+          {/* ── S1 Profile Banner ── */}
+          <section data-aos="fade-up" className="hcard" style={{ marginBottom:'16px' }}>
+            <div style={{ background:'linear-gradient(110deg,var(--lagoon) 0%,#FAFCFF 45%,var(--mist) 100%)', borderRadius:'20px', padding:'14px 16px', display:'flex', alignItems:'center', gap:'22px', border:'1.5px solid var(--border)', boxShadow:'0 4px 24px rgba(30,144,214,0.08)', position:'relative', overflow:'hidden' }}>
+              {/* Gold wedge decoration */}
+              <div className="absolute top-0 right-0 w-[45%] md:w-[30%] h-[120%] bg-gradient-to-l from-[#FFF9E6] to-[#FFF5D1] skew-x-12 translate-x-10 pointer-events-none border-l border-[#D4AF37]/30 shadow-[-15px_0_30px_rgba(250,204,21,0.15)]"></div>
+              <div style={{ position:'absolute', top:'14px', right:'22px', display:'flex', gap:'6px', opacity:0.30 }}>
+                {[0,1,2].map(i => <div key={i} style={{ width:'6px', height:'6px', borderRadius:'50%', background:'var(--gold)' }}></div>)}
               </div>
-              <p className="text-sm font-black text-[#475569]">Software Developer • ID: SE-1234</p>
-              
-              <div className="mt-3 flex flex-wrap justify-center md:justify-start gap-4">
-                <span className="flex items-center gap-1 text-xs font-semibold text-[#64748B]">
-                  <span className="material-symbols-outlined text-[16px] text-[#D4AF37]">location_on</span>Varanasi
-                </span>
-                <span className="flex items-center gap-1 text-xs font-semibold text-[#64748B]">
-                  <span className="material-symbols-outlined text-[16px] text-[#D4AF37]">mail</span>arpit.pandey@techhansait.com
-                </span>
+
+              {/* Avatar */}
+              <div style={{ width:'80px', height:'80px', borderRadius:'18px', background:'linear', display:'flex', alignItems:'center', justifyContent:'center', border:'3px solid #fff', boxShadow:'0 6px 22px rgba(30,144,214,0.22)', flexShrink:0, zIndex:1 }}>
+                <span style={{ fontSize:'28px', fontWeight:900, color:'#cdbc20' }}></span>
+              </div>
+
+              <div style={{ flex:1, zIndex:1 }}>
+                <h3 style={{ fontSize:'27px', fontWeight:800, letterSpacing:'-0.5px', color:'var(--blue)', margin:'0 0 5px' }}>Arpit Pandey</h3>
+                <p style={{ fontSize:'13px', fontWeight:700, color:'var(--sub)', margin:'0 0 12px' }}>
+                  Software Developer • <span style={{ color:'var(--gold)', fontWeight:800 }}>ID: SE-1234</span>
+                </p>
+                <div style={{ display:'flex', gap:'22px', flexWrap:'wrap' }}>
+                  {[{icon:'location_on',text:'Varanasi'},{icon:'mail',text:'arpit.pandey@techhansait.com'}].map(({icon,text})=>(
+                    <span key={icon} style={{ display:'flex', alignItems:'center', gap:'5px', fontSize:'12px', fontWeight:600, color:'var(--sub)' }}>
+                      <span className="material-symbols-outlined" style={{ fontSize:'15px', color:'var(--gold)' }}>{icon}</span>{text}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ textAlign:'right', zIndex:1 }}>
+                <p style={{ fontSize:'9px', fontWeight:800, color:'var(--sub)', textTransform:'uppercase', letterSpacing:'1.2px', margin:'0 0 5px' }}>Join Date</p>
+                <p style={{ fontSize:'16px', fontWeight:900, color:'var(--blue)', margin:0 }}>May 25, 2026</p>
               </div>
             </div>
-            
-            <div className="flex flex-col items-center md:items-end gap-2.5 z-10 mt-4 md:mt-0">
-              <div className="text-center md:text-right">
-                <p className="text-[10px] font-bold text-[#64748B] mb-0.5 uppercase tracking-widest">Join Date</p>
-                <p className="text-sm font-black text-[#2563EB]/85">May 25, 2026</p>
-              </div>
-              
-            </div>
-          </div>
-        </section>
-      {/* COMBINED ATTENDANCE HUB (AURA GLOW + ROYAL BLUE CHART)  */}
-        <section className="mb-6">
-          {/* Main Outer Container */}
-          <div className="bg-white rounded-3xl p-1.5 shadow-[0_8px_30px_rgba(15,32,74,0.03)] border border-[#0F204A]/5 flex flex-col lg:flex-row gap-2.5">
-            
-            {/*  LEFT: The "Star" Punch In/Out Widget (Glow Gradient Card)  */}
-            <div className="lg:w-[35%] rounded-2xl p-2 md:p-4 relative overflow-hidden flex flex-col shadow-[inner_0_2px_12px_rgba(255,255,255,0.8)] border border-[#D4AF37]/20 group bg-gradient-to-b from-[#FFF5D1] via-white to-[#E0F2FE]">
-              
-              {/* Dynamic Glow Background */}
-              <div className={`absolute top-[-20%] right-[-20%] w-50 h-50 blur-[80px] rounded-full transition-colors duration-700 pointer-events-none ${
-                isPunchedIn ? 'bg-green-400/30 group-hover:bg-green-400/40' : 'bg-[#D4AF37]/30 group-hover:bg-[#D4AF37]/40'
-              }`}></div>
-              
-              {/* Header & Status */}
-              <div className="relative z-10 flex justify-between items-start mb-6">
-                <div>
-                  <h3 className="text-[#0F204A]/60 text-[10px] font-black tracking-widest uppercase mb-1.5">Current Status</h3>
-                  
-                  {/* Dynamic Attendance Status Badge */}
-                  <div className={`flex items-center gap-2 w-fit px-3 py-1.5 rounded-full border backdrop-blur-md transition-all duration-300 ${
-                    isPunchedIn ? 'bg-green-50 border-green-200 shadow-sm' : 'bg-white/70 border-[#0F204A]/10 shadow-sm'
-                  }`}>
-                    <span className={`w-2 h-2 rounded-full animate-pulse ${
-                      isPunchedIn ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]'
-                    }`}></span>
-                    <span className={`text-xs font-bold tracking-wide ${isPunchedIn ? 'text-green-700' : 'text-[#1E3A8A]'}`}>
-                      {isPunchedIn ? 'Active (Punched In)' : 'Not Punched In'}
-                    </span>
+          </section>
+
+          {/* ── S2 Attendance Hub ── */}
+          {/* 🔥 Added ID to trigger chart animation when scrolled 🔥 */}
+          <section id="stats-section" data-aos="fade-up" data-aos-delay="100" style={{ marginBottom:'22px' }}>
+            <div style={{ background:'var(--card)', borderRadius:'22px', padding:'6px', border:'1.5px solid var(--border)', boxShadow:'0 4px 22px rgba(30,144,214,0.06)', display:'flex', gap:'6px', flexWrap:'wrap' }}>
+
+              {/* LEFT: Punch Widget */}
+              <div style={{ flex:'0 0 calc(36% - 3px)', minWidth:'250px', background:'linear-gradient(160deg,var(--mist) 0%,#FAFCFF 50%,var(--lagoon) 100%)', borderRadius:'17px', padding:'22px 24px', border:'1px solid rgba(201,168,76,0.22)', display:'flex', flexDirection:'column', position:'relative', overflow:'hidden' }}>
+                <div style={{ position:'absolute', top:'-40px', right:'-40px', width:'200px', height:'200px', borderRadius:'50%', background:isPunchedIn?'rgba(61,191,133,0.18)':'rgba(201,168,76,0.22)', filter:'blur(65px)', pointerEvents:'none', transition:'background 0.9s' }}></div>
+
+                {/* Status */}
+                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:'16px', position:'relative', zIndex:1 }}>
+                  <div>
+                    <p style={{ fontSize:'9px', fontWeight:800, color:'var(--sub)', textTransform:'uppercase', letterSpacing:'1.5px', margin:'0 0 8px' }}>Current Status</p>
+                    <div style={{ display:'inline-flex', alignItems:'center', gap:'7px', padding:'6px 14px', borderRadius:'20px', background:isPunchedIn?'#E8FBF4':'#FFF0F0', border:`1px solid ${isPunchedIn?'rgba(61,191,133,0.35)':'rgba(240,96,96,0.25)'}`, transition:'all 0.5s' }}>
+                      <span style={{ width:'8px', height:'8px', borderRadius:'50%', background:isPunchedIn?'var(--mint)':'var(--rose)', display:'inline-block', animation:'dotBeat 1.8s ease-in-out infinite', boxShadow:isPunchedIn?'0 0 6px rgba(61,191,133,0.55)':'0 0 6px rgba(240,96,96,0.55)' }}></span>
+                      <span style={{ fontSize:'11px', fontWeight:800, color:isPunchedIn?'#2A9065':'var(--rose)' }}>
+                        {isPunchedIn?'Active — Punched In':'Not Punched In'}
+                      </span>
+                    </div>
+                  </div>
+                  <div style={{ width:'38px', height:'38px', borderRadius:'50%', background:'var(--card)', border:'1.5px solid var(--border)', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 2px 8px rgba(30,144,214,0.08)' }}>
+                    <span className="material-symbols-outlined" style={{ fontSize:'19px', color:'var(--sub)' }}>schedule</span>
                   </div>
                 </div>
-                <div className="w-10 h-10 rounded-full bg-white border border-[#0F204A]/5 flex items-center justify-center shadow-sm">
-                  <span className="material-symbols-outlined text-[#0F204A]/60 text-[20px]">schedule</span>
-                </div>
-              </div>
 
-              {/* Dynamic Live Time */}
-              <div className="relative z-10 my-4 text-center">
-                <h2 className="text-5xl md:text-6xl font-black text-[#2563EB]/85 tracking-tight drop-shadow-sm mb-1">
-                  {timeVal} <span className="text-2xl text-[#0F204A]/50">{amPm}</span>
-                </h2>
-                <p className="text-sm font-bold text-[#0F204A]/60">{formattedDate}</p>
-              </div>
-
-              {/* DYNAMIC PUNCH BUTTON  */}
-              <div className="relative z-10 mt-6 mb-8 w-full">
-                <button 
-                  onClick={handlePunch}
-                  className={`w-full relative group/btn overflow-hidden rounded-2xl p-[2px] transition-all duration-300 transform hover:-translate-y-1 ${
-                    isPunchedIn 
-                      ? 'bg-gradient-to-r from-red-500 via-rose-400 to-red-500 shadow-[0_4px_15px_rgba(239,68,68,0.2)] hover:shadow-[0_8px_25px_rgba(239,68,68,0.4)]' 
-                      : 'bg-gradient-to-r from-[#D4AF37] via-[#FDE047] to-[#D4AF37] shadow-[0_4px_15px_rgba(212,175,55,0.2)] hover:shadow-[0_8px_25px_rgba(212,175,55,0.4)]'
-                  }`}
-                >
-                  <div className="relative bg-white group-hover/btn:bg-transparent transition-colors duration-500 py-4 px-6 rounded-[14px] flex items-center justify-center gap-3">
-                    <span className={`material-symbols-outlined text-[28px] transition-colors duration-500 ${
-                      isPunchedIn ? 'text-red-500 group-hover/btn:text-white' : 'text-[#D4AF37] group-hover/btn:text-[#0F204A]'
-                    }`}>
-                      {isPunchedIn ? 'logout' : 'fingerprint'}
-                    </span>
-                    <span className={`text-xl font-black tracking-wider transition-colors duration-500 ${
-                      isPunchedIn ? 'text-red-500 group-hover/btn:text-white' : 'text-[#D4AF37] group-hover/btn:text-[#0F204A]'
-                    }`}>
-                      {isPunchedIn ? 'PUNCH OUT' : 'PUNCH IN'}
-                    </span>
+                {/* Clock */}
+                <div style={{ textAlign:'center', margin:'8px 0 20px', position:'relative', zIndex:1 }}>
+                  <div style={{ fontSize:'58px', fontWeight:900, color:'var(--blue)', letterSpacing:'-2px', lineHeight:1 }}>
+                    {timeVal}<span style={{ fontSize:'22px', color:'var(--sub)', fontWeight:700, marginLeft:'6px' }}>{amPm}</span>
                   </div>
-                </button>
+                  <p style={{ fontSize:'12.5px', fontWeight:600, color:'var(--sub)', marginTop:'7px' }}>{formattedDate}</p>
+                </div>
+
+                {/* Punch button */}
+                <div style={{ position:'relative', zIndex:1, marginBottom:'20px',paddingTop: '50px'}}>
+                  <button onClick={handlePunch} className="pbtn" style={{
+                    background: isPunchedIn
+                      ? 'linear-gradient(90deg,#F06060,#F88080)'
+                      : 'linear-gradient(90deg,var(--gold),var(--gold-lt))',
+                    boxShadow: isPunchedIn
+                      ? '0 6px 22px rgba(240,96,96,0.38)'
+                      : '0 6px 22px rgba(201,168,76,0.42)',
+                    animation: isPunchedIn ? 'pulseMint 2s infinite' : 'pulseGold 2.5s infinite',
+                  }}>
+                    <span className="material-symbols-outlined" style={{ fontSize:'46px' }}>
+                      {isPunchedIn?'logout':'fingerprint'}
+                    </span>
+                    {isPunchedIn?'PUNCH OUT':'PUNCH IN'}
+                  </button>
+                </div>
+
+                {/* Quick stats */}
+                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', borderTop:'1px solid rgba(168,213,234,0.38)', paddingTop:'80px', position:'relative', zIndex:1 }}>
+                  {[
+                    { label:'Present',  val:'21', color:'var(--blue)' },
+                    { label:'Absent',   val:'01', color:'var(--rose)' },
+                    { label:'Half Day', val:'02', color:'var(--gold)' },
+                  ].map((s,i) => (
+                    <div key={i} style={{ textAlign:'center', borderLeft:i>0?'1px solid rgba(168,213,234,0.38)':'none' }}>
+                      <p style={{ fontSize:'9px', fontWeight:800, color:'var(--sub)', textTransform:'uppercase', letterSpacing:'1px', margin:'0 0 5px' }}>{s.label}</p>
+                      <p style={{ fontSize:'24px', fontWeight:900, color:s.color, margin:0, transition:'transform 0.2s', display:'inline-block', cursor:'default' }}
+                        onMouseEnter={e=>e.currentTarget.style.transform='scale(1.18)'}
+                        onMouseLeave={e=>e.currentTarget.style.transform='scale(1)'}
+                      >{s.val}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              {/* Quick Stats */}
-              <div className="relative z-10 grid grid-cols-3 gap-3 mt-auto pt-5 border-t border-[#0F204A]/10">
-                <div className="text-center">
-                  <p className="text-[9px] font-bold text-[#0F204A]/50 uppercase tracking-widest mb-1">Present</p>
-                  <p className="text-xl font-black text-[#0F204A]">21</p>
-                </div>
-                <div className="text-center border-l border-r border-[#0F204A]/10">
-                  <p className="text-[9px] font-bold text-[#0F204A]/50 uppercase tracking-widest mb-1">Absent</p>
-                  <p className="text-xl font-black text-red-500">01</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-[9px] font-bold text-[#0F204A]/50 uppercase tracking-widest mb-1">Half Day</p>
-                  <p className="text-xl font-black text-[#D4AF37]">02</p>
-                </div>
-              </div>
-            </div>
-
-            {/* RIGHT: Analytics & Recent Logs */}
-            <div className="lg:w-[65%] bg-[#F8FAFC] rounded-2xl p-6 border border-[#0F204A]/5 flex flex-col">
-              
-              {/* Header */}
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <h3 className="text-lg font-black text-[#2563EB]/85 text-shadow-lg">Attendance Analytics</h3>
-                  <p className="text-xs font-semibold text-[#0F204A]/50 mt-0.5">Your monthly trends & recent logs</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="bg-white px-3 py-1.5 rounded-lg border border-[#0F204A]/5 shadow-sm text-center">
-                    <p className="text-[9px] font-bold text-[#0F204A]/50 uppercase tracking-wider mb-0.5">Average</p>
-                    <p className="text-sm font-black text-green-500 leading-none">94.8%</p>
+              {/* RIGHT: Analytics */}
+              <div style={{ flex:'1 1 calc(64% - 3px)', minWidth:'300px', background:'var(--lagoon)', borderRadius:'17px', padding:'22px', border:'1px solid var(--border)', display:'flex', flexDirection:'column' }}>
+                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'18px' }}>
+                  <div>
+                    <h3 className="sh">Attendance Analytics</h3>
+                    <p style={{ fontSize:'11px', fontWeight:600, color:'var(--sub)', marginTop:'3px' }}>Monthly trends &amp; recent logs</p>
+                  </div>
+                  <div style={{ background:'var(--card)', padding:'8px 16px', borderRadius:'12px', border:'1px solid var(--border)', textAlign:'center', boxShadow:'0 2px 10px rgba(30,144,214,0.08)' }}>
+                    <p style={{ fontSize:'9px', fontWeight:800, color:'var(--sub)', textTransform:'uppercase', letterSpacing:'0.8px', margin:'0 0 3px' }}>Average</p>
+                    <p style={{ fontSize:'15px', fontWeight:900, color:'var(--mint)', margin:0 }}>94.8%</p>
                   </div>
                 </div>
-              </div>
 
-              {/* Middle Area: Chart */}
-              <div className="flex-grow flex flex-col justify-end mb-6">
-                {/* Legends - UPDATED COLOR */}
-                <div className="flex gap-3 mb-4 self-end bg-white p-1.5 px-3 rounded-full shadow-sm border border-[#0F204A]/5">
-                  <div className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-[#2563EB]/85"></span><span className="text-[10px] font-bold text-[#0F204A]/60">Present</span></div>
-                  <div className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-red-500"></span><span className="text-[10px] font-bold text-[#0F204A]/60">Absent</span></div>
-                  <div className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-[#D4AF37]"></span><span className="text-[10px] font-bold text-[#0F204A]/60">Half Day</span></div>
+                <div style={{ display:'flex', gap:'14px', marginBottom:'14px', alignSelf:'flex-end', background:'var(--card)', padding:'6px 16px', borderRadius:'20px', border:'1px solid var(--border)' }}>
+                  {[['var(--blue)','Present'],['var(--rose)','Absent'],['var(--gold)','Half Day']].map(([c,l])=>(
+                    <div key={l} style={{ display:'flex', alignItems:'center', gap:'5px' }}>
+                      <span style={{ width:'9px', height:'9px', borderRadius:'50%', background:c, display:'inline-block' }}></span>
+                      <span style={{ fontSize:'10px', fontWeight:700, color:'var(--sub)' }}>{l}</span>
+                    </div>
+                  ))}
                 </div>
 
-                {/* Chart Plot Area */}
-                <div className="relative flex-grow flex items-end gap-6 md:gap-10 h-32 border-l-2 border-b-2 border-[#0F204A]/10 pl-4 pb-px overflow-hidden">
-                  <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
-                    {[100, 50, 0].map((val, i) => (
-                      <div key={i} className="flex items-center w-full">
-                        <span className="absolute -left-7 text-[9px] font-bold text-[#0F204A]/40 w-5 text-right">{val}</span>
-                        <div className="border-t border-dashed border-[#0F204A]/10 w-full ml-1"></div>
+                {/* Bar chart - Height now depends on statsVisible */}
+                <div style={{ flex:1, display:'flex', flexDirection:'column', justifyContent:'flex-end', marginBottom:'14px' }}>
+                  <div style={{ position:'relative', display:'flex', alignItems:'flex-end', gap:'20px', height:'130px', borderLeft:'2px solid rgba(30,144,214,0.15)', borderBottom:'2px solid rgba(30,144,214,0.15)', paddingLeft:'14px', paddingBottom:'2px' }}>
+                    {[0,1,2].map(i=>(
+                      <div key={i} style={{ position:'absolute', left:0, right:0, top:`${i*33.3}%`, borderTop:'1px dashed rgba(30,144,214,0.12)', pointerEvents:'none' }}></div>
+                    ))}
+                    {bars.map((col,idx)=>(
+                      <div key={idx} className="cb" style={{ flex:1, display:'flex', flexDirection:'column', justifyContent:'flex-end', alignItems:'center', gap:'2px', height:'100%', zIndex:1 }}>
+                        <div className="cbtip">Pr:{col.p}% Ab:{col.a}% HD:{col.h}%</div>
+                        <div style={{ width:'100%', maxWidth:'30px', background:'linear-gradient(180deg,var(--blue-lt),var(--blue))', borderRadius:'5px 5px 0 0', height:statsVisible?`${col.p}%`:'0', transition:'height 1s cubic-bezier(0.4,0,0.2,1)' }}></div>
+                        {col.a>0&&<div style={{ width:'100%', maxWidth:'30px', background:'var(--rose)', height:statsVisible?`${col.a}%`:'0', transition:'height 1s 0.1s ease-out' }}></div>}
+                        {col.h>0&&<div style={{ width:'100%', maxWidth:'30px', background:'var(--gold)', borderRadius:'0 0 4px 4px', height:statsVisible?`${col.h}%`:'0', transition:'height 1s 0.2s ease-out' }}></div>}
                       </div>
                     ))}
                   </div>
+                  <div style={{ display:'flex', justifyContent:'space-around', marginTop:'8px', paddingLeft:'14px' }}>
+                    {['Wk 1','Wk 2','Wk 3','Wk 4'].map(w=>(
+                      <span key={w} style={{ fontSize:'10px', fontWeight:700, color:'var(--sub)' }}>{w}</span>
+                    ))}
+                  </div>
+                </div>
 
-                  {/* Bars - UPDATED COLOR */}
+                {/* Recent logs */}
+                <div style={{ borderTop:'1px solid var(--border)', paddingTop:'14px' }}>
+                  <h4 style={{ fontSize:'10px', fontWeight:800, color:'var(--blue)', textTransform:'uppercase', letterSpacing:'1.2px', margin:'0 0 12px' }}>Recent Logs</h4>
+                  <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:'8px' }}>
+                    {[
+                      { d:'Today',  in:todayLog.in, out:todayLog.out, active:true },
+                      { d:'Jun 05', in:'09:35 AM', out:'06:35 PM' },
+                      { d:'Jun 04', in:'09:25 AM', out:'06:30 PM' },
+                      { d:'Jun 03', in:'09:30 AM', out:'06:40 PM' },
+                    ].map((log,idx)=>(
+                      <div key={idx} className="lc" style={{ padding:'10px 11px', borderRadius:'12px', background:log.active?'var(--card)':'rgba(255,255,255,0.65)', border:`1px solid ${log.active?'rgba(201,168,76,0.45)':'var(--border)'}`, boxShadow:log.active?'0 3px 12px rgba(201,168,76,0.15)':'none' }}>
+                        <p style={{ fontSize:'10px', fontWeight:800, color:log.active?'var(--gold)':'var(--sub)', margin:'0 0 8px' }}>{log.d}</p>
+                        {[['In',log.in],['Out',log.out]].map(([lbl,val])=>(
+                          <div key={lbl} style={{ display:'flex', justifyContent:'space-between', marginBottom:'3px' }}>
+                            <span style={{ fontSize:'9px', fontWeight:700, color:'var(--sub)' }}>{lbl}</span>
+                            <span style={{ fontSize:'10px', fontWeight:800, color:'var(--blue)' }}>{val}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ── S3 Performance Rating ── */}
+          {/* 🔥 Added ID to trigger circle animation when scrolled 🔥 */}
+          <section id="perf-section" data-aos="fade-up" data-aos-delay="200" className="hcard" style={{ marginBottom:'22px' }}>
+            <div style={{ background:'var(--card)', borderRadius:'20px', padding:'24px 28px', border:'1.5px solid var(--border)', boxShadow:'0 4px 22px rgba(30,144,214,0.06)' }}>
+              <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'22px' }}>
+                <h3 className="sh">Performance Rating</h3>
+                <a href="#" className="vlink">View Details <span className="material-symbols-outlined" style={{ fontSize:'14px' }}>arrow_forward</span></a>
+              </div>
+              <div style={{ display:'flex', alignItems:'center', gap:'36px', flexWrap:'wrap' }}>
+                {/* Gauge */}
+                <div style={{ background:'linear-gradient(135deg,var(--lagoon),var(--mist))', borderRadius:'20px', padding:'24px', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, border:'1px solid var(--border)' }}>
+                  <div style={{ position:'relative', width:'100px', height:'100px' }}>
+                    <svg style={{ width:'100%', height:'100%', transform:'rotate(-90deg)' }}>
+                      <defs>
+                        <linearGradient id="gg" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="var(--blue)" />
+                          <stop offset="100%" stopColor="var(--gold)" />
+                        </linearGradient>
+                      </defs>
+                      <circle cx="50" cy="50" r="40" fill="transparent" stroke="var(--border)" strokeWidth="7" />
+                      <circle cx="50" cy="50" r="40" fill="transparent" stroke="url(#gg)" strokeWidth="7"
+                        strokeDasharray="251.2" strokeDashoffset={perfVisible?'25.12':'251.2'}
+                        strokeLinecap="round"
+                        style={{ transition:'stroke-dashoffset 1.7s cubic-bezier(0.4,0,0.2,1)' }}
+                      />
+                    </svg>
+                    <div style={{ position:'absolute', inset:0, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center' }}>
+                      <p style={{ fontSize:'26px', fontWeight:900, color:'var(--blue)', margin:0 }}>4.5</p>
+                      <p style={{ fontSize:'9px', fontWeight:800, color:'var(--gold)', textTransform:'uppercase', letterSpacing:'1px', margin:0 }}>Overall</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Skill bars */}
+                <div style={{ flex:1, minWidth:'220px' }}>
                   {[
-                    { p: 85, h: 5, a: 0 },
-                    { p: 90, h: 0, a: 0 },
-                    { p: 70, h: 10, a: 10 },
-                    { p: 80, h: 10, a: 0 },
-                  ].map((col, idx) => (
-                    <div key={idx} className="flex-1 flex flex-col justify-end items-center gap-px relative h-full z-10 group/bar">
-                      
-                      {/* Royal Blue for Primary Bar */}
-                      <div className={`w-full max-w-[28px] bg-[#2563EB]/85 rounded-t-md transition-all duration-1000 group-hover/bar:brightness-110 ${mounted ? '' : '!h-0'}`} style={{ height: mounted ? `${col.p}%` : '0%' }}></div>
-                      
-                      {col.a > 0 && <div className={`w-full max-w-[28px] bg-red-500 transition-all duration-1000 delay-100 ${mounted ? '' : '!h-0'}`} style={{ height: mounted ? `${col.a}%` : '0%' }}></div>}
-                      {col.h > 0 && <div className={`w-full max-w-[28px] bg-[#D4AF37] transition-all duration-1000 delay-200 ${mounted ? '' : '!h-0'}`} style={{ height: mounted ? `${col.h}%` : '0%' }}></div>}
-                      
-                      {/* Tooltip on hover */}
-                      <div className="absolute bottom-full mb-2 bg-[#0F204A] text-white text-[9px] font-bold px-2 py-1 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg z-20">
-                        Pr: {col.p}% | Ab: {col.a}% | HD: {col.h}%
+                    { name:'Technical Skill', val:92, from:'var(--blue)',  to:'var(--blue-lt)' },
+                    { name:'Punctuality',     val:88, from:'var(--gold)',  to:'var(--gold-lt)' },
+                    { name:'Soft Skills',     val:95, from:'var(--mint)',  to:'#6ED8A8' },
+                  ].map((sk,i)=>(
+                    <div key={i} style={{ marginBottom:i<2?'20px':0 }}>
+                      <div style={{ display:'flex', justifyContent:'space-between', marginBottom:'7px' }}>
+                        <span style={{ fontSize:'13px', fontWeight:700, color:'var(--blue)' }}>{sk.name}</span>
+                        <span style={{ fontSize:'13px', fontWeight:900, color:'var(--gold)' }}>{sk.val}%</span>
+                      </div>
+                      <div style={{ height:'8px', background:'var(--lagoon)', borderRadius:'10px', overflow:'hidden', border:'1px solid var(--border)' }}>
+                        <div className="sbar" style={{ background:`linear-gradient(90deg,${sk.from},${sk.to})`, width:perfVisible?`${sk.val}%`:'0' }}></div>
                       </div>
                     </div>
                   ))}
                 </div>
-                {/* X-Axis */}
-                <div className="flex justify-between mt-2 px-4 ml-4">
-                  {['Wk 1', 'Wk 2', 'Wk 3', 'Wk 4'].map(w => <span key={w} className="text-[10px] font-bold text-[#0F204A]/50">{w}</span>)}
-                </div>
               </div>
+            </div>
+          </section>
 
-              {/* Bottom Area: Recent Logs Grid */}
-              <div className="pt-5 border-t border-[#0F204A]/5">
-                <h4 className="text-[11px] font-black text-[#1E3A8A] uppercase tracking-widest mb-3">Recent Logs</h4>
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                  {[
-                    { d: 'Today', in: todayLog.in, out: todayLog.out, active: true },
-                    { d: 'Jun 05', in: '09:35 AM', out: '06:35 PM' },
-                    { d: 'Jun 04', in: '09:25 AM', out: '06:30 PM' },
-                    { d: 'Jun 03', in: '09:30 AM', out: '06:40 PM' }
-                  ].map((log, idx) => (
-                    <div key={idx} className={`p-3 rounded-xl border transition-colors ${log.active ? 'bg-white border-[#D4AF37]/40 shadow-sm' : 'bg-white/50 border-[#0F204A]/5 hover:border-[#0F204A]/20'}`}>
-                      <p className={`text-[10px] font-bold mb-2 ${log.active ? 'text-[#D4AF37]' : 'text-[#0F204A]/50'}`}>{log.d}</p>
-                      <div className="flex flex-col gap-1">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-semibold text-[#0F204A]/50">In</span>
-                          <span className="text-[11px] font-bold text-[#0F204A]">{log.in}</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-semibold text-[#0F204A]/50">Out</span>
-                          <span className="text-[11px] font-bold text-[#0F204A]/70">{log.out}</span>
-                        </div>
-                      </div>
+          {/* ── S4 Request Management ── */}
+          <section data-aos="fade-up" data-aos-delay="300" style={{ marginBottom:'22px' }}>
+            <div style={{ background:'var(--card)', borderRadius:'20px', padding:'24px 28px', border:'1.5px solid var(--border)', boxShadow:'0 4px 22px rgba(30,144,214,0.06)' }}>
+              <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'22px' }}>
+                <h3 className="sh">Request Management</h3>
+                <button className="vlink" style={{ background:'none', border:'none', cursor:'pointer', padding:0 }}>
+                  View History <span className="material-symbols-outlined" style={{ fontSize:'14px' }}>arrow_forward</span>
+                </button>
+              </div>
+              <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'18px' }}>
+                <RCard bg="linear-gradient(140deg,var(--lagoon),#fff)" bdr="rgba(30,144,214,0.18)" hbdr="var(--blue)" hg="rgba(30,144,214,0.12)" iBg="var(--lagoon)" iC="var(--blue)" icon="event_busy" badge="1 Pending" bBg="#EBF6FF" bC="var(--blue)" title="Leave Request" desc="Request full-day PTOs, casual, or sick leaves securely." btn="Apply Leave" btnC="var(--blue)" btnH="var(--blue)" />
+                <RCard bg="linear-gradient(140deg,var(--mist),#fff)" bdr="rgba(201,168,76,0.20)" hbdr="var(--gold)" hg="rgba(201,168,76,0.14)" iBg="var(--mist)" iC="var(--gold)" icon="timelapse" badge="Approved" bBg="#E8FBF4" bC="var(--mint)" title="Half-Day Request" desc="Apply for first or second half leaves for urgent short tasks." btn="Request Half-Day" btnC="var(--gold)" btnH="var(--gold)" />
+                <RCard bg="linear-gradient(140deg,#E8FBF4,#fff)" bdr="rgba(61,191,133,0.18)" hbdr="var(--mint)" hg="rgba(61,191,133,0.12)" iBg="#E8FBF4" iC="var(--mint)" icon="receipt_long" badge="0 Drafts" bBg="#F4F5F8" bC="var(--sub)" title="Expense Claim" desc="Submit bills for travel, meals, or internet reimbursements." btn="File Expense" btnC="var(--mint)" btnH="var(--mint)" />
+              </div>
+            </div>
+          </section>
+
+          {/* ── S5 Career Growth ── */}
+          <section data-aos="fade-up" data-aos-delay="400" className="hcard" style={{ marginBottom:'22px' }}>
+            <div style={{ background:'var(--card)', borderRadius:'20px', padding:'24px 28px', border:'1.5px solid var(--border)', boxShadow:'0 4px 22px rgba(30,144,214,0.06)' }}>
+              <h3 className="sh" style={{ marginBottom:'24px' }}>Career Growth Roadmap</h3>
+              <div style={{ position:'relative' }}>
+                <div style={{ position:'absolute', left:'13px', top:'8px', bottom:'8px', width:'2px', background:'linear-gradient(180deg,var(--mint),var(--blue) 55%,var(--border))', borderRadius:'2px' }}></div>
+                <div style={{ display:'flex', flexDirection:'column', gap:'24px' }}>
+                  {/* Done */}
+                  <div style={{ paddingLeft:'42px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+                    <div style={{ position:'absolute', left:'7px', width:'14px', height:'14px', borderRadius:'50%', background:'var(--mint)', border:'3px solid #E8FBF4', zIndex:1, boxShadow:'0 0 0 4px rgba(61,191,133,0.16)' }}></div>
+                    <div>
+                      <h4 style={{ fontSize:'13px', fontWeight:800, color:'var(--blue)', margin:'0 0 3px' }}>Junior Developer</h4>
+                      <p style={{ fontSize:'11px', fontWeight:600, color:'var(--sub)', margin:0 }}>Completed April 2026 • Duration: 1 Year</p>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-        {/* Section 4 & 5: Salary and Appraisal */}
-        <section className="mb-6 grid grid-cols-1 xl:grid-cols-2 gap-6">
-          
-   
-          {/* Performance Rating */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#0F204A]/5 flex flex-col">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-lg font-black text-[#2563EB]/85 text-shadow-lg">Performance Rating</h3>
-              <a href="#" className="text-xs font-bold text-[#D4AF37] hover:text-[#0F204A] transition-colors flex items-center gap-1">
-                View Details <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-              </a>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row items-center gap-6 flex-1">
-              {/* Reduced Radial Chart */}
-              <div className="flex flex-col items-center justify-center p-5 bg-[#F4F7FF] rounded-2xl shrink-0">
-                <div className="relative flex items-center justify-center w-24 h-24">
-                  <svg className="w-full h-full transform -rotate-90">
-                    <circle className="text-gray-200" cx="48" cy="48" fill="transparent" r="40" strokeWidth="6" stroke="currentColor"></circle>
-                    <circle className="text-[#0F204A] transition-all duration-1500 ease-out" cx="48" cy="48" fill="transparent" r="40" strokeWidth="6" stroke="currentColor" strokeDasharray="251.2" strokeDashoffset={mounted ? "25.12" : "251.2"} strokeLinecap="round"></circle>
-                  </svg>
-                  <div className="absolute text-center">
-                    <p className="text-2xl font-black text-[#0F204A] leading-none mb-0.5">4.5</p>
-                    <p className="text-[9px] font-bold text-[#D4AF37] uppercase tracking-widest">Overall</p>
+                    <span className="material-symbols-outlined" style={{ fontSize:'22px', color:'var(--mint)', flexShrink:0 }}>check_circle</span>
+                  </div>
+                  {/* Current */}
+                  <div style={{ paddingLeft:'42px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+                    <div className="tl-live" style={{ position:'absolute', left:'7px', width:'14px', height:'14px', borderRadius:'50%', background:'var(--blue)', border:'3px solid var(--lagoon)', zIndex:1, boxShadow:'0 0 0 5px rgba(30,144,214,0.18)' }}></div>
+                    <div>
+                      <h4 style={{ fontSize:'15px', fontWeight:900, color:'var(--blue)', margin:'0 0 3px' }}>Software Developer</h4>
+                      <p style={{ fontSize:'11.5px', fontWeight:600, color:'var(--sub)', margin:0 }}>Current Position • Since May 2026</p>
+                    </div>
+                    <span style={{ padding:'7px 18px', background:'linear-gradient(90deg,var(--blue),var(--blue-lt))', color:'#fff', borderRadius:'10px', fontWeight:800, fontSize:'12px', boxShadow:'0 4px 14px rgba(30,144,214,0.28)', flexShrink:0 }}>Current</span>
+                  </div>
+                  {/* Future */}
+                  <div style={{ paddingLeft:'42px', display:'flex', justifyContent:'space-between', alignItems:'center', opacity:0.42 }}>
+                    <div style={{ position:'absolute', left:'7px', width:'14px', height:'14px', borderRadius:'50%', background:'var(--border)', border:'3px solid var(--page)', zIndex:1 }}></div>
+                    <div>
+                      <h4 style={{ fontSize:'13px', fontWeight:700, color:'var(--sub)', margin:'0 0 3px' }}>Senior Software Developer</h4>
+                      <p style={{ fontSize:'11px', fontWeight:600, color:'var(--sub)', margin:0 }}>Projected Target: Q4 2028</p>
+                    </div>
+                    <span className="material-symbols-outlined" style={{ fontSize:'22px', color:'var(--sub)', flexShrink:0 }}>lock</span>
                   </div>
                 </div>
-               
-              </div>
-
-              {/* Skill Bars */}
-              <div className="flex-1 w-full space-y-4">
-                {[
-                  { name: 'Technical Skill', val: 92, col: 'bg-[#0F204A]' },
-                  { name: 'Punctuality', val: 88, col: 'bg-[#D4AF37]' },
-                  { name: 'Soft Skills', val: 95, col: 'bg-[#38BDF8]' }
-                ].map((skill, i) => (
-                  <div key={i} className="group">
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-xs font-bold text-[#0F204A]">{skill.name}</span>
-                      <span className="text-[11px] font-black text-[#0F204A]/60">{skill.val}%</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                      <div className={`h-full ${skill.col} transition-all duration-1000 ease-out`} style={{ width: mounted ? `${skill.val}%` : '0%' }}></div>
-                    </div>
-                  </div>
-                ))}
-                
-                
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Section 6: Request Management */}
-        <section className="mb-6">
-          {/* Main Wrapper Div (Heading ab iske andar hai) */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#0F204A]/5">
-            
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-lg font-black text-[#2563EB]/85 text-shadow-lg">Request Management</h3>
-              <button className="text-[11px] font-bold text-[#D4AF37] hover:text-[#0F204A] transition-colors flex items-center gap-1">
-                View History <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-              </button>
-            </div>
+          {/* ── S6 Salary Overview ── */}
+          <section data-aos="fade-up" data-aos-delay="500" className="hcard" style={{ marginBottom:'22px' }}>
+            <div style={{ background:'var(--card)', borderRadius:'20px', padding:'24px 28px', border:'1.5px solid var(--border)', boxShadow:'0 4px 22px rgba(30,144,214,0.06)' }}>
+              <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'22px' }}>
+                <h3 className="sh">Salary Overview</h3>
+                <span style={{ padding:'5px 14px', background:'var(--lagoon)', color:'var(--blue)', border:'1px solid var(--border)', borderRadius:'8px', fontSize:'11px', fontWeight:800 }}>June 2026</span>
+              </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              
-              {/* Option 1: Leave Request */}
-              <div className="group relative bg-gradient-to-br from-[#F4F7FF] to-white p-5 rounded-2xl border border-[#0F204A]/10 hover:border-[#0F204A]/30 hover:shadow-[0_8px_20px_rgba(15,32,74,0.06)] transition-all duration-300 hover:-translate-y-1">
-                <div className="flex justify-between items-start mb-4">
-                  <div className="w-10 h-10 bg-white text-[#0F204A] rounded-xl shadow-sm flex items-center justify-center border border-[#0F204A]/5 group-hover:scale-110 transition-transform duration-300">
-                    <span className="material-symbols-outlined text-[20px]">event_busy</span>
-                  </div>
-                  <span className="px-2.5 py-1 bg-yellow-100 text-yellow-700 rounded-md text-[9px] font-bold tracking-widest uppercase shadow-sm">1 Pending</span>
+              {/* Net banner */}
+              <div className="sal-banner" style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'22px 26px', background:'linear-gradient(110deg,var(--mist) 0%,#FAFCFF 50%,var(--lagoon) 100%)', border:'1.5px solid rgba(201,168,76,0.26)', borderRadius:'16px', marginBottom:'24px', flexWrap:'wrap', gap:'14px' }}>
+                <div>
+                  <p style={{ fontSize:'9px', fontWeight:800, color:'var(--sub)', textTransform:'uppercase', letterSpacing:'1.2px', margin:'0 0 6px' }}>Monthly Net Payable</p>
+                  <p style={{ fontSize:'32px', fontWeight:900, color:'var(--blue)', margin:0, letterSpacing:'-1px' }}>₹ 34,000.00</p>
                 </div>
-                <h4 className="text-sm font-black text-[#0F204A] mb-1.5">Leave Request</h4>
-                <p className="text-xs font-semibold text-[#0F204A]/60 mb-5">Request full-day PTOs, casual, or sick leaves securely.</p>
-                
-                {/* Animated Button */}
-                <button className="w-full py-2.5 bg-white border border-[#0F204A]/20 text-[#0F204A] rounded-xl font-bold text-xs group-hover:bg-[#0F204A] group-hover:text-white group-hover:border-[#0F204A] transition-all duration-300 flex justify-center items-center gap-1.5 overflow-hidden">
-                  Apply Leave 
-                  <span className="material-symbols-outlined text-[14px] opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300">add</span>
+                <button className="dlbtn">
+                  <span className="material-symbols-outlined" style={{ fontSize:'17px' }}>download</span>Download Payslip
                 </button>
               </div>
 
-              {/* Option 2: Half-Day Request */}
-              <div className="group relative bg-gradient-to-br from-[#FFF9E6] to-white p-5 rounded-2xl border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 hover:shadow-[0_8px_20px_rgba(212,175,55,0.1)] transition-all duration-300 hover:-translate-y-1">
-                <div className="flex justify-between items-start mb-4">
-                  <div className="w-10 h-10 bg-white text-[#D4AF37] rounded-xl shadow-sm flex items-center justify-center border border-[#D4AF37]/10 group-hover:scale-110 transition-transform duration-300">
-                    <span className="material-symbols-outlined text-[20px]">timelapse</span>
-                  </div>
-                  <span className="px-2.5 py-1 bg-green-100 text-green-700 rounded-md text-[9px] font-bold tracking-widest uppercase shadow-sm">Approved</span>
-                </div>
-                <h4 className="text-sm font-black text-[#0F204A] mb-1.5">Half-Day Request</h4>
-                <p className="text-xs font-semibold text-[#0F204A]/60 mb-5">Apply for first or second half leaves for urgent short tasks.</p>
-                
-                {/* Animated Button */}
-                <button className="w-full py-2.5 bg-white border border-[#D4AF37]/40 text-[#D4AF37] rounded-xl font-bold text-xs group-hover:bg-[#D4AF37] group-hover:text-white group-hover:border-[#D4AF37] transition-all duration-300 flex justify-center items-center gap-1.5 overflow-hidden">
-                  Request Half-Day 
-                  <span className="material-symbols-outlined text-[14px] opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300">add</span>
-                </button>
+              {/* Earnings */}
+              <p style={{ fontSize:'11px', fontWeight:900, color:'var(--mint)', textTransform:'uppercase', letterSpacing:'1px', margin:'0 0 14px' }}>Earnings</p>
+              <Row l="Basic Salary"               v="₹ 22,500.00" />
+              <Row l="House Rent Allowance (HRA)" v="₹ 9,000.00" />
+              <Row l="Special Allowance"          v="₹ 4,500.00" />
+              <div style={{ display:'flex', justifyContent:'space-between', padding:'12px 0 20px' }}>
+                <span style={{ fontSize:'13px', fontWeight:900, color:'var(--mint)' }}>Gross Earnings</span>
+                <span style={{ fontSize:'13px', fontWeight:900, color:'var(--mint)' }}>₹ 36,000.00</span>
               </div>
 
-              {/* Option 3: Expense Claim (Reimbursement) */}
-              <div className="group relative bg-gradient-to-br from-[#F0F9FF] to-white p-5 rounded-2xl border border-[#38BDF8]/20 hover:border-[#38BDF8]/50 hover:shadow-[0_8px_20px_rgba(56,189,248,0.1)] transition-all duration-300 hover:-translate-y-1">
-                <div className="flex justify-between items-start mb-4">
-                  <div className="w-10 h-10 bg-white text-[#38BDF8] rounded-xl shadow-sm flex items-center justify-center border border-[#38BDF8]/10 group-hover:scale-110 transition-transform duration-300">
-                    <span className="material-symbols-outlined text-[20px]">receipt_long</span>
-                  </div>
-                  <span className="px-2.5 py-1 bg-gray-100 text-gray-500 rounded-md text-[9px] font-bold tracking-widest uppercase shadow-sm">0 Drafts</span>
-                </div>
-                <h4 className="text-sm font-black text-[#0F204A] mb-1.5">Expense Claim</h4>
-                <p className="text-xs font-semibold text-[#0F204A]/60 mb-5">Submit bills for travel, meals, or internet reimbursements.</p>
-                
-                {/* Animated Button */}
-                <button className="w-full py-2.5 bg-white border border-[#38BDF8]/40 text-[#38BDF8] rounded-xl font-bold text-xs group-hover:bg-[#38BDF8] group-hover:text-white group-hover:border-[#38BDF8] transition-all duration-300 flex justify-center items-center gap-1.5 overflow-hidden">
-                  File Expense 
-                  <span className="material-symbols-outlined text-[14px] opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300">add</span>
-                </button>
+              {/* Deductions */}
+              <p style={{ fontSize:'11px', fontWeight:900, color:'var(--rose)', textTransform:'uppercase', letterSpacing:'1px', margin:'0 0 14px' }}>Deductions</p>
+              <Row l="Provident Fund (12%)" v="- ₹ 1,800.00" lc="#F08080" vc="var(--rose)" border="#FFF0F0" />
+              <Row l="Professional Tax"    v="- ₹ 200.00"   lc="#F08080" vc="var(--rose)" border="#FFF0F0" />
+              <div style={{ display:'flex', justifyContent:'space-between', padding:'12px 0 20px' }}>
+                <span style={{ fontSize:'13px', fontWeight:900, color:'var(--rose)' }}>Total Deductions</span>
+                <span style={{ fontSize:'13px', fontWeight:900, color:'var(--rose)' }}>- ₹ 2,000.00</span>
               </div>
 
-            </div>
-          </div>
-        </section>
-
-        {/* Section 7: Career Growth Roadmap */}
-
-
-        <section className="mb-6">
-          <div className="bg-white rounded-2xl p-6 mb-6 shadow-sm border border-[#0F204A]/5">
-            <h3 className="text-lg font-black text-[#2563EB]/85 text-shadow-lg mb-6">Career Growth Roadmap</h3>
-            
-            <div className="relative">
-              <div className="absolute left-3 top-2 bottom-2 w-0.5 bg-gray-100 rounded-full"></div>
-              
-              <div className="space-y-6">
-                <div className="relative pl-10 flex flex-col md:flex-row md:items-center gap-4">
-                  <div className="absolute left-[9px] top-1.5 w-2.5 h-2.5 bg-green-500 rounded-full ring-[3px] ring-green-100 z-10"></div>
-                  <div className="flex-grow">
-                    <h4 className="text-sm font-black text-[#0F204A]">Junior Developer</h4>
-                    <p className="text-[11px] font-bold text-[#0F204A]/50 mt-0.5">Completed April 2026 • Duration: 1 Year</p>
-                  </div>
-                  <span className="material-symbols-outlined text-green-500 text-2xl">check_circle</span>
-                </div>
-
-                <div className="relative pl-10 flex flex-col md:flex-row md:items-center gap-4">
-                  <div className="absolute left-[9px] top-1.5 w-2.5 h-2.5 bg-[#0F204A] rounded-full ring-[3px] ring-[#F4F7FF] z-10"></div>
-                  <div className="flex-grow">
-                    <h4 className="text-base font-black text-[#1E3A8A]">Software Developer</h4>
-                    <p className="text-xs font-bold text-[#0F204A]/60 mt-0.5">Current Position • Since May 2026</p>
-                    <div className="mt-2 flex gap-1.5">
-                     
-                    </div>
-                  </div>
-                  <div className="px-4 py-1.5 bg-[#2563EB]/85 text-white rounded-lg font-bold text-xs shadow-md">Current</div>
-                </div>
-
-                <div className="relative pl-10 flex flex-col md:flex-row md:items-center gap-4 opacity-50">
-                  <div className="absolute left-[9px] top-1.5 w-2.5 h-2.5 bg-gray-300 rounded-full ring-[3px] ring-white z-10 border border-gray-400"></div>
-                  <div className="flex-grow">
-                    <h4 className="text-sm font-bold text-[#0F204A]">Senior Software Developer</h4>
-                    <p className="text-[11px] font-semibold text-[#0F204A]/60 mt-0.5">Projected Target: Q4 2028</p>
-                  </div>
-                  <span className="material-symbols-outlined text-gray-400 text-2xl">lock</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-             
-
-    {/* Salary Components - Updated & Interactive */}
-        <section className="mb-6">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#0F204A]/5 flex flex-col">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-lg font-black text-[#2563EB]/85 text-shadow-lg">
-                Salary Overview
-              </h3>
-
-              <span className="px-2.5 py-1 bg-[#F4F7FF] text-[#0F204A] border border-[#0F204A]/10 rounded-md text-[10px] font-bold tracking-wide">
-                June 2026
-              </span>
-            </div>
-
-            {/*  Net Salary (Light Premium Gradient)  */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-6 bg-gradient-to-br from-[#FFF9E6] via-[#F4F7FF] to-[#E0F2FE] border border-[#D4AF37]/20 rounded-xl shadow-sm mb-6">
-              <div>
-                <p className="text-[10px] font-bold text-[#0F204A]/60 uppercase tracking-widest mb-1">
-                  Monthly Net Payable
-                </p>
-
-                {/* 36000 - 1800 - 200 = 34000 */}
-                <p className="text-3xl font-black text-[#0F204A]">
-                  ₹ 34,000.00
-                </p>
+              {/* Net pay */}
+              <div style={{ padding:'18px 22px', background:'linear-gradient(90deg,var(--lagoon),var(--mist))', borderRadius:'14px', border:'1.5px solid rgba(30,144,214,0.18)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+                <span style={{ fontSize:'14px', fontWeight:900, color:'var(--blue)' }}>Net Salary Credited</span>
+                <span style={{ fontSize:'24px', fontWeight:900, color:'var(--mint)' }}>₹ 34,000.00</span>
               </div>
 
-              {/* Button changed to Dark Blue for contrast against light background */}
-              <button className="flex items-center gap-1.5 bg-[#2563EB]/85 text-white px-5 py-2.5 rounded-lg font-bold text-xs shadow-md hover:bg-[#D4AF37] hover:text-[#0F204A] transition-all w-full sm:w-auto justify-center mt-4 sm:mt-0">
-                <span className="material-symbols-outlined text-[16px]">
-                  download
-                </span>
-                Download Payslip
-              </button>
-            </div>
-
-            {/* Earnings */}
-            <div className="mb-4">
-              <p className="text-xs font-black text-green-600 uppercase tracking-wider mb-3">
-                Earnings
-              </p>
-
-              <div className="space-y-4">
-                <div className="flex justify-between items-center text-sm font-bold">
-                  <span className="text-[#0F204A]/60">Basic Salary</span>
-                  <span className="text-[#0F204A]">₹ 22,500.00</span>
-                </div>
-
-                <div className="flex justify-between items-center text-sm font-bold">
-                  <span className="text-[#0F204A]/60">House Rent Allowance (HRA)</span>
-                  <span className="text-[#0F204A]">₹ 9,000.00</span>
-                </div>
-
-                <div className="flex justify-between items-center text-sm font-bold">
-                  <span className="text-[#0F204A]/60">Special Allowance</span>
-                  <span className="text-[#0F204A]">₹ 4,500.00</span>
-                </div>
-
-                <div className="flex justify-between items-center text-sm font-black text-green-600 pt-2 border-t border-green-100">
-                  <span>Gross Earnings</span>
-                  <span>₹ 36,000.00</span>
-                </div>
+              <div style={{ marginTop:'18px', paddingTop:'14px', borderTop:'1px solid var(--lagoon)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+                <p style={{ fontSize:'10px', fontWeight:700, color:'var(--sub)', textTransform:'uppercase', letterSpacing:'1px', margin:0 }}>Next Revision: July 2026</p>
+                <a href="#" className="vlink">View History <span className="material-symbols-outlined" style={{ fontSize:'14px' }}>arrow_forward</span></a>
               </div>
             </div>
+          </section>
 
-            {/* Deductions */}
-            <div>
-              <p className="text-xs font-black text-red-500 uppercase tracking-wider mb-3">
-                Deductions
-              </p>
-
-              <div className="space-y-4">
-                <div className="flex justify-between items-center text-sm font-bold text-red-500">
-                  <span>Provident Fund (12%)</span>
-                  <span>- ₹ 1,800.00</span>
-                </div>
-
-                <div className="flex justify-between items-center text-sm font-bold text-red-500">
-                  <span>Professional Tax</span>
-                  <span>- ₹ 200.00</span>
-                </div>
-
-                <div className="flex justify-between items-center text-sm font-black text-red-500 pt-2 border-t border-red-100">
-                  <span>Total Deductions</span>
-                  <span>- ₹ 2,000.00</span>
-                </div>
-              </div>
+          {/* Footer */}
+          <footer style={{ paddingTop:'20px', paddingBottom:'8px', borderTop:'1px solid var(--border)', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:'10px' }}>
+            <p style={{ fontSize:'11px', fontWeight:600, color:'var(--sub)', margin:0 }}>© 2026 TechHansa HRMS. All rights reserved.</p>
+            <div style={{ display:'flex', gap:'22px' }}>
+              {['Privacy','Terms','Support'].map(l=>(
+                <a key={l} href="#" style={{ fontSize:'11px', fontWeight:700, color:'var(--sub)', textDecoration:'none', transition:'color 0.2s' }}
+                  onMouseEnter={e=>e.currentTarget.style.color='var(--gold)'}
+                  onMouseLeave={e=>e.currentTarget.style.color='var(--sub)'}
+                >{l}</a>
+              ))}
             </div>
+          </footer>
+        </main>
+      </div>
+    </>
+  );
+}
 
-            {/* Net Pay */}
-            <div className="mt-5 p-4 bg-[#F4F7FF] rounded-xl border border-[#0F204A]/5">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-black text-[#0F204A]">
-                  Net Salary Credited
-                </span>
-
-                <span className="text-xl font-black text-green-600">
-                  ₹ 34,000.00
-                </span>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="mt-6 pt-4 border-t border-[#0F204A]/5 flex justify-between items-center">
-              <p className="text-[10px] font-bold text-[#0F204A]/40 uppercase tracking-widest">
-                Next Revision: July 2026
-              </p>
-
-              <a
-                href="#"
-                className="text-[11px] font-black text-[#D4AF37] hover:text-[#0F204A] transition-colors flex items-center gap-1"
-              >
-                View History
-                <span className="material-symbols-outlined text-[14px]">
-                  arrow_forward
-                </span>
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* Footer Minimal */}
-        <footer className="pt-6 pb-2 flex flex-col md:flex-row justify-between items-center border-t border-[#0F204A]/5 mt-8 gap-3">
-          <p className="text-[11px] font-bold text-[#0F204A]/50">© 2026 TechHansa HRMS. All rights reserved.</p>
-          <div className="flex gap-5">
-            <a className="text-[11px] font-bold text-[#0F204A]/50 hover:text-[#D4AF37] transition-all" href="#">Privacy</a>
-            <a className="text-[11px] font-bold text-[#0F204A]/50 hover:text-[#D4AF37] transition-all" href="#">Terms</a>
-            <a className="text-[11px] font-bold text-[#0F204A]/50 hover:text-[#D4AF37] transition-all" href="#">Support</a>
-          </div>
-        </footer>
-
-      </main>
+/* ── Request Card ── */
+function RCard({ bg,bdr,hbdr,hg,iBg,iC,icon,badge,bBg,bC,title,desc,btn,btnC,btnH }) {
+  const [h,sH] = useState(false);
+  return (
+    <div className="rcard"
+      onMouseEnter={()=>sH(true)} onMouseLeave={()=>sH(false)}
+      style={{ background:bg, border:`1.5px solid ${h?hbdr:bdr}`, boxShadow:h?`0 10px 28px ${hg}`:'none', transform:h?'translateY(-5px)':'none' }}
+    >
+      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:'16px' }}>
+        <div className="ricon" style={{ background:iBg, border:`1px solid ${bdr}` }}>
+          <span className="material-symbols-outlined" style={{ fontSize:'20px', color:iC }}>{icon}</span>
+        </div>
+        <span style={{ padding:'4px 10px', background:bBg, color:bC, borderRadius:'7px', fontSize:'9px', fontWeight:800, textTransform:'uppercase', letterSpacing:'0.8px' }}>{badge}</span>
+      </div>
+      <h4 style={{ fontSize:'13.5px', fontWeight:900, color:'var(--blue)', margin:'0 0 7px' }}>{title}</h4>
+      <p style={{ fontSize:'12px', fontWeight:600, color:'var(--sub)', margin:'0 0 18px', lineHeight:1.55 }}>{desc}</p>
+      <button className="rbtn" style={{ background:h?btnH:'var(--card)', color:h?'#fff':btnC, borderColor:btnC }}>
+        {btn}{h&&<span className="material-symbols-outlined" style={{ fontSize:'14px' }}>add</span>}
+      </button>
     </div>
   );
 }

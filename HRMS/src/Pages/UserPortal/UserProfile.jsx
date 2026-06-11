@@ -108,17 +108,21 @@ export default function UserProfile() {
           </a>
           
           {[
-            { icon: 'calendar_today', label: 'Attendance' },
-            { icon: 'payments', label: 'Salary' },
+            { icon: 'calendar_today', label: 'Attendance', path: '/user-attendance' },
+            { icon: 'payments', label: 'Salary', path: '/user-salary' },
             { icon: 'monitoring', label: 'Appraisal' },
             { icon: 'mark_as_unread', label: 'Requests' },
             { icon: 'trending_up', label: 'Growth' },
             { icon: 'mail', label: 'Newsletter' }
           ].map((item, index) => (
-            <a key={index} href="#" className="flex items-center gap-3 px-4 py-2.5 mt-1 rounded-lg text-[#64748B] hover:bg-[#E0F2FE]/50 hover:text-[#2563EB] border border-transparent transition-all duration-200 group">
-              <span className="material-symbols-outlined text-[18px] group-hover:text-[#D4AF37] transition-colors">{item.icon}</span>
-              <span className="font-bold text-[13px]">{item.label}</span>
-            </a>
+            <Link 
+                          key={index} 
+                          to={item.path} 
+                          className="flex items-center gap-3 px-4 py-2.5 mt-1 rounded-lg text-[#786F64] hover:bg-[#FFF9E6]/50 hover:text-[#A16207] hover:shadow-sm border border-transparent hover:border-[#D4AF37]/20 transition-all duration-200 group"
+                        >
+                          <span className="material-symbols-outlined text-[18px] group-hover:text-[#D4AF37] transition-colors">{item.icon}</span>
+                          <span className="font-bold text-[13px]">{item.label}</span>
+                        </Link>
           ))}
         </div>
 

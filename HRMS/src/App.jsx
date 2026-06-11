@@ -6,6 +6,7 @@ import PortalLogin from './pages/PortalLogin';
 import UserDashboard from './Pages/UserPortal/UserDashboard';
 import UserProfile from './Pages/UserPortal/UserProfile';
 import UserAttendance from './Pages/UserPortal/UserAttendance';
+import UserSalary from './Pages/UserPortal/UserSalary';
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
         <Route path="/user-profile" element={<UserProfile />} />
         {/* /user-attendance route -> User Attendance */}
         <Route path="/user-attendance" element={<UserAttendance />} />
+        {/* /user-salary route -> User Salary */}
+        <Route path="/user-salary" element={<UserSalary />} />
       </Routes>
     </BrowserRouter>
   );
